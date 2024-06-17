@@ -259,6 +259,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">References</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../about_the_author.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About the author</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -780,25 +786,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Mean crossing (mcross)</strong>, on the other hand, is the number of times the wavelet coefficient crosses the mean of the signal. It can be used to measure the amplitude since high-amplitude signals tend to have more mean crossings than low-amplitude signals.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> getZeroCrossingRate(arr):</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    my_array <span class="op">=</span> np.array(arr)</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    zcross <span class="op">=</span> <span class="bu">float</span>(<span class="st">"</span><span class="sc">{0:.2f}</span><span class="st">"</span>.<span class="bu">format</span>((((my_array[:<span class="op">-</span><span class="dv">1</span>] <span class="op">*</span> my_array[<span class="dv">1</span>:]) <span class="op">&lt;</span> <span class="dv">0</span>).su    m())<span class="op">/</span><span class="bu">len</span>(arr)))</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> zcross</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> getMeanCrossingRate(arr):</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    mcross <span class="op">=</span> getZeroCrossingRate(np.array(arr) <span class="op">-</span> np.mean(arr))</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> mcross</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_crossings(<span class="bu">list</span>):</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    zcross<span class="op">=</span>[]</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    mcross<span class="op">=</span>[]</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(<span class="bu">list</span>)):</span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>        zcross_i <span class="op">=</span> getZeroCrossingRate(<span class="bu">list</span>[i])</span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>        zcross.append(zcross_i)</span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>        mcross_i <span class="op">=</span> getMeanCrossingRate(<span class="bu">list</span>[i])</span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>        mcross.append(mcross_i)</span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> zcross, mcross</span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>cross_l0 <span class="op">=</span> calculate_crossings(sensors)</span>
-<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>cross_l1 <span class="op">=</span> calculate_crossings(sensors_l1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    zcross <span class="op">=</span> <span class="bu">float</span>(<span class="st">"</span><span class="sc">{0:.2f}</span><span class="st">"</span>.<span class="bu">format</span>((((my_array[:<span class="op">-</span><span class="dv">1</span>] <span class="op">*</span> \ </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                                       my_array[<span class="dv">1</span>:]) <span class="op">&lt;</span> <span class="dv">0</span>)<span class="op">\</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>                                       .<span class="bu">sum</span>())<span class="op">/</span><span class="bu">len</span>(arr)))</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> zcross</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> getMeanCrossingRate(arr):</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    mcross <span class="op">=</span> getZeroCrossingRate(np.array(arr) <span class="op">-</span> np.mean(arr))</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> mcross</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_crossings(<span class="bu">list</span>):</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    zcross<span class="op">=</span>[]</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    mcross<span class="op">=</span>[]</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(<span class="bu">list</span>)):</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>        zcross_i <span class="op">=</span> getZeroCrossingRate(<span class="bu">list</span>[i])</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>        zcross.append(zcross_i)</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>        mcross_i <span class="op">=</span> getMeanCrossingRate(<span class="bu">list</span>[i])</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>        mcross.append(mcross_i)</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> zcross, mcross</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>cross_l0 <span class="op">=</span> calculate_crossings(sensors)</span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>cross_l1 <span class="op">=</span> calculate_crossings(sensors_l1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In wavelet analysis, <strong>entropy</strong> refers to the degree of disorder or randomness in the distribution of wavelet coefficients. Here, we used Shannon entropy, which measures a signal’s uncertainty or randomness. It is calculated as the negative sum of the probabilities of the different possible outcomes of the signal multiplied by their base 2 logarithm. In the context of wavelet analysis, Shannon entropy can be used to measure the complexity of the signal, with higher values indicating greater complexity.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_entropy(signal, base<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    value, counts <span class="op">=</span> np.unique(signal, return_counts<span class="op">=</span><span class="va">True</span>)</span>
@@ -807,25 +815,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>entropy_l0 <span class="op">=</span> [calculate_entropy(x) <span class="cf">for</span> x <span class="kw">in</span> sensors]</span>
 <span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>entropy_l1 <span class="op">=</span> [calculate_entropy(x) <span class="cf">for</span> x <span class="kw">in</span> sensors_l1]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Let’s now list all the wavelet features and create a list by layers.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>L1_features_names <span class="op">=</span> [<span class="st">"L1-n5"</span>, <span class="st">"L1-n25"</span>, <span class="st">"L1-n75"</span>, <span class="st">"L1-n95"</span>, <span class="st">"L1-median"</span>, <span class="st">"L1-mean"</span>, <span class="st">"L1-std"</span>, <span class="st">"L1-var"</span>, <span class="st">"L1-rms"</span>, <span class="st">"L1-skew"</span>, <span class="st">"L1-Kurtosis"</span>, <span class="st">"L1-zcross"</span>, <span class="st">"L1-mcross"</span>, <span class="st">"L1-entropy"</span>]</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>L0_features_names <span class="op">=</span> [<span class="st">"L0-n5"</span>, <span class="st">"L0-n25"</span>, <span class="st">"L0-n75"</span>, <span class="st">"L0-n95"</span>, <span class="st">"L0-median"</span>, <span class="st">"L0-mean"</span>, <span class="st">"L0-std"</span>, <span class="st">"L0-var"</span>, <span class="st">"L0-rms"</span>, <span class="st">"L0-skew"</span>, <span class="st">"L0-Kurtosis"</span>, <span class="st">"L0-zcross"</span>, <span class="st">"L0-mcross"</span>, <span class="st">"L0-entropy"</span>]</span>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>L1_features_names <span class="op">=</span> [<span class="st">"L1-n5"</span>, <span class="st">"L1-n25"</span>, <span class="st">"L1-n75"</span>, <span class="st">"L1-n95"</span>, <span class="st">"L1-median"</span>, </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"L1-mean"</span>, <span class="st">"L1-std"</span>, <span class="st">"L1-var"</span>, <span class="st">"L1-rms"</span>, <span class="st">"L1-skew"</span>, </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"L1-Kurtosis"</span>, <span class="st">"L1-zcross"</span>, <span class="st">"L1-mcross"</span>, <span class="st">"L1-entropy"</span>]</span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>all_feat_l0 <span class="op">=</span> []</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(axis)):</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    feat_l0 <span class="op">=</span> stat_feat_l0[i]<span class="op">+</span>[skew_l0[i]]<span class="op">+</span>[kurtosis_l0[i]]<span class="op">+</span>[cross_l0[<span class="dv">0</span>][i]]<span class="op">+</span>[cross_l0[<span class="dv">1</span>][i]]<span class="op">+</span>[entropy_l0[i]]</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    [<span class="bu">print</span>(axis[i]<span class="op">+</span><span class="st">' '</span><span class="op">+</span>x<span class="op">+</span><span class="st">'= '</span>, <span class="bu">round</span>(y, <span class="dv">4</span>)) <span class="cf">for</span> x,y <span class="kw">in</span> <span class="bu">zip</span>(L0_features_names, feat_l0)][<span class="dv">0</span>]</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    all_feat_l0.append(feat_l0)</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>all_feat_l0 <span class="op">=</span> [item <span class="cf">for</span> sublist <span class="kw">in</span> all_feat_l0 <span class="cf">for</span> item <span class="kw">in</span> sublist]</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">All L0 Features = </span><span class="sc">{</span><span class="bu">len</span>(all_feat_l0)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>all_feat_l1 <span class="op">=</span> []</span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(axis)):</span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>feat_l1 <span class="op">=</span> stat_feat_l1[i]<span class="op">+</span>[skew_l1[i]]<span class="op">+</span>[kurtosis_l1[i]]<span class="op">+</span>[cross_l1[<span class="dv">0</span>][i]]<span class="op">+</span>[cross_l1[<span class="dv">1</span>][i]]<span class="op">+</span>[entropy_l1[i]]</span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>[<span class="bu">print</span>(axis[i]<span class="op">+</span><span class="st">' '</span><span class="op">+</span>x<span class="op">+</span><span class="st">'= '</span>, <span class="bu">round</span>(y, <span class="dv">4</span>)) <span class="cf">for</span> x,y <span class="kw">in</span> <span class="bu">zip</span>(L1_features_names, feat_l1)][<span class="dv">0</span>]</span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>all_feat_l1.append(feat_l1)</span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>all_feat_l1 <span class="op">=</span> [item <span class="cf">for</span> sublist <span class="kw">in</span> all_feat_l1 <span class="cf">for</span> item <span class="kw">in</span> sublist]</span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">All L1 Features = </span><span class="sc">{</span><span class="bu">len</span>(all_feat_l1)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>L0_features_names <span class="op">=</span> [<span class="st">"L0-n5"</span>, <span class="st">"L0-n25"</span>, <span class="st">"L0-n75"</span>, <span class="st">"L0-n95"</span>, <span class="st">"L0-median"</span>, </span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"L0-mean"</span>, <span class="st">"L0-std"</span>, <span class="st">"L0-var"</span>, <span class="st">"L0-rms"</span>, <span class="st">"L0-skew"</span>, </span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"L0-Kurtosis"</span>, <span class="st">"L0-zcross"</span>, <span class="st">"L0-mcross"</span>, <span class="st">"L0-entropy"</span>]</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>all_feat_l0 <span class="op">=</span> []</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(axis)):</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    feat_l0 <span class="op">=</span> stat_feat_l0[i]<span class="op">+</span>[skew_l0[i]]<span class="op">+</span>[kurtosis_l0[i]]<span class="op">+\</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    [cross_l0[<span class="dv">0</span>][i]]<span class="op">+</span>[cross_l0[<span class="dv">1</span>][i]]<span class="op">+</span>[entropy_l0[i]]</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    [<span class="bu">print</span>(axis[i]<span class="op">+</span><span class="st">' '</span><span class="op">+</span>x<span class="op">+</span><span class="st">'= '</span>, <span class="bu">round</span>(y, <span class="dv">4</span>)) <span class="cf">for</span> x,y <span class="kw">in</span> <span class="op">\</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>     <span class="bu">zip</span>(L0_features_names, feat_l0)][<span class="dv">0</span>]</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    all_feat_l0.append(feat_l0)</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>all_feat_l0 <span class="op">=</span> [item <span class="cf">for</span> sublist <span class="kw">in</span> all_feat_l0 <span class="cf">for</span> item <span class="kw">in</span> sublist]</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">All L0 Features = </span><span class="sc">{</span><span class="bu">len</span>(all_feat_l0)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>all_feat_l1 <span class="op">=</span> []</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(axis)):</span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>feat_l1 <span class="op">=</span> stat_feat_l1[i]<span class="op">+</span>[skew_l1[i]]<span class="op">+</span>[kurtosis_l1[i]]<span class="op">+</span>[cross_l1[<span class="dv">0</span>][i]]<span class="op">+\</span></span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>          [cross_l1[<span class="dv">1</span>][i]]<span class="op">+</span>[entropy_l1[i]]</span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>[<span class="bu">print</span>(axis[i]<span class="op">+</span><span class="st">' '</span><span class="op">+</span>x<span class="op">+</span><span class="st">'= '</span>, <span class="bu">round</span>(y, <span class="dv">4</span>)) <span class="cf">for</span> x,y <span class="kw">in</span> <span class="bu">zip</span>(L1_features_names, </span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>                                                       feat_l1)][<span class="dv">0</span>]</span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>all_feat_l1.append(feat_l1)</span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>all_feat_l1 <span class="op">=</span> [item <span class="cf">for</span> sublist <span class="kw">in</span> all_feat_l1 <span class="cf">for</span> item <span class="kw">in</span> sublist]</span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">All L1 Features = </span><span class="sc">{</span><span class="bu">len</span>(all_feat_l1)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/png/wav_result.png" class="img-fluid figure-img" style="width:3.58in"></p>
