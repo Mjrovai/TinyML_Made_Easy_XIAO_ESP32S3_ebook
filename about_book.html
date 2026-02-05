@@ -276,7 +276,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#supplementary-online-resources" id="toc-supplementary-online-resources" class="nav-link active" data-scroll-target="#supplementary-online-resources">Supplementary Online Resources</a></li>
+  <li><a href="#who-this-book-is-for" id="toc-who-this-book-is-for" class="nav-link active" data-scroll-target="#who-this-book-is-for"><strong>Who This Book Is For</strong></a></li>
+  <li><a href="#what-youll-learn" id="toc-what-youll-learn" class="nav-link" data-scroll-target="#what-youll-learn"><strong>What You’ll Learn</strong></a></li>
+  <li><a href="#tools-and-platforms" id="toc-tools-and-platforms" class="nav-link" data-scroll-target="#tools-and-platforms"><strong>Tools and Platforms</strong></a></li>
+  <li><a href="#hardware-requirements" id="toc-hardware-requirements" class="nav-link" data-scroll-target="#hardware-requirements"><strong>Hardware Requirements</strong></a></li>
+  <li><a href="#project-based-approach" id="toc-project-based-approach" class="nav-link" data-scroll-target="#project-based-approach"><strong>Project-Based Approach</strong></a></li>
+  <li><a href="#learning-philosophy" id="toc-learning-philosophy" class="nav-link" data-scroll-target="#learning-philosophy"><strong>Learning Philosophy</strong></a></li>
+  <li><a href="#beyond-the-book" id="toc-beyond-the-book" class="nav-link" data-scroll-target="#beyond-the-book"><strong>Beyond the Book</strong></a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/edit/main/about_book.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/blob/main/about_book.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
@@ -301,59 +307,82 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 <p>This book is part of the open book <a href="https://harvard-edge.github.io/cs249r_book/">Machine Learning Systems</a>, which we invite you to read.<img src="././images/mls_harward_cover_book.jpg" class="img-fluid"></p>
-<p><strong>TinyML Made Easy,</strong> an open-access eBook and part of the open book <a href="https://harvard-edge.github.io/cs249r_book/">Machine Learning Systems</a>, is an accessible resource for enthusiasts, professionals, and engineering students embarking on the transformative path of embedded machine learning (TinyML). This book offers a systematic introduction to integrating ML algorithms with microcontrollers, focusing on practicality and hands-on experiences.</p>
-<p>Students are introduced to core concepts of TinyML through the setup and programming of the <strong>Seeed Studio XIAO ESP32-S3</strong>, a state-of-the-art microcontroller designed for ML applications. The book breaks down complex ideas into understandable segments, ensuring foundational knowledge is built from the ground up.</p>
-<p>True to the engineering ethos of ‘learning by doing,’ each chapter focuses on a project that challenges students to apply their knowledge in real-world scenarios. The projects are designed to reinforce learning and stimulate innovation, covering:</p>
+<section id="who-this-book-is-for" class="level3">
+<h3 class="anchored" data-anchor-id="who-this-book-is-for"><strong>Who This Book Is For</strong></h3>
+<p>This book is designed for makers, students, engineers, and anyone curious about bringing artificial intelligence to embedded devices. Whether you’re new to machine learning or experienced with traditional ML but unfamiliar with embedded systems, the hands-on approach will guide you from setup to deployment.</p>
+<p>You should have basic familiarity with Arduino programming and the Arduino IDE. Prior machine learning experience is helpful but not required—each concept is introduced with clear explanations and practical examples.</p>
+</section>
+<section id="what-youll-learn" class="level3">
+<h3 class="anchored" data-anchor-id="what-youll-learn"><strong>What You’ll Learn</strong></h3>
+<p>The book is organized into three main sections, each building on the previous:</p>
+<p><strong>XIAOML Kit Projects</strong> - The heart of the book, featuring comprehensive hands-on projects:</p>
 <ul>
-<li>Microcontroller setup and sensor tests,</li>
-<li>Image classification,</li>
-<li>Dataset labeling and Object detection,</li>
-<li>Audio processing and keyword spotting,</li>
-<li>Time-series data and Digital Signal Processing,</li>
-<li>Motion classification and Anomaly detection.</li>
+<li><strong>Setup</strong>: Complete configuration of the XIAO ESP32S3 Sense and XIAOML Kit, testing all sensors and peripherals</li>
+<li><strong>Image Classification</strong>: Build a computer vision system to classify objects using convolutional neural networks (CNNs)</li>
+<li><strong>Object Detection</strong>: Deploy FOMO (Faster Objects, More Objects) for real-time multi-object detection</li>
+<li><strong>Keyword Spotting (KWS)</strong>: Create a voice-activated system that recognizes specific spoken commands</li>
+<li><strong>Motion Classification and Anomaly Detection</strong>: Use IMU data to recognize gestures and detect unusual patterns</li>
 </ul>
-<p><strong>TinyML Made Easy</strong> provides detailed walkthroughs of industry-standard tools such as <strong>Arduino IDE</strong>, <strong>Seeed SenseCraft</strong>, and <strong>Edge Impulse Studio</strong>. Students will gain hands-on experience with data collection, pre-processing, model training, and deployment, equipping them with the technical skills sought in the embedded systems industry.</p>
-<p>As TinyML is poised to be a driving force in the evolution of IoT and smart devices, students will emerge from this book with an introductory theoretical understanding and the practical skills necessary to contribute to and shape the future of technology.</p>
-<p>With its straightforward language, clarity, and focus on experiential learning, <strong>TinyML Made Easy</strong> is more than just a book—it’s a comprehensive toolkit for anyone ready to delve into the world of embedded machine learning. It empowers them to move beyond the classroom and into the lab or field, and they are well-prepared to tackle the challenges and opportunities TinyML presents.</p>
-<section id="supplementary-online-resources" class="level1">
-<h1>Supplementary Online Resources</h1>
-<p><strong>Chapter 1 - Setup XIAO ESP32S3 Sense</strong></p>
+<p><strong>Preprocessing Deep Dive</strong> - Understanding the signal processing that makes TinyML work:</p>
 <ul>
-<li><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense">Arduino Codes</a></li>
+<li><strong>DSP Spectral Features</strong>: Master digital signal processing techniques for extracting meaningful features from sensor data</li>
+<li><strong>KWS Feature Engineering</strong>: Learn specialized audio processing methods, including MFCC (Mel-frequency cepstral coefficients) and spectrograms</li>
 </ul>
-<p><strong>Chapter 2 - Image Classification</strong></p>
+<p><strong>Grove Vision AI V2</strong> - Exploring no-code and accelerated computer vision:</p>
 <ul>
-<li><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense">Arduino Codes</a></li>
-<li><a href="https://www.kaggle.com/kritikseth/fruit-and-vegetable-image-recognition">Dataset</a></li>
-<li><a href="https://studio.edgeimpulse.com/public/228516/live">Edge Impulse Project</a></li>
+<li><strong>Setup and No-Code Applications</strong>: Deploy pre-trained models without writing code using SenseCraft AI</li>
+<li><strong>Image Classification</strong>: Custom model deployment with hardware acceleration</li>
+<li><strong>Object Detection</strong>: High-performance object detection on a dedicated AI accelerator</li>
 </ul>
-<p><strong>Chapter 3 - Object Detection</strong></p>
+</section>
+<section id="tools-and-platforms" class="level3">
+<h3 class="anchored" data-anchor-id="tools-and-platforms"><strong>Tools and Platforms</strong></h3>
+<p>You’ll work extensively with:</p>
 <ul>
-<li><a href="https://studio.edgeimpulse.com/public/315759/latest">Edge Impulse Project</a></li>
+<li><strong>Arduino IDE</strong>: Primary development environment for the XIAO ESP32S3 Sense</li>
+<li><strong>Edge Impulse Studio</strong>: Cloud-based platform for ML model development, from data collection through deployment</li>
+<li><strong>SenseCraft AI</strong>: Seeed Studio’s platform for no-code AI model deployment</li>
+<li><strong>Python notebooks</strong>: For advanced preprocessing and data analysis</li>
 </ul>
-<p><strong>Chapter 4 - Audio Feature Engineering</strong></p>
+</section>
+<section id="hardware-requirements" class="level3">
+<h3 class="anchored" data-anchor-id="hardware-requirements"><strong>Hardware Requirements</strong></h3>
+<p>To follow along with all projects, you’ll need:</p>
 <ul>
-<li><a href="https://colab.research.google.com/github/Mjrovai/Arduino_Nicla_Vision/blob/main/KWS/Audio_Data_Analysis.ipynb">Audio_Data_Analysis Colab Notebook</a></li>
+<li>XIAOML Kit (includes XIAO ESP32S3 Sense and expansion board with OLED and an IMU)</li>
+<li>Grove Vision AI V2 (for the final section)</li>
+<li>USB-C cable for programming</li>
+<li>MicroSD card (optional, for data logging)</li>
 </ul>
-<p><strong>Chapter 5 - Keyword Spotting (KWS)</strong></p>
+</section>
+<section id="project-based-approach" class="level3">
+<h3 class="anchored" data-anchor-id="project-based-approach"><strong>Project-Based Approach</strong></h3>
+<p>Every chapter follows the same proven workflow:</p>
+<ol type="1">
+<li><strong>Problem definition</strong>: Understanding the application and its constraints</li>
+<li><strong>Data collection</strong>: Gathering training data from sensors or datasets</li>
+<li><strong>Feature extraction</strong>: Processing raw sensor data into meaningful features</li>
+<li><strong>Model training</strong>: Building and training neural networks optimized for edge deployment</li>
+<li><strong>Evaluation</strong>: Testing model performance and understanding trade-offs</li>
+<li><strong>Deployment</strong>: Uploading trained models to your device and running inference</li>
+<li><strong>Real-world testing</strong>: Validating your application with actual sensor data</li>
+</ol>
+</section>
+<section id="learning-philosophy" class="level3">
+<h3 class="anchored" data-anchor-id="learning-philosophy"><strong>Learning Philosophy</strong></h3>
+<p>This book emphasizes learning by doing. Rather than lengthy theoretical discussions, you’ll build working projects that demonstrate core concepts. Code examples are complete and tested, with detailed explanations of key sections. When theory is necessary—like understanding how convolutional layers work or why we use Mel-frequency features for audio—it’s presented in context, connected directly to the project you’re building.</p>
+</section>
+<section id="beyond-the-book" class="level3">
+<h3 class="anchored" data-anchor-id="beyond-the-book"><strong>Beyond the Book</strong></h3>
+<p>By the end, you won’t just have completed several projects—you’ll understand the fundamental principles that apply to any ML application. You’ll know how to:</p>
 <ul>
-<li><p><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense">Arduino Codes</a></p></li>
-<li><p><a href="https://cdn.edgeimpulse.com/datasets/keywords2.zip">Subset of Google Speech Commands Dataset</a></p></li>
-<li><p><a href="https://colab.research.google.com/github/Mjrovai/Arduino_Nicla_Vision/blob/main/KWS/KWS_MFCC_Analysis.ipynb">KWS_MFCC_Analysis Colab Notebook</a></p></li>
-<li><p><a href="https://colab.research.google.com/github/Mjrovai/Arduino_Nicla_Vision/blob/main/KWS/KWS_CNN_training.ipynb">KWS_CNN_training Colab Notebook</a></p></li>
-<li><p><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/tree/main/xiao_esp32s3_microphone_led">Arduino post-processing code</a></p></li>
-<li><p><a href="https://studio.edgeimpulse.com/public/230109/live">Edge Impulse Project</a></p></li>
+<li>Choose appropriate sensors and platforms for your application</li>
+<li>Collect and prepare training data effectively</li>
+<li>Select and configure neural network architectures for embedded constraints</li>
+<li>Optimize models for memory, latency, and power consumption</li>
+<li>Deploy and validate ML models on resource-constrained devices</li>
 </ul>
-<p><strong>Chapter 6 - DSP Spectral Features</strong></p>
-<ul>
-<li><a href="https://colab.research.google.com/github/Mjrovai/TinyML4D/blob/main/SciTinyM-2023/Edge_Impulse-Spectral_Analysis_Block/Edge_Impulse_Spectral_Analysis_Block_V3.ipynb">DSP - Spectral Features Colab Notebook</a></li>
-</ul>
-<p><strong>Chapter 7 - Motion Classification and Anomaly Detection</strong></p>
-<ul>
-<li><p><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense">Arduino Codes</a></p></li>
-<li><p><a href="https://colab.research.google.com/github/Mjrovai/Arduino_Nicla_Vision/blob/main/Motion_Classification/Edge_Impulse_Spectral_Features_Block.ipynb">Edge_Impulse_Spectral_Features_Block Colab Notebook</a></p></li>
-<li><p><a href="https://studio.edgeimpulse.com/public/226398/live">Edge Impulse Project</a></p></li>
-</ul>
+<p>These skills transfer directly to your own TinyML projects, whether you’re building smart home devices, industrial sensors, wearables, or environmental monitors.</p>
 
 
 </section>
