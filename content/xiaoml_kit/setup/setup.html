@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>TinyML Made Easy - Setup</title>
+<title>Setup – TinyML Made Easy</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -21,6 +24,7 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -65,22 +69,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../../../">
 <link href="../../../content/xiaoml_kit/image_classification/image_classification.html" rel="next">
 <link href="../../../images/cover.jpg" rel="icon" type="image/jpeg">
-<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-daec65ff3ba034f51daec66ecad3ce27.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -89,6 +100,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -99,54 +111,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../../../styles.css">
 </head>
 
-<body class="nav-sidebar floating nav-fixed">
+<body class="nav-sidebar floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">TinyML Made Easy</span>
     </a>
   </div>
-        <div class="quarto-navbar-tools ms-auto tools-wide">
-    <a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+        <div class="quarto-navbar-tools tools-wide tools-end">
+    <a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="../../../TinyML-Made-Easy.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
     <div class="dropdown">
-      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download"><i class="bi bi-download"></i></a>
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
-            <a class="dropdown-item quarto-navbar-tools ms-auto-item" href="../../../TinyML-Made-Easy.pdf">
-              <i class="bi bi-bi-file-pdf pe-1"></i>
-            Download PDF
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item quarto-navbar-tools ms-auto-item" href="../../../TinyML-Made-Easy.epub">
-              <i class="bi bi-bi-journal pe-1"></i>
-            Download ePub
-            </a>
-          </li>
-      </ul>
-    </div>
-    <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
-      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-1">
-          <li>
-            <a class="dropdown-item quarto-navbar-tools ms-auto-item" href="https://twitter.com/intent/tweet?url=|url|">
-              <i class="bi bi-bi-twitter pe-1"></i>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
-            <a class="dropdown-item quarto-navbar-tools ms-auto-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
-              <i class="bi bi-bi-linkedin pe-1"></i>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
             LinkedIn
             </a>
           </li>
           <li>
-            <a class="dropdown-item quarto-navbar-tools ms-auto-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
-              <i class="bi bi-bi-facebook pe-1"></i>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
             Facebook
             </a>
           </li>
@@ -163,13 +159,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </nav>
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../content/xiaoml_kit/setup/setup.html">Setup</a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../content/xiaoml_kit/setup/setup.html">Setup</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -178,7 +174,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -247,7 +243,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text"><div class="part">Preprocessing Deepdiving</div></span></span>
+ <span class="menu-text"><div class="part">Preprocessing Deep Dive</div></span></span>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
@@ -303,7 +299,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -318,7 +314,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#installing-the-xiao-esp32s3-sense-on-arduino-ide" id="toc-installing-the-xiao-esp32s3-sense-on-arduino-ide" class="nav-link" data-scroll-target="#installing-the-xiao-esp32s3-sense-on-arduino-ide">Installing the XIAO ESP32S3 Sense on Arduino IDE</a></li>
   <li><a href="#testing-the-board-with-blink" id="toc-testing-the-board-with-blink" class="nav-link" data-scroll-target="#testing-the-board-with-blink">Testing the board with BLINK</a></li>
-  <li><a href="#sec-setup-microphone-test-1c2e" id="toc-sec-setup-microphone-test-1c2e" class="nav-link" data-scroll-target="#sec-setup-microphone-test-1c2e">Microphone Test</a></li>
+  <li><a href="#sec-setup-microphone-test-1c2e" id="toc-sec-setup-microphone-test-1c2e" class="nav-link" data-scroll-target="#sec-setup-microphone-test-1c2e">Microphone Test</a>
+  <ul class="collapse">
+  <li><a href="#testing-the-microphone-with-the-sensecraft-ai-studio" id="toc-testing-the-microphone-with-the-sensecraft-ai-studio" class="nav-link" data-scroll-target="#testing-the-microphone-with-the-sensecraft-ai-studio">Testing the Microphone with the SenseCraft AI Studio</a></li>
+  <li><a href="#testing-the-microphone-with-arduino-ide" id="toc-testing-the-microphone-with-arduino-ide" class="nav-link" data-scroll-target="#testing-the-microphone-with-arduino-ide">Testing the Microphone with Arduino IDE</a></li>
+  <li><a href="#saving-recorded-sound-on-an-sd-card" id="toc-saving-recorded-sound-on-an-sd-card" class="nav-link" data-scroll-target="#saving-recorded-sound-on-an-sd-card">Saving recorded sound on an SD card</a></li>
+  </ul></li>
   <li><a href="#testing-the-camera" id="toc-testing-the-camera" class="nav-link" data-scroll-target="#testing-the-camera">Testing the Camera</a>
   <ul class="collapse">
   <li><a href="#sec-setup-nocode-applications-sensecraft-ai-studio-6f01" id="toc-sec-setup-nocode-applications-sensecraft-ai-studio-6f01" class="nav-link" data-scroll-target="#sec-setup-nocode-applications-sensecraft-ai-studio-6f01">Testing the camera with the SenseCraft AI Studio</a></li>
@@ -357,7 +358,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#installing-the-heat-sink" id="toc-installing-the-heat-sink" class="nav-link" data-scroll-target="#installing-the-heat-sink">Installing the Heat Sink</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/edit/main/content/xiaoml_kit/setup/setup.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/blob/main/content/xiaoml_kit/setup/setup.qmd" class="toc-action">View source</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/edit/main/content/xiaoml_kit/setup/setup.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/blob/main/content/xiaoml_kit/setup/setup.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -377,22 +378,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="./images/jpeg/xiao_setup.jpg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption"><em>DALL·E prompt - 1950s cartoon-style drawing of a XIAO ESP32S3 board with a distinctive camera module, as shown in the image provided. The board is placed on a classic lab table with various sensors, including a microphone. Behind the board, a vintage computer screen displays the Arduino IDE in muted colors, with code focusing on LED pin setups and machine learning inference for voice commands. The Serial Monitor on the IDE showcases outputs detecting voice commands like ‘yes’ and ‘no’. The scene merges the retro charm of mid-century labs with modern electronics.</em></figcaption>
+<figcaption><em>DALL·E prompt - 1950s cartoon-style drawing of a XIAO ESP32S3 board with a distinctive camera module, as shown in the image provided. The board is placed on a classic lab table with various sensors, including a microphone. Behind the board, a vintage computer screen displays the Arduino IDE in muted colors, with code focusing on LED pin setups and machine learning inference for voice commands. The Serial Monitor on the IDE showcases outputs detecting voice commands like ‘yes’ and ‘no’. The scene merges the retro charm of mid-century labs with modern electronics.</em></figcaption>
 </figure>
 </div>
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>The <a href="https://www.seeedstudio.com/The-XIAOML-Kit.html">XIAOML Kit</a> is designed to provides hands-on experience with TinyML applications. The kit includes the powerful <a href="https://www.seeedstudio.com/XIAO-ESP32S3-Sense-p-5639.html">XIAO ESP32S3 Sense</a> development board and an expansion board that adds essential sensors for machine learning projects.</p>
+<p>The <a href="https://www.seeedstudio.com/The-XIAOML-Kit.html">XIAOML Kit</a> is designed to provide hands-on experience with TinyML applications. The kit includes the powerful <a href="https://www.seeedstudio.com/XIAO-ESP32S3-Sense-p-5639.html">XIAO ESP32S3 Sense</a> development board and an expansion board that adds essential sensors for machine learning projects.</p>
 <p><strong>Complete XIAOML Kit Components:</strong></p>
 <ul>
 <li><strong>XIAO ESP32S3 Sense</strong>: Main development board with integrated camera sensor, digital microphone, and SD card support</li>
 <li><strong>Expansion Board</strong>: Features a 6-axis IMU (LSM6DS3TR-C) and 0.42” OLED display for motion sensing and data visualization</li>
-<li><strong>SD Card Toolkit</strong>: Includes SD card and USB adapter for data storage and model deployment</li>
+<li><strong>SD Card Toolkit</strong>: Includes an SD card and a USB adapter for data storage and model deployment</li>
 <li><strong>USB-C Cable</strong>: For connecting the board to your computer</li>
 <li><strong>Antenna and Heat Sinks</strong></li>
 </ul>
@@ -400,11 +403,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>⚠️ <strong>Attention</strong></p>
 <p><strong>Do not install the heat sinks</strong> (or carefully, remove them) on/from the XIAO ESP32S3 if you want to use the XIAO ML Kit Expansion Board. See Appendix for more information.</p>
 </blockquote>
-<p> <img src="./images/png/kit-2.png" class="img-fluid" style="width:90.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/kit-2.png" class="img-fluid quarto-figure quarto-figure-center" style="width:90.0%"></p>
 <section id="xiao-esp32s3-sense---core-board-features" class="level3">
 <h3 class="anchored" data-anchor-id="xiao-esp32s3-sense---core-board-features">XIAO ESP32S3 Sense - Core Board Features</h3>
 <p>The <a href="https://www.seeedstudio.com/XIAO-ESP32S3-Sense-p-5639.html">XIAO ESP32S3 Sense</a> serves as the heart of the XIAOML Kit, integrating embedded ML computing power with photography and audio capabilities, making it an ideal platform for TinyML applications in intelligent voice and vision AI.</p>
-<p> <img src="./images/png/xiao.png" class="img-fluid" style="width:65.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/xiao.png" class="img-fluid quarto-figure quarto-figure-center" style="width:65.0%"></p>
 <p><strong>Key Features</strong></p>
 <ul>
 <li><strong>Powerful MCU</strong>: ESP32S3 32-bit, dual-core, Xtensa processor operating up to 240 MHz, with Arduino / MicroPython support</li>
@@ -414,9 +417,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Outstanding RF Performance</strong>: 2.4 GHz Wi-Fi and BLE dual wireless communication, supports 100m+ remote communication with U.FL antenna</li>
 <li><strong>Compact Design</strong>: 21 × 17.5 mm, adopting the classic XIAO form factor, suitable for space-limited projects</li>
 </ul>
-<p> <img src="./images/png/xiao_pins.png" class="img-fluid" style="width:65.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/xiao_pins.png" class="img-fluid quarto-figure quarto-figure-center" style="width:65.0%"></p>
 <p>Below is the general board pinout:</p>
-<p> <img src="./images/png/xiao_esp32c3_sense_pin-out.png" class="img-fluid" style="width:85.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/xiao_esp32c3_sense_pin-out.png" class="img-fluid quarto-figure quarto-figure-center" style="width:85.0%"></p>
 <blockquote class="blockquote">
 <p>For more details, please refer to the <a href="https://wiki.seeedstudio.com/xiao_esp32s3_getting_started/">Seeed Studio Wiki page</a></p>
 </blockquote>
@@ -424,7 +427,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="expansion-board-features" class="level3">
 <h3 class="anchored" data-anchor-id="expansion-board-features">Expansion Board Features</h3>
 <p>The expansion board extends the XIAOML Kit’s capabilities for motion-based machine learning applications:</p>
-<p> <img src="./images/png/exp_board_views.png" class="img-fluid" style="width:85.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/exp_board_views.png" class="img-fluid quarto-figure quarto-figure-center" style="width:85.0%"></p>
 <p><strong>Components:</strong></p>
 <ul>
 <li><p>6-axis IMU (LSM6DS3TR-C):</p>
@@ -451,9 +454,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="complete-kit-assembly" class="level3">
 <h3 class="anchored" data-anchor-id="complete-kit-assembly">Complete Kit Assembly</h3>
 <p>The expansion board connects seamlessly to the XIAO ESP32S3 Sense, creating a comprehensive platform for multimodal machine learning experiments covering vision, audio, and motion sensing.</p>
-<p> <img src="./images/png/kit_assembled.png" class="img-fluid" style="width:85.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/kit_assembled.png" class="img-fluid quarto-figure quarto-figure-center" style="width:85.0%"></p>
 <p>Please pay attention to the mounting orientation of the module:</p>
-<p> <img src="./images/png/mounted.png" class="img-fluid" style="width:60.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/mounted.png" class="img-fluid quarto-figure quarto-figure-center" style="width:60.0%"></p>
 <p>Note that</p>
 <ul>
 <li>The <code>EN</code> connection, shown at the bottom of the ESP32S3 Sense, is available on the expansion board via the <code>RST</code> button.</li>
@@ -471,7 +474,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="installing-the-xiao-esp32s3-sense-on-arduino-ide" class="level2">
 <h2 class="anchored" data-anchor-id="installing-the-xiao-esp32s3-sense-on-arduino-ide">Installing the XIAO ESP32S3 Sense on Arduino IDE</h2>
 <ol type="1">
-<li><p>Connect the XIAOML Kit to your computer via the USB-C port. <img src="./images/png/usb-conn.png" class="img-fluid" style="width:80.0%" data-fig-align="center"></p></li>
+<li>Connect the XIAOML Kit to your computer via the USB-C port.</li>
+</ol>
+<p> <img src="./images/png/usb-conn.png" class="img-fluid quarto-figure quarto-figure-center" style="width:80.0%"></p>
+<ol start="2" type="1">
 <li><p>Download and Install the stable version of Arduino IDE according to your operating system.</p>
 <p><a href="https://www.arduino.cc/en/software"><strong>[Download Arduino IDE]</strong></a></p></li>
 <li><p>Open the <strong>Arduino IDE</strong> and select the Boards Manager (represented by the <code>UNO Icon</code>).</p></li>
@@ -480,7 +486,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <blockquote class="blockquote">
 <p>Do not select “<strong>Arduino ESP32 Boards</strong> by Arduino”, which are the support package for the Arduino Nano ESP32 and not our board.</p>
 </blockquote>
-<p> <img src="./images/png/ide_1.png" class="img-fluid" style="width:85.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/ide_1.png" class="img-fluid quarto-figure quarto-figure-center" style="width:85.0%"></p>
 <blockquote class="blockquote">
 <p>⚠️ <strong>Attention</strong></p>
 <p>Versions 3.x may experience issues when using the XIAO ESP32S3 Sense with Edge Impulse deploy codes. If this is the case, use the last 2.0.x stable version (for example, 2.0.17) instead.</p>
@@ -488,13 +494,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol start="5" type="1">
 <li>Click <code>Select Board</code>, enter with <em>xiao</em> or <em>esp32s3</em>, and select the <code>XIAO_ESP32S3</code> in the boards manager and the corresponding PORT where the ESP32S3 is connected.</li>
 </ol>
-<p> <img src="./images/png/sel_board_port.png" class="img-fluid" style="width:85.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/sel_board_port.png" class="img-fluid quarto-figure quarto-figure-center" style="width:85.0%"></p>
 <p>That is it! The device should be OK. Let’s do some tests.</p>
 </section>
 <section id="testing-the-board-with-blink" class="level2">
 <h2 class="anchored" data-anchor-id="testing-the-board-with-blink">Testing the board with BLINK</h2>
 <p>The XIAO ESP32S3 Sense features a built-in LED connected to GPIO21. So, you can run the blink sketch (which can be found under <code>Files/Examples/Basics/Blink</code>. The sketch uses the <code>LED_BUILTIN</code> Arduino constant, which internally corresponds to the LED connected to pin 21. Alternatively, you can change the Blink sketch accordingly.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define LED_BUILT_IN </span><span class="dv">21</span><span class="pp"> </span><span class="co">// This line is optional</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define LED_BUILT_IN </span><span class="dv">21</span><span class="pp"> </span><span class="co">// This line is optional</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> setup<span class="op">()</span> <span class="op">{</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  pinMode<span class="op">(</span>LED_BUILT_IN<span class="op">,</span> OUTPUT<span class="op">);</span> <span class="co">// Set the pin as output</span></span>
@@ -507,16 +513,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  delay <span class="op">(</span><span class="dv">1000</span><span class="op">);</span> <span class="co">//Wait 1 sec</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  digitalWrite<span class="op">(</span>LED_BUILT_IN<span class="op">,</span> HIGH<span class="op">);</span> <span class="co">//Turn off</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  delay <span class="op">(</span><span class="dv">1000</span><span class="op">);</span> <span class="co">//Wait 1 sec</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <blockquote class="blockquote">
 <p>Note that the pins operate with inverted logic: LOW turns on and HIGH turns off.</p>
 </blockquote>
-<p> <img src="./images/png/blink.png" class="img-fluid" style="width:60.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/blink.png" class="img-fluid quarto-figure quarto-figure-center" style="width:60.0%"></p>
 </section>
 <section id="sec-setup-microphone-test-1c2e" class="level2">
 <h2 class="anchored" data-anchor-id="sec-setup-microphone-test-1c2e">Microphone Test</h2>
-<p>Let’s start with sound detection. Enter with the code below or go to the <a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense">GitHub project</a> and download the sketch: <a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/tree/main/Mic_Test/XiaoEsp32s3_Mic_Test">XIAOML_Kit_Mic_Test</a> and run it on the Arduino IDE:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">/*</span></span>
+<p>For testing the microphone, we can use several methods:</p>
+<ul>
+<li>The SenseCraft AI Studio</li>
+<li>The Arduino IDE</li>
+<li>Capturing sounds and <a href="https://github.com/limengdu/SeeedStudio-XIAO-ESP32S3-Sense-camera/tree/main">saving them on an SD card</a></li>
+</ul>
+<section id="testing-the-microphone-with-the-sensecraft-ai-studio" class="level3">
+<h3 class="anchored" data-anchor-id="testing-the-microphone-with-the-sensecraft-ai-studio">Testing the Microphone with the SenseCraft AI Studio</h3>
+<p>Let’s use the <a href="https://sensecraft.seeed.cc/ai/home">SenseCraft AI</a> Studio, a robust platform that offers a wide range of AI models compatible with various devices, including the <strong>XIAO ESP32S3 Sense</strong> and the Grove Vision AI V2.</p>
+<p>Let’s follow the steps below to start the <strong>SenseCraft AI</strong>:</p>
+<ul>
+<li>Open the <a href="https://sensecraft.seeed.cc/ai/device/local/32">SenseCraft AI Vision Workspace</a> in a web browser, such as <strong>Chrome</strong>, and sign in (or create an account).</li>
+</ul>
+<p> <img src="./images/png/sensecraft1.png" class="img-fluid quarto-figure quarto-figure-center" style="width:85.0%"></p>
+<ul>
+<li>Having the XIAOML Kit physically connected to the notebook, select it as follows:</li>
+</ul>
+<p> <img src="./images/png/sensecraft2.png" class="img-fluid quarto-figure quarto-figure-center" style="width:85.0%"></p>
+<blockquote class="blockquote">
+<p>Note: The <strong>WebUSB tool</strong> may not function correctly in certain browsers, such as Safari. Use Chrome instead. Also, confirm that neither the Arduino IDE nor any other serial device is connected to the XIAO.</p>
+</blockquote>
+<p>By default, SenseCraft expects a Vision model, so first select Audio in the left panel. Three options will appear. Select the <code>Audio Classification</code> - <code>Try it now</code> button.</p>
+<p><img src="./images/png/audio-sensecraft.png" class="img-fluid"></p>
+<p>After you confirm, new firmware will be uploaded to the XIAO, and you can “see” your voice displayed as a spectrogram in the <strong>Preview</strong> window. Try some different sounds and see the Preview window changing:</p>
+<p><img src="./images/png/mic-test.png" class="img-fluid"></p>
+</section>
+<section id="testing-the-microphone-with-arduino-ide" class="level3">
+<h3 class="anchored" data-anchor-id="testing-the-microphone-with-arduino-ide">Testing the Microphone with Arduino IDE</h3>
+<p>For testing the microphone on the Arduino IDE, enter the code below or go to the <a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense">GitHub project</a> and download the sketch: <a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/tree/main/Mic_Test/XiaoEsp32s3_Mic_Test">XIAOML_Kit_Mic_Test</a> and run it on the Arduino IDE:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">/*</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">  XIAO ESP32S3 Simple Mic Test</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">  (for ESP32 Library version 3.0.x and later)</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span></span>
@@ -550,11 +584,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>sample <span class="op">&amp;&amp;</span> sample <span class="op">!=</span> <span class="op">-</span><span class="dv">1</span> <span class="op">&amp;&amp;</span> sample <span class="op">!=</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
 <span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    Serial<span class="op">.</span>println<span class="op">(</span>sample<span class="op">);</span></span>
 <span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Open the <strong>Serial Plotter,</strong> and you will see the loudness change curve of the sound.</p>
-<p> <img src="./images/png/sound_test.png" class="img-fluid" style="width:85.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/sound_test.png" class="img-fluid quarto-figure quarto-figure-center" style="width:85.0%"></p>
 <p>When producing sound, you can verify it on the Serial Plotter.</p>
-<p><strong>Save recorded sound (.wav audio files) to a microSD card.</strong></p>
+</section>
+<section id="saving-recorded-sound-on-an-sd-card" class="level3">
+<h3 class="anchored" data-anchor-id="saving-recorded-sound-on-an-sd-card">Saving recorded sound on an SD card</h3>
 <p>Now, using the onboard SD Card reader, we can save .wav audio files. To do that, we need first to enable the XIAO PSRAM.</p>
 <blockquote class="blockquote">
 <p>ESP32-S3 has only a few hundred kilobytes of internal RAM on the MCU chip. This can be insufficient for some purposes, so up to 16 MB of external PSRAM (pseudo-static RAM) can be connected with the SPI flash chip (The XIAO has 8 MB of PSRAM). The external memory is incorporated in the memory map and, with certain restrictions, is usable in the same way as internal data RAM.</p>
@@ -562,13 +598,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>To turn it on, go to <code>Tools-&gt;PSRAM:"OPI PSRAM"-&gt;OPI PSRAM</code></li>
 </ul>
-<p> <img src="./images/png/psram.png" class="img-fluid" style="width:85.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/psram.png" class="img-fluid quarto-figure quarto-figure-center" style="width:85.0%"></p>
 <blockquote class="blockquote">
 <p>XIAO ESP32S3 Sense supports microSD cards up to <strong>32GB</strong>. If you are ready to purchase a microSD card for XIAO, please refer to the specifications below. Format the microSD card to <strong>FAT32 format</strong> before using it.</p>
 </blockquote>
 <p>Now, insert the FAT32 formatted SD card into the XIAO as shown in the photo below</p>
-<p> <img src="./images/png/sdcard.png" class="img-fluid" style="width:60.0%" data-fig-align="center"></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">/*</span></span>
+<p> <img src="./images/png/sdcard.png" class="img-fluid quarto-figure quarto-figure-center" style="width:60.0%"></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">/*</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"> * WAV Recorder for Seeed XIAO ESP32S3 Sense</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"> * (for ESP32 Library version 3.0.x and later)</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span></span>
@@ -643,53 +679,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> loop<span class="op">()</span> <span class="op">{</span></span>
 <span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>  delay<span class="op">(</span><span class="dv">1000</span><span class="op">);</span></span>
 <span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>  Serial<span class="op">.</span>printf<span class="op">(</span><span class="st">"."</span><span class="op">);</span></span>
-<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>Save the code, for example, as <code>Wav_Record.ino</code>, and run it in the Arduino IDE.</li>
 <li>This program is executed only once after the user turns on the serial monitor (or when the <code>RESET</code> button is pressed). It records for 20 seconds and saves the recording file to a microSD card as “arduino_rec.wav.”</li>
 <li>When the “.” is output every second in the serial monitor, the program execution is complete, and you can play the recorded sound file using a card reader.</li>
 </ul>
-<p> <img src="./images/png/rec.png" class="img-fluid" style="width:85.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/rec.png" class="img-fluid quarto-figure quarto-figure-center" style="width:85.0%"></p>
 <p>The sound quality is excellent!</p>
 <blockquote class="blockquote">
 <p>The explanation of how the code works is beyond the scope of this lab, but you can find an excellent description on the <a href="https://wiki.seeedstudio.com/xiao_esp32s3_sense_mic/">wiki</a> page.</p>
 </blockquote>
 <p>To know more about the File System on the XIAO ESP32S3 Sense, please refer to this <a href="https://wiki.seeedstudio.com/xiao_esp32s3_sense_filesystem/">link</a>.</p>
 </section>
+</section>
 <section id="testing-the-camera" class="level2">
 <h2 class="anchored" data-anchor-id="testing-the-camera">Testing the Camera</h2>
-<p>For testing (and using the camera, we can use several methods:</p>
+<p>For testing the camera, we can use several methods:</p>
 <ul>
 <li>The SenseCraft AI Studio</li>
-<li>The CameraWebServer app on Arduino IDE (See the next section)</li>
+<li>The <code>CameraWebServer</code> app on Arduino IDE (See the next section)</li>
 <li>Capturing images and <a href="https://github.com/limengdu/SeeedStudio-XIAO-ESP32S3-Sense-camera/tree/main">saving them on an SD card</a> (similar to what we did with audio)</li>
 </ul>
 <section id="sec-setup-nocode-applications-sensecraft-ai-studio-6f01" class="level3">
 <h3 class="anchored" data-anchor-id="sec-setup-nocode-applications-sensecraft-ai-studio-6f01">Testing the camera with the SenseCraft AI Studio</h3>
-<p>The easiest way to see the camera working is to use the <a href="https://sensecraft.seeed.cc/ai/home">SenseCraft AI</a> Studio, a robust platform that offers a wide range of AI models compatible with various devices, including the <strong>XIAO ESP32S3 Sense</strong> and the Grove Vision AI V2.</p>
+<p>The easiest way to see the camera working is to use the <a href="https://sensecraft.seeed.cc/ai/home">SenseCraft AI</a> Studio.</p>
 <blockquote class="blockquote">
 <p>We can also use the <a href="https://seeed-studio.github.io/SenseCraft-Web-Toolkit/#/setup/process"><strong>SenseCraft Web Toolkit</strong></a>, a simplified version of the SenseCraft AI Studio.</p>
 </blockquote>
-<p>Let’s follow the steps below to start the <strong>SenseCraft AI</strong>:</p>
+<p>As we did with audio, let’s follow the steps below to start the <strong>SenseCraft AI</strong>:</p>
 <ul>
-<li>Open the <a href="https://sensecraft.seeed.cc/ai/device/local/32">SenseCraft AI Vision Workspace</a> in a web browser, such as <strong>Chrome</strong>, and sign in (or create an account).</li>
+<li><p>Open the <a href="https://sensecraft.seeed.cc/ai/device/local/32">SenseCraft AI Vision Workspace</a> in a web browser, such as <strong>Chrome</strong>, and sign in (or create an account).</p></li>
+<li><p>Having the XIAOML Kit physically connected to the notebook, select it as below:</p></li>
 </ul>
-<p> <img src="./images/png/sensecraft1.png" class="img-fluid" style="width:85.0%" data-fig-align="center"></p>
-<ul>
-<li>Having the XIAOML Kit physically connected to the notebook, select it as below:</li>
-</ul>
-<p> <img src="./images/png/sensecraft2.png" class="img-fluid" style="width:85.0%" data-fig-align="center"></p>
 <blockquote class="blockquote">
 <p>Note: The <strong>WebUSB tool</strong> may not function correctly in certain browsers, such as Safari. Use Chrome instead. Also, confirm that the Arduino IDE or any other serial device is not connected to the XIAO.</p>
 </blockquote>
+<p>When you open the SenseCraft, <strong>Vision</strong> is installed by default. If you were using Aidio, for example, you should select Vision on the left panel first.</p>
 <p>To see the camera working, we should upload a model. We can try several Computer Vision models previously uploaded by Seeed Studio. Use the button <code>[Select Model]</code> and choose among the available models.</p>
-<p> <img src="./images/png/sensecraft5.png" class="img-fluid" style="width:85.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/sensecraft5.png" class="img-fluid quarto-figure quarto-figure-center" style="width:85.0%"></p>
 <p>Passing the cursor over the AI models, we can have some information about them, such as name, description, <strong>category</strong> or <strong>task</strong> (Image Classification, Object Detection, or Pose/Keypoint Detection), the <strong>algorithm</strong> (like YOLO V5 or V8, FOMO, MobileNet V2, etc.) and in some cases, <strong>metrics</strong> (Accuracy or mAP).</p>
-<p> <img src="./images/png/sensecraft4.png" class="img-fluid" style="width:85.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/sensecraft4.png" class="img-fluid quarto-figure quarto-figure-center" style="width:85.0%"></p>
 <p>We can choose one of the ready-to-use AI models, such as “Person Classification”, by clicking on it and pressing the [Confirm] button, or upload our own model.</p>
-<p> <img src="./images/png/sensecraft3.png" class="img-fluid" style="width:85.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/sensecraft3.png" class="img-fluid quarto-figure quarto-figure-center" style="width:85.0%"></p>
 <p>In the <strong>Preview</strong> Area, we can see the streaming generated by the camera.</p>
-<p> <img src="./images/png/sensecraft6.png" class="img-fluid" style="width:85.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/sensecraft6.png" class="img-fluid quarto-figure quarto-figure-center" style="width:85.0%"></p>
 <blockquote class="blockquote">
 <p>We will return to the SenseCraft AI Studio in more detail during the Vision AI labs.</p>
 </blockquote>
@@ -703,27 +737,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>On the bottom left of the front of XIAO ESP32S3, there is a separate “WiFi/BT Antenna Connector”. To improve your WiFi/Bluetooth signal, remove the antenna from the package and attach it to the connector.</p>
 <p>There is a small trick to installing the antenna. If you press down hard on it directly, you will find it very difficult to press and your fingers will hurt! The correct way to install the antenna is to insert one side of the antenna connector into the connector block first, then gently press down on the other side to ensure the antenna is securely installed.</p>
 <p>Removing the antenna is also the case. Do not use brute force to pull the antenna directly; instead, apply force to one side to lift, making the antenna easy to remove.</p>
-<p> <img src="./images/jpeg/antenna.jpg" class="img-fluid" style="width:60.0%" data-fig-align="center"></p>
+<p> <img src="./images/jpeg/antenna.jpg" class="img-fluid quarto-figure quarto-figure-center" style="width:60.0%"></p>
 <p>Reinstalling the expansion board is very simple; you just need to align the connector on the expansion board with the B2B connector on the XIAO ESP32S3, press it hard, and hear a “click.” The installation is complete.</p>
 <p>One of the XIAO ESP32S3’s differentiators is its WiFi capability. So, let’s test its radio by scanning the Wi-Fi networks around it. You can do this by running one of the code examples on the board.</p>
 <p>Open the Arduino IDE and select our board and port. Go to Examples and look for <strong>WiFI ==&gt; WiFIScan</strong> under the “Examples for the XIAO ESP32S3”. Upload the sketch to the board.</p>
 <p>You should see the Wi-Fi networks (SSIDs and RSSIs) within your device’s range on the serial monitor. Here is what I got in the lab:</p>
-<p> <img src="./images/png/wifi.png" class="img-fluid" style="width:85.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/wifi.png" class="img-fluid quarto-figure quarto-figure-center" style="width:85.0%"></p>
 </section>
 <section id="simple-wifi-server-turning-led-onoff" class="level3">
 <h3 class="anchored" data-anchor-id="simple-wifi-server-turning-led-onoff">Simple WiFi Server (Turning LED ON/OFF)</h3>
 <p>Let’s test the device’s capability to behave as a Wi-Fi server. We will host a simple page on the device that sends commands to turn the XIAO built-in LED ON and OFF.</p>
 <p>Go to Examples and look for <strong>WiFI ==&gt; SimpleWiFIServer</strong> under the “Examples for the XIAO ESP32S3”.</p>
 <p>Before running the sketch, you should enter your network credentials:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">char</span><span class="op">*</span> ssid     <span class="op">=</span> <span class="st">"Your credentials here"</span><span class="op">;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">char</span><span class="op">*</span> password <span class="op">=</span> <span class="st">"Your credentials here"</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">char</span><span class="op">*</span> ssid     <span class="op">=</span> <span class="st">"Your credentials here"</span><span class="op">;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">char</span><span class="op">*</span> password <span class="op">=</span> <span class="st">"Your credentials here"</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And modify <strong>pin 5</strong> to <strong>pin 21</strong>, where the built-in LED is installed. Also, let’s modify the webpage (lines 85 and 86) to reflect the correct LED Pin and that it is active with LOW:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>client<span class="op">.</span>print<span class="op">(</span><span class="st">"Click &lt;a href=</span><span class="sc">\"</span><span class="st">/H</span><span class="sc">\"</span><span class="st">&gt;here&lt;/a&gt; to turn the LED on pin 21 OFF.&lt;br&gt;"</span><span class="op">);</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>client<span class="op">.</span>print<span class="op">(</span><span class="st">"Click &lt;a href=</span><span class="sc">\"</span><span class="st">/L</span><span class="sc">\"</span><span class="st">&gt;here&lt;/a&gt; to turn the LED on pin 21 ON.&lt;br&gt;"</span><span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>client<span class="op">.</span>print<span class="op">(</span><span class="st">"Click &lt;a href=</span><span class="sc">\"</span><span class="st">/H</span><span class="sc">\"</span><span class="st">&gt;here&lt;/a&gt; to turn the LED on pin 21 OFF.&lt;br&gt;"</span><span class="op">);</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>client<span class="op">.</span>print<span class="op">(</span><span class="st">"Click &lt;a href=</span><span class="sc">\"</span><span class="st">/L</span><span class="sc">\"</span><span class="st">&gt;here&lt;/a&gt; to turn the LED on pin 21 ON.&lt;br&gt;"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You can monitor your server’s performance using the Serial Monitor.</p>
-<p> <img src="./images/png/wifi-2.png" class="img-fluid" style="width:85.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/wifi-2.png" class="img-fluid quarto-figure quarto-figure-center" style="width:85.0%"></p>
 <p>Take the IP address shown in the Serial Monitor and enter it in your browser. You will see a page with links that can turn the built-in LED of your XIAO ON and OFF.</p>
-<p> <img src="./images/png/app.png" class="img-fluid" style="width:75.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/app.png" class="img-fluid quarto-figure quarto-figure-center" style="width:75.0%"></p>
 </section>
 <section id="using-the-camerawebserver" class="level3">
 <h3 class="anchored" data-anchor-id="using-the-camerawebserver">Using the CameraWebServer</h3>
@@ -733,14 +767,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <blockquote class="blockquote">
 <p>Do not forget to check the <code>Tools</code> to see if PSRAM is enabled.</p>
 </blockquote>
-<p> <img src="./images/png/webcap-1.png" class="img-fluid" style="width:85.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/webcap-1.png" class="img-fluid quarto-figure quarto-figure-center" style="width:85.0%"></p>
 <p>As done before, in the <code>CameraWebServer.ino</code> tab, enter your wifi credentials and upload the code to the device.</p>
 <p>If the code is executed correctly, you should see the address on the Serial Monitor:</p>
 <pre><code>WiFi connecting....
 WiFi connected
 Camera Ready! Use 'http://192.168.5.60' to connect</code></pre>
 <p>Copy the address into your browser and wait for the page to load. Select the camera resolution (for example, QVGA) and select <code>[START STREAM]</code>. Wait for a few seconds, depending on your connection. Using the <code>[Save]</code> button, you can save an image to your computer’s download area.</p>
-<p> <img src="./images/png/img_cap.png" class="img-fluid" style="width:85.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/img_cap.png" class="img-fluid quarto-figure quarto-figure-center" style="width:85.0%"></p>
 <p>That’s it! You can save the images directly on your computer for use on projects.</p>
 </section>
 </section>
@@ -764,13 +798,13 @@ Camera Ready! Use 'http://192.168.5.60' to connect</code></pre>
 <section id="coordinate-system" class="level3">
 <h3 class="anchored" data-anchor-id="coordinate-system">Coordinate System:</h3>
 <p>The sensor follows a right-hand coordinate system. When looking at the IMU sensor with the point mark visible (Expansion Board bottom view):</p>
-<p> <img src="./images/png/imu-mark.png" class="img-fluid" style="width:60.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/imu-mark.png" class="img-fluid quarto-figure quarto-figure-center" style="width:60.0%"></p>
 <ul>
 <li><strong>X-axis</strong>: Points to the right</li>
 <li><strong>Y-axis</strong>: Points forward (away from you)</li>
 <li><strong>Z-axis</strong>: Points upward (out of the board)</li>
 </ul>
-<p> <img src="./images/png/imu-directions.png" class="img-fluid" style="width:85.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/imu-directions.png" class="img-fluid quarto-figure quarto-figure-center" style="width:85.0%"></p>
 </section>
 <section id="required-libraries" class="level3">
 <h3 class="anchored" data-anchor-id="required-libraries">Required Libraries</h3>
@@ -779,13 +813,13 @@ Camera Ready! Use 'http://192.168.5.60' to connect</code></pre>
 <li><p>Open the <strong>Arduino IDE</strong> and select <strong>Manage Libraries</strong> (represented by the <code>Books Icon</code>).</p></li>
 <li><p>For the IMU library, enter “<em>LSM6DS3”</em>, and select”<strong>Seeed Arduino LSM6DS3 by Seeed</strong>”. You can <code>INSTALL</code> or <code>UPDATE</code> the board support packages.</p></li>
 </ol>
-<p> <img src="./images/png/imu.png" class="img-fluid" style="width:85.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/imu.png" class="img-fluid quarto-figure quarto-figure-center" style="width:85.0%"></p>
 <p>⚠️ <strong>Important</strong>: Do NOT install “Arduino_LSM6DS3 by Arduino” - that’s for different boards!</p>
 </section>
 <section id="test-code" class="level3">
 <h3 class="anchored" data-anchor-id="test-code">Test Code</h3>
 <p>Enter with the code below at the Arduino IDE and uploaded it to Kit:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;LSM6DS3.h&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;LSM6DS3.h&gt;</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;Wire.h&gt;</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">// Create IMU object using I2C interface</span></span>
@@ -867,9 +901,9 @@ Camera Ready! Use 'http://192.168.5.60' to connect</code></pre>
 <span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Update rate: 10 Hz (100ms delay)</span></span>
 <span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>  delay<span class="op">(</span><span class="dv">100</span><span class="op">);</span></span>
-<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The Serial monitor will show the values, and the plotter will show their variation over time. For example, by moving the Kit over the <strong>y-axis</strong>, we will see that value 2 (red line) changes accordingly. Note that <strong>z-axis</strong> is represented by value 3 (green line), which is near 1.0g. The blue line (value 1) is related to the <strong>x-axis</strong>.</p>
-<p> <img src="./images/png/plotter.png" class="img-fluid" style="width:85.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/plotter.png" class="img-fluid quarto-figure quarto-figure-center" style="width:85.0%"></p>
 <p>You can select the values 4 to 6 to see the Gyroscope behavior.</p>
 </section>
 </section>
@@ -905,7 +939,7 @@ Camera Ready! Use 'http://192.168.5.60' to connect</code></pre>
 <li><p>Enter <em>u8g2</em> and select <strong>U8g2 by oliver</strong>. You can <code>install</code> or <code>update</code> the board support packages.</p>
 <p>ℹ️ <strong>Note</strong>: U8g2 is a powerful graphics library supporting many display types</p></li>
 </ol>
-<p> <img src="./images/png/oled.png" class="img-fluid" style="width:85.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/oled.png" class="img-fluid quarto-figure quarto-figure-center" style="width:85.0%"></p>
 <p>The <strong>U8g2</strong> library is a monochrome graphics library with these features:</p>
 <ul>
 <li>Support for many display controllers (including SSD1306)</li>
@@ -918,7 +952,7 @@ Camera Ready! Use 'http://192.168.5.60' to connect</code></pre>
 <section id="test-code-1" class="level3">
 <h3 class="anchored" data-anchor-id="test-code-1">Test Code</h3>
 <p>Enter with the code below at the Arduino IDE and uploaded it to Kit:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;U8g2lib.h&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;U8g2lib.h&gt;</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;Wire.h&gt;</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">// Initialize the OLED display</span></span>
@@ -961,17 +995,17 @@ Camera Ready! Use 'http://192.168.5.60' to connect</code></pre>
 <span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> <span class="cf">while</span> <span class="op">(</span>u8g2<span class="op">.</span>nextPage<span class="op">());</span></span>
 <span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>  <span class="co">// No delay needed - the display will show continuously</span></span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If everything works fine, you should see at the display, “Hello World” inside a rectangle.</p>
-<p> <img src="./images/jpeg/hello_world.jpg" class="img-fluid" style="width:60.0%" data-fig-align="center"></p>
+<p> <img src="./images/jpeg/hello_world.jpg" class="img-fluid quarto-figure quarto-figure-center" style="width:60.0%"></p>
 </section>
 <section id="oled---text-sizes-and-positioning" class="level3">
 <h3 class="anchored" data-anchor-id="oled---text-sizes-and-positioning">OLED - Text Sizes and Positioning</h3>
 <ul>
 <li><p>Note that the text is positioned with <code>setCursor(x, y)</code>, in this case centered:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>u8g2<span class="op">.</span>setCursor<span class="op">(</span><span class="dv">8</span><span class="op">,</span> <span class="dv">15</span><span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>u8g2<span class="op">.</span>setCursor<span class="op">(</span><span class="dv">8</span><span class="op">,</span> <span class="dv">15</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>The font used in the code was medium.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>u8g2<span class="op">.</span>setFont<span class="op">(</span>u8g2_font_ncenB08_tr<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>u8g2<span class="op">.</span>setFont<span class="op">(</span>u8g2_font_ncenB08_tr<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>But other font sizes are available:</p>
 <ul>
 <li><code>u8g2_font_4x6_tr</code>: Tiny font (4×6 pixels)</li>
@@ -984,7 +1018,7 @@ Camera Ready! Use 'http://192.168.5.60' to connect</code></pre>
 <section id="shapes" class="level3">
 <h3 class="anchored" data-anchor-id="shapes">Shapes</h3>
 <p>The code added a simple decoration, drawing a frame around the text</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>u8g2<span class="op">.</span>drawFrame<span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">68</span><span class="op">,</span> <span class="dv">36</span><span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>u8g2<span class="op">.</span>drawFrame<span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">68</span><span class="op">,</span> <span class="dv">36</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>But other shapes are available:</p>
 <ul>
 <li><strong>Rectangle outline</strong>: <code>drawFrame(x, y, width, height)</code></li>
@@ -1018,14 +1052,14 @@ Camera Ready! Use 'http://192.168.5.60' to connect</code></pre>
 </section>
 <section id="custom-characters" class="level3">
 <h3 class="anchored" data-anchor-id="custom-characters">Custom Characters:</h3>
-<div class="sourceCode" id="cb12"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Draw custom bitmap</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Draw custom bitmap</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="at">static</span> <span class="at">const</span> <span class="dt">unsigned</span> <span class="dt">char</span> myBitmap<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span><span class="bn">0x00</span><span class="op">,</span> <span class="bn">0x3c</span><span class="op">,</span> <span class="bn">0x42</span><span class="op">,</span> <span class="bn">0x42</span><span class="op">,</span> <span class="bn">0x3c</span><span class="op">,</span> <span class="bn">0x00</span><span class="op">};</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>u8g2<span class="op">.</span>drawBitmap<span class="op">(</span>x<span class="op">,</span> y<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">6</span><span class="op">,</span> myBitmap<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>u8g2<span class="op">.</span>drawBitmap<span class="op">(</span>x<span class="op">,</span> y<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">6</span><span class="op">,</span> myBitmap<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="text-measurements" class="level3">
 <h3 class="anchored" data-anchor-id="text-measurements">Text Measurements:</h3>
-<div class="sourceCode" id="cb13"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> width <span class="op">=</span> u8g2<span class="op">.</span>getStrWidth<span class="op">(</span><span class="st">"Hello"</span><span class="op">);</span>  <span class="co">// Get text width</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> height <span class="op">=</span> u8g2<span class="op">.</span>getAscent<span class="op">();</span>         <span class="co">// Get font height</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> width <span class="op">=</span> u8g2<span class="op">.</span>getStrWidth<span class="op">(</span><span class="st">"Hello"</span><span class="op">);</span>  <span class="co">// Get text width</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> height <span class="op">=</span> u8g2<span class="op">.</span>getAscent<span class="op">();</span>         <span class="co">// Get font height</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The OLED display is now ready to show your sensor data, system status, or any custom graphics you design for your ML projects!</p>
 </section>
 </section>
@@ -1060,7 +1094,7 @@ Camera Ready! Use 'http://192.168.5.60' to connect</code></pre>
 <h2 class="anchored" data-anchor-id="heat-sink-considerations">Heat Sink Considerations</h2>
 <p>If you need to use the XIAO ESP32S3 Sense for camera applications WITHOUT the Expansion Board, you may install the heat sink.</p>
 <p>Note that having the heat sink installed, it is not possible to connect the XIAO ESP32S3 Sense with the Expansion Board.</p>
-<p> <img src="./images/jpeg/heat-sink.jpg" class="img-fluid" style="width:60.0%" data-fig-align="center"></p>
+<p> <img src="./images/jpeg/heat-sink.jpg" class="img-fluid quarto-figure quarto-figure-center" style="width:60.0%"></p>
 </section>
 <section id="installing-the-heat-sink" class="level2">
 <h2 class="anchored" data-anchor-id="installing-the-heat-sink">Installing the Heat Sink</h2>
@@ -1076,7 +1110,7 @@ Camera Ready! Use 'http://192.168.5.60' to connect</code></pre>
 <p>Now, let’s begin the installation process:</p>
 <p><strong>Step 1. Prepare the Heat Sink:</strong> Start by removing the protective cover from the heat sink to expose the thermal adhesive. This will prepare the heat sink for a secure attachment to the ESP32S3 chip.</p>
 <p><strong>Step 2. Assemble the Heat Sink:</strong></p>
-<p> <img src="./images/png/heat-sink-assembly.png" class="img-fluid" style="width:85.0%" data-fig-align="center"></p>
+<p> <img src="./images/png/heat-sink-assembly.png" class="img-fluid quarto-figure quarto-figure-center" style="width:85.0%"></p>
 <blockquote class="blockquote">
 <p>After installation, ensure everything is properly secured with no risk of short circuits. Verify that the heat sink is properly aligned and securely attached.</p>
 </blockquote>
@@ -1092,43 +1126,58 @@ Camera Ready! Use 'http://192.168.5.60' to connect</code></pre>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
       }
+      return false;
     }
-    return false;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
@@ -1136,215 +1185,358 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
       return codeEl.innerText;
     }
-  });
-  clipboard.on('success', function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  });
-  function tippyHover(el, contentFn) {
-    const config = {
-      allowHTML: true,
-      content: contentFn,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start'
-    };
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      return note.innerHTML;
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
       });
     }
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-          // target, if specified
-          link.setAttribute("target", "_blank");
-          // default icon
-          link.classList.add("external");
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-});
-</script>
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../content/xiaoml_kit/image_classification/image_classification.html" class="pagination-link">
+      <a href="../../../content/xiaoml_kit/image_classification/image_classification.html" class="pagination-link" aria-label="Image Classification">
         <span class="nav-page-text">Image Classification</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1352,13 +1544,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">Written and edited by Prof.&nbsp;Marcelo Rovai (UNIFEI University)</div>   
+    <div class="nav-footer-left">
+<p>Written and edited by Prof.&nbsp;Marcelo Rovai (UNIFEI University)</p>
+</div>   
     <div class="nav-footer-center">
       &nbsp;
-    </div>
-    <div class="nav-footer-right">This book was built with <a href="https://quarto.org/">Quarto</a>.</div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/edit/main/content/xiaoml_kit/setup/setup.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/blob/main/content/xiaoml_kit/setup/setup.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
   </div>
 </footer>
+
 
 
 
