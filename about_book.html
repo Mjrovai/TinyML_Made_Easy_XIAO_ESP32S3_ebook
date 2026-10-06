@@ -87,12 +87,24 @@ ul.task-list li input[type="checkbox"] {
     <span class="navbar-title">TinyML Made Easy</span>
     </a>
   </div>
-        <div class="quarto-navbar-tools tools-wide tools-end">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/Mjrovai/TinyML_Made_Easy_XIAO_ESP32S3_ebook/releases/latest/download/TinyML-Made-Easy.pdf"> <i class="bi bi-file-earmark-pdf" role="img">
+</i> 
+<span class="menu-text">Download PDF</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools tools-wide">
     <a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./TinyML-Made-Easy.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
     <div class="dropdown">
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
-      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
             <a class="dropdown-item quarto-navbar-tools-item" href="https://twitter.com/intent/tweet?url=|url|">
               <i class="bi bi-twitter pe-1"></i>
@@ -119,7 +131,6 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </a>
 </div>
-          <div id="quarto-search" class="" title="Search"></div>
       </div> <!-- /container-fluid -->
     </nav>
   <nav class="quarto-secondary-nav">
@@ -244,6 +255,22 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Object Detection</span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text"><div class="part">XIAO IPS Display</div></span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./content/xiao_ips_display/choosing_a_board.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Choosing a Board and Adapting the Projects</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./content/xiao_ips_display/xiao_ips_display.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Testing the Seeed XIAO IPS Display (ESP32-S3) Series</span></a>
+  </div>
+</li>
         <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
@@ -279,7 +306,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#learning-philosophy" id="toc-learning-philosophy" class="nav-link" data-scroll-target="#learning-philosophy"><strong>Learning Philosophy</strong></a></li>
   <li><a href="#beyond-the-book" id="toc-beyond-the-book" class="nav-link" data-scroll-target="#beyond-the-book"><strong>Beyond the Book</strong></a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/edit/main/about_book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/blob/main/about_book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -316,7 +343,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="what-youll-learn" class="level3">
 <h3 class="anchored" data-anchor-id="what-youll-learn"><strong>What You’ll Learn</strong></h3>
-<p>The book is organized into three main sections, each building on the previous:</p>
+<p>The book is organized into four main sections, each building on the previous:</p>
 <p><strong>XIAOML Kit Projects</strong> - The heart of the book, featuring comprehensive hands-on projects:</p>
 <ul>
 <li><strong>Setup</strong>: Complete configuration of the XIAO ESP32S3 Sense and XIAOML Kit, testing all sensors and peripherals</li>
@@ -336,12 +363,18 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Image Classification</strong>: Custom model deployment with hardware acceleration</li>
 <li><strong>Object Detection</strong>: High-performance object detection on a dedicated AI accelerator</li>
 </ul>
+<p><strong>XIAO IPS Display</strong> - Taking TinyML to boards with a screen:</p>
+<ul>
+<li><strong>Choosing a Board and Adapting the Projects</strong>: The differences between the three XIAO IPS Display boards, and what to change to repeat the book’s projects on each of them</li>
+<li><strong>Testing the Seeed XIAO IPS Display Series</strong>: Hardware bring-up of the 1.47” touch board (display, touch, IMU, microphone, buttons, microSD, and Wi-Fi), motion classification and keyword spotting running on the board with Edge Impulse models, and a tiny language model that writes stories on the device</li>
+</ul>
 </section>
 <section id="tools-and-platforms" class="level3">
 <h3 class="anchored" data-anchor-id="tools-and-platforms"><strong>Tools and Platforms</strong></h3>
 <p>You’ll work extensively with:</p>
 <ul>
 <li><strong>Arduino IDE</strong>: Primary development environment for the XIAO ESP32S3 Sense</li>
+<li><strong>arduino-cli</strong>: The command-line tool used in the XIAO IPS Display section to build and upload the sketches</li>
 <li><strong>Edge Impulse Studio</strong>: Cloud-based platform for ML model development, from data collection through deployment</li>
 <li><strong>SenseCraft AI</strong>: Seeed Studio’s platform for no-code AI model deployment</li>
 <li><strong>Python notebooks</strong>: For advanced preprocessing and data analysis</li>
@@ -352,7 +385,8 @@ ul.task-list li input[type="checkbox"] {
 <p>To follow along with all projects, you’ll need:</p>
 <ul>
 <li>XIAOML Kit (includes XIAO ESP32S3 Sense and expansion board with OLED and an IMU)</li>
-<li>Grove Vision AI V2 (for the final section)</li>
+<li>Grove Vision AI V2 (for the Grove Vision AI V2 section)</li>
+<li>XIAO IPS Display board (for the XIAO IPS Display section; the projects of the section were built and tested on the 1.47” touch version)</li>
 <li>USB-C cable for programming</li>
 <li>MicroSD card (optional, for data logging)</li>
 </ul>
@@ -814,7 +848,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/edit/main/about_book.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/blob/main/about_book.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    </div>
     <div class="nav-footer-right">
 <p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
 </div>

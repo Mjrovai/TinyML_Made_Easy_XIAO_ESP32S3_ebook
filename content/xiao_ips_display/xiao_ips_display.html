@@ -1,0 +1,2711 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Testing the Seeed XIAO IPS Display (ESP32-S3) Series – TinyML Made Easy</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../content/xiao_ips_display/choosing_a_board.html" rel="prev">
+<link href="../../images/cover.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-daec65ff3ba034f51daec66ecad3ce27.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">TinyML Made Easy</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/Mjrovai/TinyML_Made_Easy_XIAO_ESP32S3_ebook/releases/latest/download/TinyML-Made-Easy.pdf"> <i class="bi bi-file-earmark-pdf" role="img">
+</i> 
+<span class="menu-text">Download PDF</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools tools-wide">
+    <a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/xiao_ips_display/xiao_ips_display.html">Testing the Seeed XIAO IPS Display (ESP32-S3) Series</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Acknowledgments</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../about_book.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About this Book</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text"><div class="part">XIAOML Kit</div></span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/xiaoml_kit/setup/setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setup</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/xiaoml_kit/image_classification/image_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Image Classification</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/xiaoml_kit/object_detection/object_detection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Object Detection</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/xiaoml_kit/kws/kws.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Keyword Spotting (KWS)</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/xiaoml_kit/motion_classification/motion_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion Classification and Anomaly Detection</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text"><div class="part">Preprocessing Deep Dive</div></span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/shared/dsp_spectral_features_block/dsp_spectral_features_block.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">DSP Spectral Features</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/shared/kws_feature_eng/kws_feature_eng.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">KWS Feature Engineering</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text"><div class="part">Grove Vision AI V2</div></span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/grove_vision_ai_v2/setup_and_no_code_apps/setup_and_no_code_apps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setup and No-Code Applications</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/grove_vision_ai_v2/image_classification/image_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Image Classification</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/grove_vision_ai_v2/object_detection/object_detection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Object Detection</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text"><div class="part">XIAO IPS Display</div></span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/xiao_ips_display/choosing_a_board.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Choosing a Board and Adapting the Projects</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/xiao_ips_display/xiao_ips_display.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Testing the Seeed XIAO IPS Display (ESP32-S3) Series</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text"><div class="part">References &amp; Author</div></span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../about_the_author.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About the author</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a>
+  <ul class="collapse">
+  <li><a href="#parts-2-and-3-at-a-glance" id="toc-parts-2-and-3-at-a-glance" class="nav-link" data-scroll-target="#parts-2-and-3-at-a-glance">Parts 2 and 3 at a glance</a></li>
+  </ul></li>
+  <li><a href="#part-1-hardware-bring-up" id="toc-part-1-hardware-bring-up" class="nav-link" data-scroll-target="#part-1-hardware-bring-up">Part 1: Hardware bring-up</a>
+  <ul class="collapse">
+  <li><a href="#the-family-at-a-glance" id="toc-the-family-at-a-glance" class="nav-link" data-scroll-target="#the-family-at-a-glance">The family at a glance</a></li>
+  <li><a href="#what-you-need" id="toc-what-you-need" class="nav-link" data-scroll-target="#what-you-need">What you need</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#pin-map-1.47-touch-version" id="toc-pin-map-1.47-touch-version" class="nav-link" data-scroll-target="#pin-map-1.47-touch-version">Pin map (1.47” touch version)</a></li>
+  <li><a href="#tests" id="toc-tests" class="nav-link" data-scroll-target="#tests">Tests</a></li>
+  <li><a href="#gotchas" id="toc-gotchas" class="nav-link" data-scroll-target="#gotchas">Gotchas</a></li>
+  <li><a href="#results-for-the-1.47-touch-version" id="toc-results-for-the-1.47-touch-version" class="nav-link" data-scroll-target="#results-for-the-1.47-touch-version">Results for the 1.47” touch version</a></li>
+  </ul></li>
+  <li><a href="#part-2-tinyml-with-the-imu-and-the-microphone-edge-impulse" id="toc-part-2-tinyml-with-the-imu-and-the-microphone-edge-impulse" class="nav-link" data-scroll-target="#part-2-tinyml-with-the-imu-and-the-microphone-edge-impulse">Part 2: TinyML with the IMU and the microphone (Edge Impulse)</a>
+  <ul class="collapse">
+  <li><a href="#what-is-different-from-the-book" id="toc-what-is-different-from-the-book" class="nav-link" data-scroll-target="#what-is-different-from-the-book">What is different from the book</a></li>
+  <li><a href="#motion-classification" id="toc-motion-classification" class="nav-link" data-scroll-target="#motion-classification">Motion classification</a></li>
+  <li><a href="#keyword-spotting" id="toc-keyword-spotting" class="nav-link" data-scroll-target="#keyword-spotting">Keyword spotting</a></li>
+  </ul></li>
+  <li><a href="#part-3-a-tiny-language-model-on-the-board" id="toc-part-3-a-tiny-language-model-on-the-board" class="nav-link" data-scroll-target="#part-3-a-tiny-language-model-on-the-board">Part 3: a tiny language model on the board</a>
+  <ul class="collapse">
+  <li><a href="#what-you-need-1" id="toc-what-you-need-1" class="nav-link" data-scroll-target="#what-you-need-1">What you need</a></li>
+  <li><a href="#credits-for-part-3" id="toc-credits-for-part-3" class="nav-link" data-scroll-target="#credits-for-part-3">Credits for Part 3</a></li>
+  <li><a href="#the-model-1" id="toc-the-model-1" class="nav-link" data-scroll-target="#the-model-1">The model</a></li>
+  <li><a href="#test-07-tell-a-story" id="toc-test-07-tell-a-story" class="nav-link" data-scroll-target="#test-07-tell-a-story">Test 07: tell a story</a></li>
+  <li><a href="#is-it-right-a-check-against-a-second-implementation" id="toc-is-it-right-a-check-against-a-second-implementation" class="nav-link" data-scroll-target="#is-it-right-a-check-against-a-second-implementation">Is it right? A check against a second implementation</a></li>
+  <li><a href="#speed" id="toc-speed" class="nav-link" data-scroll-target="#speed">Speed</a></li>
+  <li><a href="#what-the-stories-are-like" id="toc-what-the-stories-are-like" class="nav-link" data-scroll-target="#what-the-stories-are-like">What the stories are like</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next steps</a></li>
+  </ul></li>
+  <li><a href="#what-comes-next" id="toc-what-comes-next" class="nav-link" data-scroll-target="#what-comes-next">What comes next</a></li>
+  <li><a href="#credits" id="toc-credits" class="nav-link" data-scroll-target="#credits">Credits</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Testing the Seeed XIAO IPS Display (ESP32-S3) Series</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/ini_ips_display.jpg" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption><em>Image prompt - 1950s style cartoon illustration set in a cheerful retro electronics workshop. On a wooden workbench, three small display boards of different sizes stand side by side, each with a softly glowing screen showing only abstract shapes: a smiley face, a bar chart, and a wavy line. A scientist in a white lab coat and a technician with round glasses admire them, one holding a tiny screwdriver. Behind them, a chalkboard with a block diagram made only of boxes and arrows, a vintage oscilloscope, and a shelf with a small microphone and a tiny battery. Warm muted colors, clean outlines, classic animation look. No legible text anywhere. Square format.</em></figcaption>
+</figure>
+</div>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>This tutorial walks through a set of short Arduino sketches that test every feature of the Seeed Studio XIAO IPS Display (ESP32-S3) boards: display, touch, IMU, microphone, buttons, battery sensing, microSD, and Wi-Fi. A final self-test sketch checks everything on one screen.</p>
+<p>Two more parts use the same boards for TinyML (motion classification and keyword spotting, Part 2) and for running a very small language model on the device (Part 3). They follow in this chapter; see <a href="#parts-2-and-3-at-a-glance">Parts 2 and 3 at a glance</a>.</p>
+<p>Source code, photos, and tools: <a href="https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3" class="uri">https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3</a></p>
+<p><strong>Status of this draft</strong></p>
+<ul>
+<li>Tested on one board: the <strong>1.47” IPS Touch Display</strong> (XIAO ESP32-S3 Plus). Part 1 was run on September 30, 2026, and Parts 2 and 3 on October 5 and 6, 2026.</li>
+<li>The 1.14” and 0.96” versions are not tested yet. Their sections will be added when those boards are connected.</li>
+<li>Everything here was measured on one unit. Where a cause is a guess rather than a measurement, the text says so.</li>
+</ul>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Bring up every feature of the XIAO IPS Display: display, touch, IMU, microphone, buttons, battery sensing, microSD, and Wi-Fi</li>
+<li>Find and work around the slow graphics library, the shared SPI bus, and the other gotchas of the board</li>
+<li>Collect motion data on the microSD card and train and deploy a motion classifier with Edge Impulse</li>
+<li>Record your own keywords, deploy a keyword-spotting model, and check it on the board against a second implementation</li>
+<li>Run a 260,000-parameter language model on the board, with the weights in PSRAM</li>
+</ul>
+</div>
+</div>
+<section id="parts-2-and-3-at-a-glance" class="level3">
+<h3 class="anchored" data-anchor-id="parts-2-and-3-at-a-glance">Parts 2 and 3 at a glance</h3>
+<p>These were run on the same board after Part 1. Each has its own page with the details, the code, and what we did not measure.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Part</th>
+<th>What it does</th>
+<th>Headline result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="#keyword-spotting">Part 2, keyword spotting</a></td>
+<td>Recognizes YES and NO on the microphone, with an Edge Impulse model</td>
+<td>Offline, on the author’s own test clips: 85.3% correct. Live, with beep cues: YES 7 of 11, NO 9 of 9, other words 8 of 10 (few cues, wide intervals). Needs ESP-NN turned off on core 3.3.12</td>
+</tr>
+<tr class="even">
+<td><a href="#motion-classification">Part 2, motion</a></td>
+<td>Classifies four movements on the IMU, with an Edge Impulse model</td>
+<td>98.48% on the Studio’s test set (8 files); all four movements right in one live trial each; not a blind test</td>
+</tr>
+<tr class="odd">
+<td><a href="#part-3-a-tiny-language-model-on-the-board">Part 3, a tiny language model</a></td>
+<td>A 260,000-parameter model writes short stories on the board</td>
+<td>12.5 to 30 tokens per second; the first 64 tokens match an independent Python implementation for five prompts</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="part-1-hardware-bring-up" class="level2">
+<h2 class="anchored" data-anchor-id="part-1-hardware-bring-up">Part 1: Hardware bring-up</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/ini_part1_bringup.jpg" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption><em>Image prompt - 1950s style cartoon illustration of a retro test bench. A technician with a clipboard runs a checklist on a small display board held upright by a clip stand. Around the board, small playful props stand for each feature: a hand with a pointing finger touching the screen, a microphone on a stand with sound waves, a micro memory card sliding into a slot, a little antenna sending out Wi-Fi waves, a spirit level with a floating bubble, two chunky push buttons, and a tiny battery with a question mark. On the wall, a magnifying glass examines a ramp of eight gray squares that look slightly blue. Drawn tick marks instead of words. Warm muted colors, vintage animation look. No legible text. Square format.</em></figcaption>
+</figure>
+</div>
+<section id="the-family-at-a-glance" class="level3">
+<h3 class="anchored" data-anchor-id="the-family-at-a-glance">The family at a glance</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>1.47” IPS Touch</th>
+<th>1.14” IPS</th>
+<th>0.96” IPS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Resolution</td>
+<td>172 x 320</td>
+<td>135 x 240</td>
+<td>80 x 160</td>
+</tr>
+<tr class="even">
+<td>Display driver</td>
+<td>JD9853A</td>
+<td>ST7789</td>
+<td>ST7789</td>
+</tr>
+<tr class="odd">
+<td>Capacitive touch</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td>microSD slot</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td>Grove I2C</td>
+<td>No</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td>User buttons</td>
+<td>2</td>
+<td>3</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>Shared by all three</td>
+<td>XIAO ESP32-S3 Plus (dual-core 240 MHz, 8 MB PSRAM, 16 MB flash, Wi-Fi and BLE), 6-axis IMU, PDM microphone, LiPo connector with voltage sensing</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>These figures come from Seeed’s launch material. For authoritative details, see the Seeed wiki pages:</p>
+<ul>
+<li><a href="https://wiki.seeedstudio.com/getting_started_1.47_inch_touch_display_esp32s3/">1.47” getting started</a></li>
+<li><a href="https://wiki.seeedstudio.com/getting_started_1.14_inch_display_esp32s3/">1.14” getting started</a></li>
+<li><a href="https://wiki.seeedstudio.com/getting_started_0.96_inch_display_esp32s3/">0.96” getting started</a></li>
+</ul>
+<p>The Seeed product pages have a labeled diagram of each board, which we do not reproduce here:</p>
+<ul>
+<li><a href="https://www.seeedstudio.com/1-47-Inch-Touch-Display-Powered-by-XIAO-ESP32-S3-Plus-p-6996.html">1.47” touch display</a></li>
+<li><a href="https://www.seeedstudio.com/1-14-Inch-Display-Powered-by-XIAO-ESP32-S3-Plus-p-6991.html">1.14” display</a></li>
+<li><a href="https://www.seeedstudio.com/0-96-Inch-Display-Powered-by-XIAO-ESP32-S3-Plus-p-6993.html">0.96” display</a></li>
+</ul>
+</section>
+<section id="what-you-need" class="level3">
+<h3 class="anchored" data-anchor-id="what-you-need">What you need</h3>
+<ul>
+<li>A XIAO IPS Display (ESP32-S3) board. This draft covers the 1.47” touch version.</li>
+<li>A USB-C cable that carries data.</li>
+<li><strong>The Wi-Fi antenna, attached</strong> (see <a href="#without-the-antenna-wi-fi-barely-works">Gotcha 3</a>).</li>
+<li>A microSD card formatted FAT or FAT32 (see <a href="#the-microsd-card-must-have-a-fat-volume">Gotcha 4</a>).</li>
+<li>Optional: a 3.7 V LiPo battery, for the battery test.</li>
+<li>A computer with <a href="https://arduino.github.io/arduino-cli/"><code>arduino-cli</code></a>.</li>
+</ul>
+</section>
+<section id="setup" class="level3">
+<h3 class="anchored" data-anchor-id="setup">Setup</h3>
+<p>Versions used: <code>arduino-cli</code> with the <code>esp32:esp32</code> core <strong>3.3.12</strong>, and the <a href="https://github.com/Seeed-Studio/Seeed_GFX2">Seeed_GFX2</a> library <strong>1.0.0</strong>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-cli</span> core install esp32:esp32@3.3.12</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Install Seeed_GFX2 1.0.0 into your Arduino libraries folder (for example <code>~/Documents/Arduino/libraries/Seeed_GFX2</code>). The board string for every command in this tutorial is:</p>
+<pre><code>esp32:esp32:XIAO_ESP32S3_Plus</code></pre>
+<p><strong>PSRAM is disabled by default</strong> in this board definition. Nothing in Part 1 needs it, but the language-model part will. To enable it, append the option to the board string: <code>esp32:esp32:XIAO_ESP32S3_Plus:PSRAM=opi</code>.</p>
+<section id="build-the-patched-library-recommended" class="level4">
+<h4 class="anchored" data-anchor-id="build-the-patched-library-recommended">Build the patched library (recommended)</h4>
+<p>Seeed_GFX2 1.0.0 is very slow on this board (see <a href="#seeed_gfx2-1.0.0-is-slow-on-the-esp32-s3">Gotcha 1</a>). The folder <code>tools/</code> contains a small patch. This script copies your installed library into <code>libs/Seeed_GFX2_fast</code> and applies the patch there, leaving the installed library untouched:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./tools/make_fast_lib.sh</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then compile any sketch with the patched copy:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-cli</span> compile <span class="at">--fqbn</span> esp32:esp32:XIAO_ESP32S3_Plus <span class="dt">\</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--library</span> libs/Seeed_GFX2_fast part1_bringup/03_imu</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And upload (the port name will differ on your machine):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-cli</span> upload <span class="at">-p</span> /dev/cu.usbmodem101 <span class="dt">\</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--fqbn</span> esp32:esp32:XIAO_ESP32S3_Plus part1_bringup/03_imu</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>To compile all sketches at once:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./tools/build_all.sh</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If an upload fails with “Failed to connect to ESP32-S3: No serial data received”, put the board in bootloader mode by hand: hold <strong>BOOT</strong>, tap <strong>RESET</strong>, release <strong>BOOT</strong> (the B and R marks beside the USB-C port, see <a href="#the-back-of-the-board">The back of the board</a>), then upload again. This happened once on our board, right after flashing a sketch that did not use the serial port. Later uploads worked without it.</p>
+</section>
+</section>
+<section id="pin-map-1.47-touch-version" class="level3">
+<h3 class="anchored" data-anchor-id="pin-map-1.47-touch-version">Pin map (1.47” touch version)</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Pins</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Display (SPI)</td>
+<td>CS = D2, DC = D3, SCK = D8, MOSI = D10, RST = GPIO 13, backlight = GPIO 12</td>
+</tr>
+<tr class="even">
+<td>Touch (I2C, AXS5106L at 0x63)</td>
+<td>SDA = D4, SCL = D5, INT = D7; reset shared with the display</td>
+</tr>
+<tr class="odd">
+<td>IMU (I2C, same bus)</td>
+<td>address 0x6A; interrupt = D14</td>
+</tr>
+<tr class="even">
+<td>Microphone (PDM)</td>
+<td>CLK = D0, DATA = D1</td>
+</tr>
+<tr class="odd">
+<td>microSD (SPI, shared bus)</td>
+<td>CS = D6, SCK = D8, MISO = D9, MOSI = D10</td>
+</tr>
+<tr class="even">
+<td>User buttons</td>
+<td>USR1 = D19, USR2 = D15 (active low)</td>
+</tr>
+<tr class="odd">
+<td>Battery sense</td>
+<td>D16, through a 316 kΩ / 160 kΩ divider</td>
+</tr>
+</tbody>
+</table>
+<p>The display and the microSD card share SCK and MOSI. The display never reads, so the library creates its SPI without a MISO pin. Test 08 shows how to give the card a MISO without breaking the display.</p>
+<section id="the-back-of-the-board" class="level4">
+<h4 class="anchored" data-anchor-id="the-back-of-the-board">The back of the board</h4>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/board_back_antenna_microsd.jpg" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>Back of the 1.47-inch board with the antenna attached to its small connector and a microSD card in the slot; the USB-C port is at the bottom of the photo</figcaption>
+</figure>
+</div>
+<p>What the photo shows (the board is upside down, with the USB-C port at the bottom):</p>
+<ul>
+<li><strong>Antenna.</strong> The flexible 2.4 GHz antenna plugs into the small gold connector beside the module, near the “seeed studio” logo. Without it, Wi-Fi barely works (see <a href="#without-the-antenna-wi-fi-barely-works">Gotcha 3</a>).</li>
+<li><strong>microSD slot.</strong> At the top, with a card inserted. Part of the card sticks out of the board.</li>
+<li><strong>Battery connector.</strong> The two-pin connector on the left, marked + and -. It is empty in this photo.</li>
+<li><strong>Power switch.</strong> The slide switch on the right, marked ON and OFF.</li>
+<li><strong>IMU.</strong> The small square chip below the battery connector, with its X, Y, and Z axes printed on the board.</li>
+<li><strong>Boot and reset.</strong> Marks labeled B and R sit on either side of the USB-C port. For the manual bootloader step in the Setup section, hold the boot button and tap the reset button.</li>
+<li><strong>Pads.</strong> Labeled I2C pads (SCL, SDA, 3V3, GND) at the top right; and, along the edges, labeled pins for I2S, JTAG, and VBUS.</li>
+<li><strong>U1 and U2.</strong> Marks for the user buttons, at the left of the microSD slot.</li>
+</ul>
+</section>
+<section id="first-light" class="level4">
+<h4 class="anchored" data-anchor-id="first-light">First light</h4>
+<p>The first sketch, <code>xiao_esp32s3_147_hello</code>, shows “Hello, XIAO” in large green text. It confirms the whole chain works: compile, upload, and display.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/00_hello_xiao.jpg" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>Hello, XIAO in green on the 1.47-inch display</figcaption>
+</figure>
+</div>
+<section id="sketch" class="level5">
+<h5 class="anchored" data-anchor-id="sketch">Sketch</h5>
+<p>How it works:</p>
+<ul>
+<li><code>display.begin&lt;Board, Config&gt;()</code> takes two types. The board type lists the pins the LCD uses; the config type names the panel (JD9853A, 172 x 320).</li>
+<li>The reset (GPIO 13) and backlight (GPIO 12) pins are passed as template arguments.</li>
+<li>Text is centered by asking the library for <code>textWidth()</code> and <code>fontHeight()</code>, so the layout needs no hard-coded pixel positions.</li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="Code">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete sketch (54 lines) is in the repository: <a href="https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3/blob/main/xiao_esp32s3_147_hello/xiao_esp32s3_147_hello.ino"><code>xiao_esp32s3_147_hello/xiao_esp32s3_147_hello.ino</code></a>.</p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="tests" class="level3">
+<h3 class="anchored" data-anchor-id="tests">Tests</h3>
+<p>Each test is one folder in <code>part1_bringup/</code>. Every sketch draws to the screen and prints to the serial port at 115200 baud.</p>
+<section id="i2c-scan-00_i2c_scan" class="level4">
+<h4 class="anchored" data-anchor-id="i2c-scan-00_i2c_scan">00 · I2C scan (<code>00_i2c_scan</code>)</h4>
+<p>Lists the devices on the I2C bus. <strong>Expected and measured:</strong> <code>0x63</code> (touch) and <code>0x6A</code> (IMU). Two devices.</p>
+<section id="sketch-1" class="level5">
+<h5 class="anchored" data-anchor-id="sketch-1">Sketch</h5>
+<p>How it works:</p>
+<ul>
+<li><code>Wire.begin(D4, D5)</code> puts the I2C bus on the board’s SDA and SCL pins.</li>
+<li>A device that acknowledges its address makes <code>endTransmission()</code> return 0. That is the whole trick.</li>
+<li>The scan repeats every three seconds so a serial monitor opened late still sees the result.</li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="Code">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete sketch (33 lines) is in the repository: <a href="https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3/blob/main/part1_bringup/00_i2c_scan/00_i2c_scan.ino"><code>part1_bringup/00_i2c_scan/00_i2c_scan.ino</code></a>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="display-01_display" class="level4">
+<h4 class="anchored" data-anchor-id="display-01_display">01 · Display (<code>01_display</code>)</h4>
+<p>Draws red, green, blue, and white bars, a white frame, and corner markers, then steps through the four rotations.</p>
+<p><strong>Measured:</strong> colors are in the right order, the frame is complete on all four edges, and the markers land in the right corners in every rotation. The screen is 172 x 320 (rotations 0 and 2) or 320 x 172 (rotations 1 and 3).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/01_display_four_rotations.jpg" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>Rotations 0, 1, 2, and 3, left to right and top to bottom. In every one, the bars run red, green, blue, white, the yellow marker is at the logical top left, and the cyan marker is at the logical bottom right.</figcaption>
+</figure>
+</div>
+<p>One lesson from this sketch: at text size 2 the font is 12 pixels wide, so only 14 characters fit across 172 pixels. A longer string wraps and drops its last character onto the left edge. Keep lines short or turn wrapping off.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/01_display_rot0_text_wrap_bug.jpg" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>The first version of the display test. The “0” after “rot” should be on the same line, but it wrapped to the left edge. The sketch in this repository is the fixed version.</figcaption>
+</figure>
+</div>
+<section id="sketch-2" class="level5">
+<h5 class="anchored" data-anchor-id="sketch-2">Sketch</h5>
+<p>How it works:</p>
+<ul>
+<li>Everything is sized as a fraction of <code>display.width()</code> and <code>display.height()</code>, so the same drawing works in all four rotations.</li>
+<li>A one-pixel frame on the very edge shows immediately if any edge is clipped.</li>
+<li><code>setTextWrap(false)</code> stops long strings from wrapping onto the next line.</li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="Code">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete sketch (71 lines) is in the repository: <a href="https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3/blob/main/part1_bringup/01_display/01_display.ino"><code>part1_bringup/01_display/01_display.ino</code></a>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="b-gray-ramp-01b_gray_ramp-and-01c-gamma-probe-01c_gamma_probe" class="level4">
+<h4 class="anchored" data-anchor-id="b-gray-ramp-01b_gray_ramp-and-01c-gamma-probe-01c_gamma_probe">01b · Gray ramp (<code>01b_gray_ramp</code>) and 01c · Gamma probe (<code>01c_gamma_probe</code>)</h4>
+<p>These two investigate the color cast described in <a href="#grays-have-a-blue-cast">Gotcha 5</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/01b_gray_ramp.jpg" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>Gray ramp: eight steps from black to white, all with a bluish tint</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/01c_gamma_four_curves.jpg" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>Gamma curves 01, 02, 04, and 08, left to right and top to bottom, under the same conditions. The bluish tint is the same in all four. Differences in brightness between the photos come from the camera’s automatic exposure; the blue blotches in the third photo are glare and moire.</figcaption>
+</figure>
+</div>
+<section id="sketches" class="level5">
+<h5 class="anchored" data-anchor-id="sketches">Sketches</h5>
+<p>How they work:</p>
+<ul>
+<li><code>gray565()</code> packs one 8-bit level into RGB565 (5 bits red, 6 green, 5 blue) with R = G = B, so any tint you see is not in the data.</li>
+<li>The ramp draws into a sprite and sends it with one <code>pushSprite()</code>.</li>
+<li>The gamma probe reaches the raw display bus through <code>display.panel().driver().bus()</code> to send the standard <code>GAMSET</code> command (0x26), which the library does not wrap. USR1 steps to the next curve, USR2 goes back.</li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="Code">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete sketch (87 lines) is in the repository: <a href="https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3/blob/main/part1_bringup/01b_gray_ramp/01b_gray_ramp.ino"><code>part1_bringup/01b_gray_ramp/01b_gray_ramp.ino</code></a>.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Code">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete sketch (81 lines) is in the repository: <a href="https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3/blob/main/part1_bringup/01c_gamma_probe/01c_gamma_probe.ino"><code>part1_bringup/01c_gamma_probe/01c_gamma_probe.ino</code></a>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="touch-02_touch" class="level4">
+<h4 class="anchored" data-anchor-id="touch-02_touch">02 · Touch (<code>02_touch</code>)</h4>
+<p>Four yellow targets sit in the corners, and a small CLEAR box sits at the top center. Touching draws red dots and prints coordinates.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/02_touch_targets.jpg" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>Touch test: red dots near the four yellow corner targets</figcaption>
+</figure>
+</div>
+<p><strong>Measured:</strong> all four corners report coordinates inside the 172 x 320 area, for example (24, 12) at the top left and (151, 312) at the bottom right. There is no axis flip. The dots land within about 5 to 10 pixels of a fingertip aimed at each target, which is finger width, not controller error. With the patched library the tester reported the response as fast enough; we did not measure touch latency.</p>
+<p>Design note: our first version put CLEAR across the whole top edge, which made the two top corners impossible to test. Keep controls out of the areas you need to probe.</p>
+<section id="sketch-3" class="level5">
+<h5 class="anchored" data-anchor-id="sketch-3">Sketch</h5>
+<p>How it works:</p>
+<ul>
+<li>The touch object gets reset pin <code>-1</code>: the display and the touch controller share one reset line, and <code>display.begin()</code> has already pulsed it. Resetting again would blank the screen.</li>
+<li><code>attachTouch()</code> links the touch controller to the display, so <code>getTouch()</code> returns screen pixels.</li>
+<li>The CLEAR box is small and central on purpose: the four corners must stay free to test.</li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="Code">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete sketch (73 lines) is in the repository: <a href="https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3/blob/main/part1_bringup/02_touch/02_touch.ino"><code>part1_bringup/02_touch/02_touch.ino</code></a>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="imu-03_imu" class="level4">
+<h4 class="anchored" data-anchor-id="imu-03_imu">03 · IMU (<code>03_imu</code>)</h4>
+<p>Identifies the chip, then shows a bubble level and live acceleration and rotation values.</p>
+<p><strong>Measured:</strong> the chip is an <strong>LSM6DS3TR-C</strong> at 0x6A (the sketch also handles a QMI8658). At rest with the screen up: <code>az = -0.994 g</code>, <code>ax</code> and <code>ay</code> near zero with noise of 0.001 to 0.002 g, and a gyroscope bias of about 1 dps. The negative <code>az</code> means the screen side faces -Z. With the board held upright the bubble moves toward the raised side, like a real level.</p>
+<p>The demo reaches about <strong>22 frames per second</strong> with the patched library.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/03_imu_fps_readout.jpg" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>IMU demo with the frame rate shown at the bottom: 22.2 fps</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/03_imu_bubble_upright.jpg" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>IMU demo held upright: the bubble sits at the top, toward the raised side</figcaption>
+</figure>
+</div>
+<section id="sketch-4" class="level5">
+<h5 class="anchored" data-anchor-id="sketch-4">Sketch</h5>
+<p>How it works:</p>
+<ul>
+<li>The IMU is read over raw I2C, with no library. <code>WHO_AM_I</code> decides whether the chip is a QMI8658 or an LSM6 family part, and the scale factors follow from that.</li>
+<li>The screen is drawn into a full-screen sprite and sent once per frame. Drawing straight to the panel took 740 ms per frame; the sprite takes 43 ms (see Gotcha 1).</li>
+<li>Serial prints one CSV line per frame (<code>ax,ay,az,gx,gy,gz</code>), with timing lines that start with <code>#</code>.</li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="Code">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete sketch (195 lines) is in the repository: <a href="https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3/blob/main/part1_bringup/03_imu/03_imu.ino"><code>part1_bringup/03_imu/03_imu.ino</code></a>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="microphone-04_mic" class="level4">
+<h4 class="anchored" data-anchor-id="microphone-04_mic">04 · Microphone (<code>04_mic</code>)</h4>
+<p>Reads 16 kHz mono audio through the ESP-IDF 5 PDM driver and shows the level in dBFS as a number, a bar with peak hold, and a scrolling history.</p>
+<p><strong>Measured (50-second run, three phases identified by level):</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Phase</th>
+<th>RMS (dBFS)</th>
+<th>Peak (dBFS)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Silence</td>
+<td>about -73 to -69 (lowest -80)</td>
+<td>-60 to -54</td>
+</tr>
+<tr class="even">
+<td>Speech</td>
+<td>up to -41 to -31</td>
+<td>-36 to -23</td>
+</tr>
+<tr class="odd">
+<td>Clap and taps</td>
+<td>up to -15 to -13</td>
+<td>-3.4 to -0.6</td>
+</tr>
+</tbody>
+</table>
+<p>That is roughly 60 dB between the noise floor and a clap. A loud clap close to the board almost reaches full scale, so expect clipping for very loud sounds.</p>
+<p>The PDM filter needs about half a second to settle. The DC offset starts near +13000 and falls to a few hundred. <strong>Discard the first half second</strong> before measuring or recording.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/04_mic_speaking.jpg" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>While speaking close to the board: the RMS level is -21 dBFS, the peak is -13 dBFS, and the DC offset reads -161. The history shows the last 172 blocks (about 11 seconds); columns turn yellow above -40 dBFS and red above -20.</figcaption>
+</figure>
+</div>
+<section id="sketch-5" class="level5">
+<h5 class="anchored" data-anchor-id="sketch-5">Sketch</h5>
+<p>How it works:</p>
+<ul>
+<li>The PDM microphone needs two wires: a clock the ESP32 drives (D0, GPIO 1) and a one-bit data stream back (D1, GPIO 2).</li>
+<li>The DMA buffers hold 128 ms of audio, so a slow screen update does not drop samples.</li>
+<li>The DC offset is subtracted before the level is computed, and the result is converted to dBFS (0 dBFS is full scale).</li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="Code">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete sketch (146 lines) is in the repository: <a href="https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3/blob/main/part1_bringup/04_mic/04_mic.ino"><code>part1_bringup/04_mic/04_mic.ino</code></a>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="buttons-05_buttons" class="level4">
+<h4 class="anchored" data-anchor-id="buttons-05_buttons">05 · Buttons (<code>05_buttons</code>)</h4>
+<p>Shows USR1 and USR2 as boxes that light up, with press counters. Debounce is 20 ms.</p>
+<p><strong>Measured:</strong> both buttons work independently, and every <code>DOWN</code> was followed by a clean <code>UP</code>.</p>
+<p><strong>Contact bounce.</strong> The debounce in this sketch hides short bounce, so we checked the raw signal with a separate probe, <code>extras/button_bounce_probe</code>. It records every edge in an interrupt with a microsecond timestamp and no filtering. In one 60-second capture with 12 presses per button, all 24 presses produced exactly one falling edge. Of the 24 releases, 23 produced exactly one rising edge. The other release (USR1) produced three edges: up, down 6 us later, and up again 108 us after that, a bounce of 114 us in total. That is about 175 times shorter than the 20 ms debounce window. A program that counted every falling edge without debouncing would have counted that bounce as an extra press. The limits: one 60-second run, 12 presses per button, and every press was short (held for 79 to 256 ms). We did not capture slow or hard presses, which are the ones most likely to bounce.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/05_buttons_usr1_usr2.jpg" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>Left: USR1 held down. Right: USR2 held down. Each button lights only its own box, and each press adds exactly one to its own counter.</figcaption>
+</figure>
+</div>
+<section id="sketch-6" class="level5">
+<h5 class="anchored" data-anchor-id="sketch-6">Sketch</h5>
+<p>How it works:</p>
+<ul>
+<li>A pressed button pulls its pin to ground, so the pins use <code>INPUT_PULLUP</code> and <code>LOW</code> means pressed.</li>
+<li>Debounce works by time: a new level is accepted only after it has been stable for 20 ms.</li>
+<li>Each event is printed with <code>millis()</code>, so contact bounce would show up as events a few milliseconds apart.</li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="Code">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete sketch (89 lines) is in the repository: <a href="https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3/blob/main/part1_bringup/05_buttons/05_buttons.ino"><code>part1_bringup/05_buttons/05_buttons.ino</code></a>.</p>
+</div>
+</div>
+</section>
+<section id="bounce-probe" class="level5">
+<h5 class="anchored" data-anchor-id="bounce-probe">Bounce probe</h5>
+<p>How it works:</p>
+<ul>
+<li>Each button has an interrupt on <code>CHANGE</code> that stores <code>micros()</code> and the pin level in a small ring buffer. Nothing is filtered, so bounce is recorded.</li>
+<li><code>loop()</code> drains the buffer and prints one line per edge, with the time since the previous edge on that button.</li>
+<li>No display is used, so nothing else competes for the processor.</li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="Code">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete sketch (67 lines) is in the repository: <a href="https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3/blob/main/part1_bringup/extras/button_bounce_probe/button_bounce_probe.ino"><code>part1_bringup/extras/button_bounce_probe/button_bounce_probe.ino</code></a>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="battery-06_battery" class="level4">
+<h4 class="anchored" data-anchor-id="battery-06_battery">06 · Battery (<code>06_battery</code>)</h4>
+<p>Reads the voltage on D16, applies the divider ratio (2.975), and shows volts, millivolts, an estimated percentage, and a history graph.</p>
+<p><strong>Result: not validated.</strong> With <strong>no battery connected and the power switch off</strong>, the board reads a steady <strong>3.97 V</strong>, and it did not change when we toggled the switch. So that number is not a battery voltage. We do not know where it comes from; a likely explanation is that the sense divider sits on a node that the USB charging path holds up, but we did not check the schematic.</p>
+<p>This test needs a LiPo connected. Until it has been run that way, treat the battery reading and the percentage as unverified. The percentage is also only a straight line from 3.30 V to 4.20 V, and a real LiPo curve is not straight. The ESP32-S3 version can read voltage only; it cannot detect charging status.</p>
+<section id="sketch-7" class="level5">
+<h5 class="anchored" data-anchor-id="sketch-7">Sketch</h5>
+<p>How it works:</p>
+<ul>
+<li>The battery sits behind a 316 k / 160 k divider, so the pin sees 160/476 of the battery voltage. The sketch multiplies by 2.975 to undo that.</li>
+<li>It averages 16 ADC readings and uses <code>analogReadMilliVolts()</code>, which applies the chip’s calibration.</li>
+<li>The percentage is a straight line from 3.30 V to 4.20 V. A real LiPo curve is not straight, so treat it as a rough guide.</li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="Code">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete sketch (100 lines) is in the repository: <a href="https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3/blob/main/part1_bringup/06_battery/06_battery.ino"><code>part1_bringup/06_battery/06_battery.ino</code></a>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="wi-fi-scan-07_wifi_scan" class="level4">
+<h4 class="anchored" data-anchor-id="wi-fi-scan-07_wifi_scan">07 · Wi-Fi scan (<code>07_wifi_scan</code>)</h4>
+<p>Scans for 2.4 GHz networks every six seconds and lists them with signal strength, channel, and security type. No credentials are needed.</p>
+<p><strong>Measured:</strong> a scan takes about 2.4 to 2.8 seconds. See <a href="#without-the-antenna-wi-fi-barely-works">Gotcha 3</a> for the antenna result. Network names from neighbors are not shown in this document.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/07_wifi_scan.jpg" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>The header counts all 14 networks found; the screen lists the 10 strongest. Names are masked by <code>MASK_SSIDS 1</code>. Green is stronger than -60 dBm, yellow down to -75 dBm, and red weaker.</figcaption>
+</figure>
+</div>
+<section id="sketch-8" class="level5">
+<h5 class="anchored" data-anchor-id="sketch-8">Sketch</h5>
+<p>How it works:</p>
+<ul>
+<li>Station mode with no connection: a scan needs no password.</li>
+<li><code>WiFi.scanNetworks()</code> returns the list sorted by signal strength, strongest first.</li>
+<li><code>MASK_SSIDS</code> shows only the first two characters of each name, so photos and logs do not expose your neighbors.</li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="Code">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete sketch (122 lines) is in the repository: <a href="https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3/blob/main/part1_bringup/07_wifi_scan/07_wifi_scan.ino"><code>part1_bringup/07_wifi_scan/07_wifi_scan.ino</code></a>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="microsd-08_sd" class="level4">
+<h4 class="anchored" data-anchor-id="microsd-08_sd">08 · microSD (<code>08_sd</code>)</h4>
+<p>Mounts the card, lists the root folder, writes 64 KB of a known pattern, reads it back, and compares every byte.</p>
+<p><strong>Measured (947 MB card):</strong> mount passes at <strong>20 MHz</strong>; write 368 to 407 KB/s; read 1422 KB/s; zero mismatched bytes. The four colored bars drawn afterward were clean, which shows the card traffic did not corrupt the display.</p>
+<p>The sketch only writes and deletes its own test file.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/08_sd_pass.jpg" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>microSD test: mount, list, write, and verify all passed, with clean color bars underneath</figcaption>
+</figure>
+</div>
+<section id="sketch-9" class="level5">
+<h5 class="anchored" data-anchor-id="sketch-9">Sketch</h5>
+<p>How it works:</p>
+<ul>
+<li>The card shares the SPI bus with the display, so the sketch reuses the display’s own <code>SPIClass</code> and attaches the MISO pin to it. A second SPI object would stop the display’s bus (Gotcha 2).</li>
+<li>The mount tries 20 MHz first and falls back to slower clocks.</li>
+<li>The test writes a known pattern and compares every byte on read-back, so any corruption shows as a mismatch.</li>
+<li>The summary repeats in <code>loop()</code> so a serial monitor opened late still sees it.</li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="Code">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete sketch (154 lines) is in the repository: <a href="https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3/blob/main/part1_bringup/08_sd/08_sd.ino"><code>part1_bringup/08_sd/08_sd.ino</code></a>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="self-test-09_selftest" class="level4">
+<h4 class="anchored" data-anchor-id="self-test-09_selftest">09 · Self-test (<code>09_selftest</code>)</h4>
+<p>Runs I2C, IMU, microphone, microSD, Wi-Fi, and battery checks automatically, then waits for you to press USR1, press USR2, and touch the screen.</p>
+<p><strong>Measured:</strong> the six automatic checks gave PASS (battery shows N/A on purpose, because a reading alone cannot prove a battery is present). After pressing both buttons and touching the screen, the three manual lines also passed: the photo below shows 8 PASS, 0 FAIL, and 0 waiting, with the touch line reporting the last touch at x=159, y=312.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/09_selftest_all_pass.jpg" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>Self-test final screen: eight lines PASS, battery N/A in yellow, footer 8P 0F 0W</figcaption>
+</figure>
+</div>
+<section id="sketch-10" class="level5">
+<h5 class="anchored" data-anchor-id="sketch-10">Sketch</h5>
+<p>How it works:</p>
+<ul>
+<li>Every check is one function that fills a <code>Check</code> entry with PASS, FAIL, or N/A and a short note; the screen is redrawn after each one.</li>
+<li>The microphone check discards the first blocks while the PDM filter settles, then measures one block.</li>
+<li>The battery line is N/A on purpose: a reading alone cannot prove a battery is connected (see test 06).</li>
+<li>The three manual checks live in <code>loop()</code> and turn PASS the first time their event is seen.</li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="Code">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete sketch (251 lines) is in the repository: <a href="https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3/blob/main/part1_bringup/09_selftest/09_selftest.ino"><code>part1_bringup/09_selftest/09_selftest.ino</code></a>.</p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="gotchas" class="level3">
+<h3 class="anchored" data-anchor-id="gotchas">Gotchas</h3>
+<section id="seeed_gfx2-1.0.0-is-slow-on-the-esp32-s3" class="level4">
+<h4 class="anchored" data-anchor-id="seeed_gfx2-1.0.0-is-slow-on-the-esp32-s3">1. Seeed_GFX2 1.0.0 is slow on the ESP32-S3</h4>
+<p><strong>Symptom:</strong> the IMU demo ran at about one frame per second, and touch drawing felt sluggish.</p>
+<p><strong>Cause, from reading the library source:</strong> the ESP32 SPI path writes pixels one at a time and never uses a bulk transfer or DMA. <code>Seeed_Sprite</code> also fills and pushes pixel by pixel or row by row.</p>
+<p><strong>Measured (1.47” board, before and after the patch):</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Operation</th>
+<th>Original</th>
+<th>Patched</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>fillScreen</code> on the panel</td>
+<td>161 ms</td>
+<td>33 ms</td>
+</tr>
+<tr class="even">
+<td><code>fillRect</code> 50 x 50</td>
+<td>7.5 ms</td>
+<td>1.6 ms</td>
+</tr>
+<tr class="odd">
+<td><code>fillScreen</code> in a sprite</td>
+<td>41 ms</td>
+<td>1.1 ms</td>
+</tr>
+<tr class="even">
+<td><code>pushSprite</code>, full screen</td>
+<td>147 ms</td>
+<td>32 ms</td>
+</tr>
+<tr class="odd">
+<td>IMU demo, time per frame</td>
+<td>740 ms</td>
+<td>43 ms</td>
+</tr>
+</tbody>
+</table>
+<p>Drawing text, circles, and single pixels straight to the panel stays slow (12 characters took 84 ms). <strong>The rule that works: draw into a <code>Seeed_Sprite</code>, then push it once.</strong> The patch (<code>tools/seeed_gfx2_speedup.patch</code>, three files) uses the ESP32 <code>SPIClass::writePixels</code> and <code>writePattern</code> calls, adds a fast row fill to the sprite, and sets the address window once in <code>pushImage</code>.</p>
+<p>The patch is a workaround. It would be better for the fix to go upstream to Seeed.</p>
+</section>
+<section id="do-not-create-a-second-spi-object-for-the-microsd-card" class="level4">
+<h4 class="anchored" data-anchor-id="do-not-create-a-second-spi-object-for-the-microsd-card">2. Do not create a second SPI object for the microSD card</h4>
+<p><strong>Symptom:</strong> <code>SD.begin()</code> never returns when the display is already running.</p>
+<p><strong>Cause:</strong> creating a second <code>SPIClass(HSPI)</code>, as Seeed’s own <code>0519_MicSD_147_ESP32</code> example does, makes arduino-esp32 <strong>3.3.12</strong> stop the SPI bus the display is using. The log shows <code>spiDetachBus(): Stopping SPI bus</code>. The unmodified Seeed example hangs the same way on our board.</p>
+<p><strong>Fix that worked:</strong> reuse the display’s own SPI object and attach the MISO pin to it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>SPIClass <span class="op">*</span>spi <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span>Bus_SPI <span class="op">&amp;&gt;(</span>display<span class="op">.</span>panel<span class="op">().</span>driver<span class="op">().</span>bus<span class="op">()).</span>spiInstance<span class="op">();</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>spiAttachMISO<span class="op">(</span>spi<span class="op">-&gt;</span>bus<span class="op">(),</span> D9<span class="op">);</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>SD<span class="op">.</span>begin<span class="op">(</span>D6<span class="op">,</span> <span class="op">*</span>spi<span class="op">,</span> <span class="dv">20000000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="without-the-antenna-wi-fi-barely-works" class="level4">
+<h4 class="anchored" data-anchor-id="without-the-antenna-wi-fi-barely-works">3. Without the antenna, Wi-Fi barely works</h4>
+<p>With no antenna attached, a scan found <strong>2 networks at about -80 dBm</strong>. After attaching the antenna, the same room showed <strong>7 to 8 networks</strong>, and the strongest moved to <strong>-39 dBm</strong>, about 40 dB better. If your scan shows few networks that are all weaker than -80 dBm, check the antenna first.</p>
+</section>
+<section id="the-microsd-card-must-have-a-fat-volume" class="level4">
+<h4 class="anchored" data-anchor-id="the-microsd-card-must-have-a-fat-volume">4. The microSD card must have a FAT volume</h4>
+<p>A 32 GB card that probably held a Raspberry Pi OS image answered the SPI reset commands correctly but failed to mount: <code>f_mount failed: (13) There is no valid FAT volume</code>. A 1 GB FAT card worked at once. If mounting fails, a direct test helps: send CMD0 and CMD8 by hand (see <code>part1_bringup/extras/sd_spi_probe</code>). A card that replies but will not mount has a filesystem problem, not a wiring problem.</p>
+</section>
+<section id="grays-have-a-blue-cast" class="level4">
+<h4 class="anchored" data-anchor-id="grays-have-a-blue-cast">5. Grays have a blue cast</h4>
+<p>In the gray ramp, <code>R = G = B</code> values from black to white look bluish, most clearly in the middle steps. The named constants (<code>TFT_DARKGREY</code> is <code>0x7BEF</code>, which is neutral) look the same as a true gray next to them, so the constants are not the cause. The red, green, and blue primaries look correct.</p>
+<p>What we tried: the standard <code>GAMSET</code> command (0x26) with all four gamma curves. The command was accepted, and the screen did not visibly change. To check that by numbers, we photographed the ramp under the same conditions with each curve selected and measured the brightness of each step relative to the white step. At the mid-tone step (level 109) it was 0.33, 0.28, 0.36, and 0.33 for curves 01, 02, 04, and 08; at level 182 it was 0.55, 0.51, 0.56, and 0.52. The differences follow no order and are within what the camera’s automatic exposure, the viewing angle, and glare produce between photos. The mean blue to red ratio over levels 72 to 255 was 2.4 to 2.6 for all four curves. (These blue to red values are not comparable with the table below: the method and the exposure differ.)</p>
+<p>What the JD9853 datasheet (Preliminary V0.00) suggests: the gamma registers feed the red, green, and blue converters together, so gamma adjustment cannot correct a difference between channels. Our best guess is that the cast is optical (a cool-white backlight), which is common on IPS panels. We have not confirmed that cause.</p>
+<p><strong>Is it the panel or the camera?</strong> To check, we photographed the same kind of ramp on a Mac screen (<code>tools/gray_ramp_reference.png</code>, the same eight levels, True Tone and Night Shift off) with the same phone, in the same room. We sampled the middle of each step from levels 72 to 255 and averaged the blue to red ratio of the camera’s output (1.00 would be neutral):</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Photo</th>
+<th>Blue / red</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Mac reference ramp</td>
+<td>0.96</td>
+</tr>
+<tr class="even">
+<td>Board ramp, photo 1</td>
+<td>1.86</td>
+</tr>
+<tr class="odd">
+<td>Board ramp, photo 2, other time and scene</td>
+<td>1.4 to 1.65, depending on where we sampled (reflections in the glass)</td>
+</tr>
+<tr class="even">
+<td>Same photo, Mac ramp</td>
+<td>0.95</td>
+</tr>
+<tr class="odd">
+<td>Same photo, board ramp (four wide bands)</td>
+<td>1.5 to 2.2</td>
+</tr>
+</tbody>
+</table>
+<p>So the camera rendered the Mac’s neutral ramp as neutral and the board’s ramp as clearly blue, in separate photos and in one photo that has both screens in the frame (the last two rows). This points at the panel. It is still not proof: the board’s screen is small in the same-frame photo, we picked the sample points by hand, and the phone’s processing is not linear. That photo is not published, because the Mac screen behind it shows unrelated text. A colorimeter would also give a number for the size of the shift. Repeat the comparison with the reference image and see.</p>
+</section>
+<section id="serial-output-and-startup" class="level4">
+<h4 class="anchored" data-anchor-id="serial-output-and-startup">6. Serial output and startup</h4>
+<ul>
+<li>Call <code>Serial.setTxTimeoutMs(0)</code> right after <code>Serial.begin()</code>. Without it, a write to the USB serial port can block when nothing is reading it. We added this in the same change that made the sketches feel responsive, so we have not proved it was the cause of the lag.</li>
+<li>With that setting, messages printed while no program is listening are lost. Sketches that run once in <code>setup()</code> should print a summary again in <code>loop()</code>, as <code>08_sd</code> does.</li>
+</ul>
+</section>
+<section id="a-small-fat16-card-fills-up-after-about-165-files" class="level4">
+<h4 class="anchored" data-anchor-id="a-small-fat16-card-fills-up-after-about-165-files">7. A small FAT16 card fills up after about 165 files</h4>
+<p>A card under 2 GB is usually FAT16, whose root folder holds a fixed number of entries (typically 512), and a long file name uses several of them. A card that is 99% free can still refuse to create a file once the root holds about 165 long-named files. The error looks like “no space left on device”, and a sketch sees a failed write. Keep files in subfolders. Part 2 hit this while recording audio clips; see <a href="#a-limit-we-hit-the-root-folder-of-a-small-fat16-card">the details</a>.</p>
+</section>
+</section>
+<section id="results-for-the-1.47-touch-version" class="level3">
+<h3 class="anchored" data-anchor-id="results-for-the-1.47-touch-version">Results for the 1.47” touch version</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Test</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>00 I2C scan</td>
+<td>Pass</td>
+</tr>
+<tr class="even">
+<td>01 Display</td>
+<td>Pass (blue cast in grays noted)</td>
+</tr>
+<tr class="odd">
+<td>02 Touch</td>
+<td>Pass</td>
+</tr>
+<tr class="even">
+<td>03 IMU</td>
+<td>Pass (LSM6DS3TR-C)</td>
+</tr>
+<tr class="odd">
+<td>04 Microphone</td>
+<td>Pass</td>
+</tr>
+<tr class="even">
+<td>05 Buttons</td>
+<td>Pass (bounce measured: at most 114 us in 24 presses and 24 releases)</td>
+</tr>
+<tr class="odd">
+<td>06 Battery</td>
+<td><strong>Not validated</strong>: needs a connected LiPo</td>
+</tr>
+<tr class="even">
+<td>07 Wi-Fi scan</td>
+<td>Pass, with the antenna attached</td>
+</tr>
+<tr class="odd">
+<td>08 microSD</td>
+<td>Pass, with a FAT card and the shared-SPI fix</td>
+</tr>
+<tr class="even">
+<td>09 Self-test</td>
+<td>Pass (battery N/A)</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="part-2-tinyml-with-the-imu-and-the-microphone-edge-impulse" class="level2">
+<h2 class="anchored" data-anchor-id="part-2-tinyml-with-the-imu-and-the-microphone-edge-impulse">Part 2: TinyML with the IMU and the microphone (Edge Impulse)</h2>
+<p>This part follows two chapters of this book, <a href="../../content/xiaoml_kit/motion_classification/motion_classification.html">Motion Classification and Anomaly Detection</a> and <a href="../../content/xiaoml_kit/kws/kws.html">Keyword Spotting (KWS)</a>. Those chapters use the XIAOML Kit; here the same labs run on the XIAO IPS Display (ESP32-S3) boards. The vision chapters do not apply, because these boards have no camera.</p>
+<p><strong>Status: working, with open questions.</strong> Keyword spotting: a model was trained in the Edge Impulse Studio and runs on the board, it classifies recorded clips correctly there, and a first live test with a voice shows it detecting YES and NO. A cued test (beeps tell the speaker which word to say) gave, with few cues: YES 7 of 11, NO 9 of 9, other words 8 of 10 correct. Motion: 48 samples were recorded with the logger, a model was trained in the Studio (98.48% on its test set), and it runs on the board; a first live test with the board in hand classified each of the four movements correctly. A blind test is still to do.</p>
+<p>The test numbers follow the order in which we built them: test 01 (the logger) and test 06 (motion on the board) belong to motion, and tests 02 to 05 to keyword spotting. Part 3 continues with test 07.</p>
+<section id="what-is-different-from-the-book" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-different-from-the-book">What is different from the book</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>The book (XIAOML Kit)</th>
+<th>These boards</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>IMU</td>
+<td>LSM6DS3TR-C, I2C 0x6A</td>
+<td>Same chip, same address</td>
+</tr>
+<tr class="even">
+<td>IMU library</td>
+<td>Seeed Arduino LSM6DS3</td>
+<td>Same library</td>
+</tr>
+<tr class="odd">
+<td>Data collection</td>
+<td>Edge Impulse CLI data forwarder over USB</td>
+<td><strong>CSV files on the microSD card</strong>, recorded with no computer attached (the book lists this as an alternative)</td>
+</tr>
+<tr class="even">
+<td>Microphone</td>
+<td>PDM, GPIO 41 (data) and 42 (clock) on the Sense board</td>
+<td>PDM, <strong>D0 (clock) and D1 (data)</strong>, see Part 1, test 04</td>
+</tr>
+<tr class="odd">
+<td>Result display</td>
+<td>An OLED</td>
+<td>The 1.47” touch display</td>
+</tr>
+<tr class="even">
+<td>ESP32 Arduino core</td>
+<td>2.0.17 (its <code>I2S.h</code> is used for the microphone)</td>
+<td>3.3.12 (the IDF 5 PDM driver is used instead)</td>
+</tr>
+</tbody>
+</table>
+<p>One point where the book and the library disagree. The book says the IMU runs at +/-2 g and +/-250 dps by default. In the installed Seeed Arduino LSM6DS3 library (2.0.7) the defaults are <strong>+/-16 g and +/-2000 dps</strong>. The book’s code still works, because the library scales the readings to g correctly, but the resolution is eight times coarser, and the book’s inference code clips at 2 g anyway. The sketches here set +/-2 g and +/-245 dps (the library offers 245, not 250) explicitly, in both the data logger (test 01) and the inference sketch (test 06), so training and inference see the same scale.</p>
+</section>
+<section id="motion-classification" class="level3">
+<h3 class="anchored" data-anchor-id="motion-classification">Motion classification</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/ini_part2_motion.jpg" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption><em>Image prompt - 1950s style cartoon illustration at a vintage cargo port. A cartoon container ship, a freight train, a forklift lifting a wooden crate, and a quiet warehouse with a resting crate fill the scene. A small display board is strapped to each crate and shows a colorful wavy line. In the foreground, two scientists in white lab coats on the dock hold long paper charts with wavy accelerometer traces and compare them, one pointing at a calm flat line and one at a wild wavy line. Seagulls, a crane, and a lighthouse in the background. Warm muted colors, clean outlines, classic animation look. No legible text. Square format.</em></figcaption>
+</figure>
+</div>
+<p>The book’s four classes simulate how a container moves during transport:</p>
+<ul>
+<li><strong>maritime</strong>: movement on all three axes, wave-like.</li>
+<li><strong>terrestrial</strong>: mostly horizontal movement, with small vibrations.</li>
+<li><strong>lift</strong>: mostly vertical movement, like a forklift: up, pause, down.</li>
+<li><strong>idle</strong>: the board resting on a stable surface.</li>
+</ul>
+<section id="test-01-imu-data-logger" class="level4">
+<h4 class="anchored" data-anchor-id="test-01-imu-data-logger">Test 01: IMU data logger</h4>
+<p>Records 10-second samples at <strong>exactly 50 Hz</strong> and saves each one on the card as a CSV file named after its class, such as <code>idle.003.csv</code>, in a folder of the same name (<code>/idle/idle.003.csv</code>). No computer is needed while recording, so the board can ride in a bag, a car, or a cart.</p>
+<p><strong>How to use it</strong></p>
+<ol type="1">
+<li>Touch a class on the screen, or press USR2 to step through them.</li>
+<li>Press USR1 or touch START. A 3-second countdown lets you set the board.</li>
+<li>Move the board the way that class would move, for 10 seconds. The file saves itself. Press USR1 during a recording to abort it; the partial file is deleted.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/imu_logger_states.jpg" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>Left: recording <code>idle/idle.003.csv</code>, 310 of 500 samples done. Right: the class screen after the dataset was recorded, with 12 samples saved in each of the four classes. The line at the bottom shows the rate, the sample length, and the free space on the card.</figcaption>
+</figure>
+</div>
+<p><strong>The CSV format:</strong> <code>timestamp,accX,accY,accZ,gyrX,gyrY,gyrZ</code>, with the time in milliseconds (0, 20, 40, and so on), acceleration in m/s2, and rotation in degrees per second. The book’s model uses the three acceleration columns; the gyroscope columns are there for you to try.</p>
+<p><strong>Measured.</strong> One test recording with the board at rest gave 500 rows, no lost samples, timestamps from 0 to 9980 ms in steps of exactly 20 ms, and a time between samples that varied from 19.75 to 20.22 ms (about 1% around 20 ms). The mean magnitude of the acceleration was 9.72 m/s2 (0.99 g), and the gyroscope showed a bias of 1 to 2 degrees per second. The 48 files of the dataset below were recorded with it, in motion, and passed the same checks.</p>
+<section id="how-it-works" class="level5">
+<h5 class="anchored" data-anchor-id="how-it-works">How it works</h5>
+<ul>
+<li><strong>A separate task owns the clock.</strong> The sampler runs as its own task and uses <code>vTaskDelayUntil</code>, which keeps a fixed period without drift. The main loop can then draw on the screen and write to the card without delaying a sample.</li>
+<li><strong>A queue carries the samples</strong> from the sampler to the main loop, which formats them and writes to the card in blocks, with a flush every two seconds so little is lost if the card is pulled.</li>
+<li><strong>The I2C bus is shared.</strong> The touch controller and the IMU use the same bus, so the touch controller is read only while idle, and the sampler is the only code that touches the bus while recording.</li>
+<li><strong>The card shares SPI with the display</strong>, so it uses the display’s own SPI object, as in Part 1, test 08.</li>
+<li><strong>One folder per class,</strong> because a small FAT16 card cannot hold hundreds of files in its root folder (see <a href="#a-limit-we-hit-the-root-folder-of-a-small-fat16-card">A limit we hit</a>).</li>
+<li><strong>Debug commands</strong> on the serial port: <code>c</code> next class, <code>r</code> record, <code>l</code> list files, <code>p</code> print the last file, <code>x</code> delete the last file.</li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="Code">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete sketch (430 lines) is in the repository: <a href="https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3/blob/main/part2_tinyml/01_imu_logger/01_imu_logger.ino"><code>part2_tinyml/01_imu_logger/01_imu_logger.ino</code></a>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="the-motion-dataset" class="level4">
+<h4 class="anchored" data-anchor-id="the-motion-dataset">The motion dataset</h4>
+<p>We recorded 12 samples of 10 seconds for each class (48 files, 500 rows each) with test 01, and checked them with <code>tools/motion_dataset_check.py</code> before uploading. Every file has 500 rows and a step of exactly 20.00 ms. The acceleration is near 1 g in every class (mean 9.75 to 10.01 m/s2), and the classes differ in how much it varies:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Class</th>
+<th>Std of the acceleration magnitude (m/s2)</th>
+<th>What moves</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>idle</td>
+<td>0.03</td>
+<td>nothing</td>
+</tr>
+<tr class="even">
+<td>terrestrial</td>
+<td>0.72</td>
+<td>small vibration, mostly one horizontal axis</td>
+</tr>
+<tr class="odd">
+<td>lift</td>
+<td>2.60</td>
+<td>mostly the vertical axis (z)</td>
+</tr>
+<tr class="even">
+<td>maritime</td>
+<td>2.91</td>
+<td>all three axes, gyroscope 70 to 135 deg/s</td>
+</tr>
+</tbody>
+</table>
+<p><code>lift</code> and <code>maritime</code> have a similar total variation, but they differ by axis, which is what the Spectral Analysis block sees. Three <code>idle</code> files (3, 5, and 11) include a bump, probably the hand settling after START or reaching for the board; we kept them, because a real idle board is also touched now and then.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/studio_motion_1_dataset.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>The dataset in the Studio: 8 minutes of data, 83% for training and 17% for testing</figcaption>
+</figure>
+</div>
+</section>
+<section id="the-motion-model" class="level4">
+<h4 class="anchored" data-anchor-id="the-motion-model">The motion model</h4>
+<p>The model was trained in the Edge Impulse Studio by the author, in a project named “XIAO IPS Display - Motion”. The library it generated is not in this repository. What differs from the book:</p>
+<ul>
+<li><strong>Six axes, not three.</strong> The book uses the three acceleration axes; here accX, accY, accZ, gyrX, gyrY, and gyrZ all go in, because the logger records them.</li>
+<li><strong>FFT length 16</strong>, not 32, so each window gives <strong>78 features</strong> (13 per axis), not 63.</li>
+<li><strong>Learning rate 0.0005</strong> and 30 training cycles, with the book’s two dense layers (20 and 10 neurons). An anomaly block (K-means, 32 clusters) is added, as in the book.</li>
+</ul>
+<p>The window is 2,000 ms with a 200 ms stride, at 50 Hz: 100 samples of 6 axes (600 values). The 40 training files make 1,640 windows (6 minutes 40 seconds); 8 files (17%) are kept for testing.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/studio_motion_2_impulse.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>The impulse: six axes, 2,000 ms window, Spectral Analysis, a classifier with four outputs, and an anomaly detector</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/studio_motion_3_spectral.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>The Spectral Analysis block: FFT length 16, with the estimate of 47 ms and 3 KB on the right</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/studio_motion_4_features.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>The feature explorer: the four classes form separate groups</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/studio_motion_5_classifiera.png" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>The classifier of the motion model: the training settings and the network (two dense layers, 20 and 10 neurons).</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/studio_motion_5_classifierb.png" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>The validation result of the motion model: 100% accuracy, with estimates of 1 ms, 1.4 KB of RAM, and 15.9 KB of flash.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/studio_motion_6_anomaly.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>The anomaly detector, using two suggested axes</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/studio_motion_7_testing.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>Model testing: 98.48% on the test set; 6.1% of <code>maritime</code> is flagged as an anomaly</figcaption>
+</figure>
+</div>
+<p><strong>What the Studio reports.</strong> The validation accuracy is 100%, with a loss of 0.00. Do not read much into it: windows that overlap by 90% can land in both the training and the validation set, so the network is partly graded on data it has seen. The test set is independent (whole files the model never saw) and gives <strong>98.48%</strong>: <code>idle</code>, <code>lift</code>, and <code>terrestrial</code> at 100%, and <code>maritime</code> at 93.9%, with the other 6.1% flagged as an anomaly. It is only 8 files, so one more or one less changes the figure by a lot. The five features the Studio ranks highest are gyrY RMS, accZ RMS, accY spectral power in the 1.56 to 4.69 Hz band, accZ spectral power in the 4.69 to 7.81 Hz band, and accZ spectral skewness. The classifier asks for only 3,020 bytes of working memory.</p>
+</section>
+<section id="test-06-motion-classification-on-the-board" class="level4">
+<h4 class="anchored" data-anchor-id="test-06-motion-classification-on-the-board">Test 06: motion classification on the board</h4>
+<p>Runs the model on the IMU, continuously. The sampler from test 01 fills a ring buffer at 50 Hz and, every 500 ms, the last 2 seconds go to the classifier. The screen shows the winning class, a bar for each class, the anomaly score, and the processing times.</p>
+<p>The sketch sets the same ranges as the logger (+/-2 g, 245 dps), and feeds the six axes in the training order and units (m/s2 and deg/s). If the units or the order were different, the model would answer wrongly without any error.</p>
+<p><strong>Checked against the Studio data.</strong> The sketch has a replay mode: <code>tools/motion_replay.py</code> sends windows from the CSV files over USB and the board answers with its scores. All <strong>432 windows</strong> (every file, one window per second) were classified correctly, 108 per class. This is not a test of the model, since these are the same files used to train it; it shows that the board computes what the Studio computed, with the right order and units. We ran it twice, with ESP-NN off and on, and the scores were <strong>identical</strong> (the largest difference was 0.0): the fault we found in the keyword model (see <a href="#a-problem-we-found-the-esp-nn-kernels-give-wrong-answers">the ESP-NN section</a>) does not appear here, so this sketch needs no <code>build_opt.h</code>. This holds for this model, with core 3.3.12.</p>
+<p><strong>Measured.</strong> The sketch uses 603 KB of flash (28%) and 33 KB of RAM (10%), with PSRAM disabled. The signal processing takes 5 to 6 ms and the network less than 1 ms (the counter has a resolution of 1 ms), against the Studio’s estimates of 47 ms and 1 ms.</p>
+<p><strong>Live.</strong> The author held the board and moved it as each class would be moved. It answered correctly in all four cases photographed:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/motion_live_states.jpg" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>The live sketch: idle 96%, lift 88%, terrestrial 93%, and maritime 100%</figcaption>
+</figure>
+</div>
+<p><em>From left to right: the board at rest (IDLE, 96%), then moved as the classes lift (LIFT, 88%), terrestrial (TERRESTRIAL, 93%), and maritime (MARITIME, 100%) would move it. The anomaly score read -0.19, -0.02, 0.30, and 0.03.</em> The score is higher the less a window looks like the training data; 0.30 for the terrestrial movement is the largest of the four, and that class is the most variable in our data.</p>
+<p>This is one photographed attempt per class, by hand, not a blind test: it shows that the model works live, not how often it is right. Compare with how we measured the keyword model, with beeps as cues and known answers.</p>
+<div class="callout callout-style-simple callout-note callout-titled" title="Code">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete sketch (219 lines) is in the repository: <a href="https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3/blob/main/part2_tinyml/06_motion_inference/06_motion_inference.ino"><code>part2_tinyml/06_motion_inference/06_motion_inference.ino</code></a>.</p>
+</div>
+</div>
+</section>
+<section id="next-steps-for-motion" class="level4">
+<h4 class="anchored" data-anchor-id="next-steps-for-motion">Next steps for motion</h4>
+<ol type="1">
+<li><strong>A blind test with ground truth</strong>, as for the keywords: cue the movement, record what the board said, and compare. A new recording with a different person or a different container would also say how much the model depends on how we moved the board.</li>
+<li><strong>More data for <code>maritime</code> and <code>idle</code></strong>, the classes where the Studio’s test and our files show the most spread. More samples would also make the test set bigger than 8.</li>
+<li><strong>Try the accelerometer only</strong>, as in the book, and compare with the six axes.</li>
+<li><strong>Use the anomaly score</strong>: choose a threshold on a new recording and show an alert on the screen.</li>
+</ol>
+</section>
+</section>
+<section id="keyword-spotting" class="level3">
+<h3 class="anchored" data-anchor-id="keyword-spotting">Keyword spotting</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/ini_part2_kws.jpg" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption><em>Image prompt - 1950s style cartoon illustration set in a vintage sound laboratory. A person speaks into a big retro microphone on a stand; their speech rises as colorful sound waves that turn into spectrogram strips pinned on a chalkboard. On the desk, a small display board shows a big green check mark on one side and a red cross on the other, in place of words, as small speech bubbles float above it. A scientist in a lab coat listens with large headphones and writes on a clipboard. Reel-to-reel recorders and a tin-can-and-string telephone decorate the room. Warm muted colors, clean outlines, classic animation look. No legible text. Square format.</em></figcaption>
+</figure>
+</div>
+<p><strong>Status:</strong> the model is trained and runs on the board. Replaying recorded clips on the device gives the same answers as the same model on a computer (tests 04 and 05). A first live test with a voice, on the board’s own microphone, works (see <a href="#the-live-test-with-a-voice">the live test</a>), and a test with beep cues measured it (see <a href="#the-live-test-with-ground-truth">the cued test</a>). Finding why the first attempt failed took a detour through a bug in the optimized neural-network kernels (see <a href="#a-problem-we-found-the-esp-nn-kernels-give-wrong-answers">A problem we found</a>).</p>
+<p>The book uses four classes, <strong>yes</strong>, <strong>no</strong>, <strong>noise</strong>, and <strong>unknown</strong>, from the Edge Impulse keyword-spotting pre-built dataset (derived from Pete Warden’s Speech Commands), 1-second clips at 16 kHz and 16 bits. Its model uses MFCC features and a small 1D convolutional network.</p>
+<p><strong>The dataset.</strong> The two copies of this dataset in the author’s Dropbox (<code>XIAOML-Kit/keywords</code> and <code>2021/.../keywords2</code>) had the right folders and file names, but every one of the 6,036 files was empty (0 bytes), so we downloaded the original archive again from <code>https://cdn.edgeimpulse.com/datasets/keywords2.zip</code>. It is 145,511,868 bytes, with SHA-256 <code>ab2375ceb0e5add85e47419bd2edf2b8d4378fc5513079044eef73850a39a918</code>. We keep it outside the repository and outside Dropbox, in <code>~/datasets/edge-impulse/</code>.</p>
+<p><code>tools/kws_dataset_check.py</code> checks it. Result: the zip is intact, and there are 6,036 files, none empty or unreadable: <strong>yes 1,500, no 1,500, unknown 1,500, and noise 1,536</strong>. Every file is 16 kHz, 16-bit, mono, and exactly 1.00 s, which is the format the book needs. The level of a random sample of 300 files per class, as RMS in dBFS over each 1-second clip:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Class</th>
+<th>10th percentile</th>
+<th>Median</th>
+<th>90th percentile</th>
+<th>Clipped files (of 300)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>yes</td>
+<td>-35.9</td>
+<td>-25.2</td>
+<td>-18.6</td>
+<td>16</td>
+</tr>
+<tr class="even">
+<td>no</td>
+<td>-33.3</td>
+<td>-24.4</td>
+<td>-18.0</td>
+<td>9</td>
+</tr>
+<tr class="odd">
+<td>unknown</td>
+<td>-35.1</td>
+<td>-24.3</td>
+<td>-17.1</td>
+<td>14</td>
+</tr>
+<tr class="even">
+<td>noise</td>
+<td>-37.3</td>
+<td>-27.4</td>
+<td>-15.4</td>
+<td>9</td>
+</tr>
+</tbody>
+</table>
+<p><strong>A question that was open, and is now answered.</strong> These clips are fairly loud, and the speech this board records is quieter (see test 03). Whether that hurts the model turned out not to matter: with this model, the answers do not change when the signal is made 12 dB louder or 36 dB quieter (test 05).</p>
+<p>The files are derived from Pete Warden’s Speech Commands dataset (<a href="https://arxiv.org/abs/1804.03209">arXiv:1804.03209</a>). They are not in this repository; check the dataset’s license before you share them.</p>
+<section id="test-02-audio-front-end-no-model-yet" class="level4">
+<h4 class="anchored" data-anchor-id="test-02-audio-front-end-no-model-yet">Test 02: audio front end (no model yet)</h4>
+<p>Captures the microphone continuously at 16 kHz and cuts it into 250 ms slices, the way Edge Impulse’s continuous inference works: a 1-second window made of four slices, sliding forward one slice at a time. There is no classifier. This test proves the part that differs from the book, the ESP32 core 3.x PDM driver in place of the old <code>I2S.h</code>, before a trained model exists.</p>
+<p><strong>Measured.</strong> In a run of 400 slices (about 100 seconds) there were no overruns and no read errors. Single intervals between slices alternate between 240 ms and 256 ms, because the driver hands over audio in 16 ms blocks, but the average over 400 slices was 250.03 ms, so no audio is lost. The main loop picked up each slice within 1.6 ms of its completion while it also redrew the screen. We did not test this sketch with a model; test 04 does, and it takes about 32 ms per slice. The book says the KWS sketch needs PSRAM enabled; this model runs with PSRAM disabled (see <a href="#the-model">the model</a>).</p>
+<section id="how-it-works-1" class="level5">
+<h5 class="anchored" data-anchor-id="how-it-works-1">How it works</h5>
+<ul>
+<li><strong>Two buffers.</strong> A capture task fills one 250 ms slice while the main loop reads the other. If a slice finishes before the last one was read, an <em>overrun</em> is counted. That counter stayed at zero.</li>
+<li><strong>The task runs on core 0</strong>, so drawing on core 1 cannot delay the audio.</li>
+<li><strong>The first half second is discarded</strong>, because the microphone filter is still settling (see Part 1, test 04).</li>
+<li><strong>The model hook is <code>process()</code></strong>: it receives each finished slice as 4000 samples. Edge Impulse’s <code>run_classifier_continuous()</code> goes there.</li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="Code">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete sketch (201 lines) is in the repository: <a href="https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3/blob/main/part2_tinyml/02_kws_audio_frontend/02_kws_audio_frontend.ino"><code>part2_tinyml/02_kws_audio_frontend/02_kws_audio_frontend.ino</code></a>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="test-03-record-your-own-keywords" class="level4">
+<h4 class="anchored" data-anchor-id="test-03-record-your-own-keywords">Test 03: record your own keywords</h4>
+<p>The dataset comes from many voices and many microphones. This board has one specific microphone, and you have one specific pronunciation of “yes” and “no”. So it is worth recording your own clips, for two reasons: to add them to the training data, and, more important, to keep some of them as a <strong>test set</strong>, so the model is tested on what this board actually hears. The book also recommends collecting words spoken by yourself.</p>
+<p>The recorder listens to the microphone and, each time it hears a word, saves a 1-second clip with the word inside (300 ms before it starts, 700 ms after), as a 16 kHz, 16-bit, mono WAV named like the dataset: <code>yes.own.001.wav</code>, <code>no.own.014.wav</code>, and so on, in a folder per class (<code>/yes</code>, <code>/no</code>, <code>/unknown</code>, <code>/noise</code>). You say a word, wait for “SAVED”, and say it again. No computer is needed.</p>
+<p><strong>How to use it</strong></p>
+<ol type="1">
+<li>Touch a class: YES, NO, UNKNOWN (any other word), or NOISE. For NOISE the board does not wait for a word; it saves a clip every 1.5 seconds, so you can let it record the background of your room.</li>
+<li>Press USR1 to start listening, and again to stop.</li>
+<li>Press USR2 to delete the last clip if it is bad (cut off, or a cough). Press it again to delete the one before.</li>
+<li>If words are missed, or noise triggers it, change the margin with the <code>-</code> and <code>+</code> buttons. The screen shows the background level (blue line) and the trigger level (orange line).</li>
+</ol>
+<p>The thumbnail shows the last clip’s waveform, so you can check that the word is centered, and the screen shows the clip’s level in dBFS. The audio is saved as captured, with no gain, so that level is the true level of this microphone. Compare it with the dataset’s clips, whose median is near -25 dBFS RMS.</p>
+<p><strong>A suggested plan.</strong> The numbers are our judgment, not a tested recipe: about 60 clips of YES, 60 of NO, 40 of other words for UNKNOWN, and a minute or two of NOISE in the room where you will use the board. Keep about a third of the YES and NO clips for the <strong>test</strong> set, and put the rest in training. Your clips will be a small share of the training data next to the dataset’s 1,500 per class, so do not expect them to change the model much; their main value is the test.</p>
+<p><strong>Measured.</strong> The save path was tested with the NOISE class: six clips were saved, each 32,044 bytes (a 44-byte header plus 32,000 bytes of audio) and each read back from the card and compared with what was captured. Word detection was tried with a voice in the first session (next). The thresholds (a two-frame trigger, a 15 dB margin above the background) are first guesses.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/kws_recorder_states.jpg" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>The recorder while collecting YES clips. The waveform is the last clip, with the word in the middle. In these photos the line under the level bar wrapped onto a second line; the sketch now shortens it.</figcaption>
+</figure>
+</div>
+<p><strong>What a first session produced.</strong> One session with a single speaker gave 166 clips: 50 YES, 50 NO, 50 UNKNOWN, and 16 NOISE (the recorder stopped saving after the 16th NOISE clip, see the next section). The files are 16 kHz, 16-bit, mono, exactly 1.00 s, and not empty. We reviewed them with <code>tools/kws_clip_review.py</code>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Class</th>
+<th>Clips</th>
+<th>RMS median (dBFS)</th>
+<th>RMS 10th to 90th percentile</th>
+<th>Peak median / 90th percentile</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>yes</td>
+<td>50</td>
+<td>-39.2</td>
+<td>-44.2 to -29.9</td>
+<td>-22.6 / -5.7</td>
+</tr>
+<tr class="even">
+<td>no</td>
+<td>50</td>
+<td>-41.1</td>
+<td>-46.3 to -35.0</td>
+<td>-25.6 / -19.2</td>
+</tr>
+<tr class="odd">
+<td>unknown</td>
+<td>50</td>
+<td>-39.1</td>
+<td>-42.0 to -28.6</td>
+<td>-22.2 / -7.2</td>
+</tr>
+<tr class="even">
+<td>noise</td>
+<td>16</td>
+<td>-64.9</td>
+<td>-70.9 to -31.5</td>
+<td>-42.1 / -20.2</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>The words are centered as designed.</strong> The word starts at about 300 ms in the clip (median 300 for YES and NO, 320 for UNKNOWN).</li>
+<li><strong>This microphone is quieter than the dataset.</strong> The medians for the three word classes are -39 to -41 dBFS, against -24 to -25 dBFS for the dataset’s clips. That is <strong>14 to 17 dB lower</strong>, with the same measurement on both sides (the RMS of a whole 1-second clip). These recordings were made at one distance and one speaking volume, so the gap is one speaker’s, not a property of the microphone. It does not matter for this model (test 05).</li>
+<li><strong>No gain is needed.</strong> We had worried that raising the level by 14 dB would clip the louder clips (the 90th percentile of the peaks is already -5.7 dBFS for YES). Test 05 shows the model is insensitive to the level, so the question does not arise.</li>
+<li><strong>Ten clips look suspicious</strong> out of 150 word clips: <code>yes.own.003</code>, <code>022</code>, <code>038</code>, <code>039</code>, <code>047</code>; <code>no.own.026</code>; <code>unknown.own.001</code>, <code>022</code>, <code>036</code>, <code>046</code>. The reasons are a word that may be cut off, two separate bursts, or a very quiet clip (<code>yes.own.022</code> is at -62 dBFS). The review looks only at the signal. It cannot tell whether the word you said is the word in the label, so listen to these before you upload them.</li>
+<li><strong>The noise class was quiet and short.</strong> The first 16 clips had a median of -65 dBFS, against -27 for the dataset’s noise clips. A second session added 50 clips (see below).</li>
+</ul>
+<section id="how-it-works-2" class="level5">
+<h5 class="anchored" data-anchor-id="how-it-works-2">How it works</h5>
+<ul>
+<li><strong>A 2-second ring buffer</strong> is filled by a capture task, as in test 02.</li>
+<li><strong>Frames of 20 ms</strong> are analysed one by one. The background level is tracked slowly, only while it is quiet.</li>
+<li><strong>A word starts</strong> when two frames in a row are more than the margin above the background. The clip is cut 300 ms before that point and 700 ms after it.</li>
+<li><strong>After a clip is saved,</strong> the board waits for half a second of quiet before it listens again, so one word makes one clip.</li>
+<li><strong>Every clip is verified:</strong> the file is written, read back, and compared with the audio in memory.</li>
+<li><strong>The save, delete, and card code</strong> is the same as in the logger, including the shared SPI bus.</li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="Code">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete sketch (453 lines) is in the repository: <a href="https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3/blob/main/part2_tinyml/03_kws_recorder/03_kws_recorder.ino"><code>part2_tinyml/03_kws_recorder/03_kws_recorder.ino</code></a>.</p>
+</div>
+</div>
+<p><strong>A second session of noise.</strong> After the fix, the recorder saved 50 more NOISE clips into <code>/noise/</code> in one go. They are byte for byte identical to what was on the card, all 16 kHz, 16-bit, mono, exactly 1.00 s, none clipped, and the review flagged none. Their median level is -55.7 dBFS (10th to 90th percentile: -64.3 to -42.1), still about 28 dB below the dataset’s noise clips, with a few louder events in the room. Together with the first 16 that makes 66 noise clips.</p>
+</section>
+<section id="preparing-the-upload" class="level5">
+<h5 class="anchored" data-anchor-id="preparing-the-upload">Preparing the upload</h5>
+<p><code>tools/kws_prepare_upload.py</code> gathers the sessions into one folder, never moving the originals. The recorder numbers its clips from 001 in every session, so when two sessions use the same name, the later one gets its folder name in the file name (<code>noise.own2.001.wav</code>); the part before the first dot is still the label, which is how the Studio infers it. It sets aside the clips you want to listen to first and splits the rest at random, about two thirds for training and one third for testing:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Class</th>
+<th>Train</th>
+<th>Test</th>
+<th>Review first</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>yes</td>
+<td>30</td>
+<td>15</td>
+<td>5</td>
+<td>50</td>
+</tr>
+<tr class="even">
+<td>no</td>
+<td>33</td>
+<td>16</td>
+<td>1</td>
+<td>50</td>
+</tr>
+<tr class="odd">
+<td>unknown</td>
+<td>31</td>
+<td>15</td>
+<td>4</td>
+<td>50</td>
+</tr>
+<tr class="even">
+<td>noise</td>
+<td>44</td>
+<td>22</td>
+<td>0</td>
+<td>66</td>
+</tr>
+</tbody>
+</table>
+<p>The ten clips in <em>Review first</em> are the ones the review flagged. They are kept out of the test set so that doubtful clips do not distort the measurement. The split is random with a fixed seed, so it is repeatable, but it is not stratified by anything else, and with 15 or 16 test clips per word a single mistake moves the accuracy by about 6 points. Treat the result as a rough indication.</p>
+</section>
+</section>
+<section id="a-limit-we-hit-the-root-folder-of-a-small-fat16-card" class="level4">
+<h4 class="anchored" data-anchor-id="a-limit-we-hit-the-root-folder-of-a-small-fat16-card">A limit we hit: the root folder of a small FAT16 card</h4>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/kws_recorder_write_failed.jpg" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>The recorder showing WRITE FAILED while the NOISE class stands at 16 clips</figcaption>
+</figure>
+</div>
+<p><strong>Symptom.</strong> After 166 clips the recorder showed <code>WRITE FAILED</code> and saved nothing more. That is why there are only 16 NOISE clips.</p>
+<p><strong>Cause.</strong> It was not a full card: the 947 MB card was 99% free. A FAT16 volume has a fixed-size root folder, typically 512 entries, and a file with a long name uses several of them. Names like <code>unknown.own.001.wav</code> use three entries each, so 166 files take 498 entries, and with the three items already on the card and the volume label, the count reaches 508. macOS adds a few more hidden items (such as <code>.fseventsd</code> and <code>.Trashes</code>) when it mounts the card, which brings it to 512.</p>
+<p><strong>How we checked.</strong> With the card mounted on the Mac, creating even one new file with a long name failed with <em>no space left on device</em>, while the volume reported 936 MiB free. The board gave the same answer when it tried to create the class folders on that card. We did not read the root-folder size from the volume itself, so “512 entries” is the usual value for FAT16, not something we measured on this card.</p>
+<p><strong>Fix.</strong> The recorder and the logger now keep each class in its own folder. Subfolders do not have the root’s limit. Creating the folders needs a few free entries in the root, so on a card whose root is already full, the sketches say so on the screen (<code>CARD FULL</code>) and on the serial port, instead of failing quietly. To recover such a card, copy the clips to a computer, delete them from the card, and reset the board.</p>
+<p><strong>Tested after the fix.</strong> We cleared the card (the 166 clips were first checked byte for byte against the copies on the Mac) and reset the board. It created the class folders on its own. The logger saved a 500-row file into <code>/idle/</code> with no lost samples, and the recorder saved six NOISE clips into <code>/noise/</code>, each read back and verified; we removed those test files afterwards. We have not run a full recording session with the fixed sketches yet.</p>
+</section>
+<section id="the-model" class="level4">
+<h4 class="anchored" data-anchor-id="the-model">The model</h4>
+<p>The model was trained in the Edge Impulse Studio by the author (project <a href="https://studio.edgeimpulse.com/public/1129422/live">XIAO IPS Display - KWS</a>, a public project) from the dataset plus the recordings from test 03. The library it generated is not in this repository. What it contains, read from its files:</p>
+<ul>
+<li>the input is 16,000 samples (1 second at 16 kHz); 13 MFCC coefficients over 50 frames, 650 values, go into the network;</li>
+<li>four classes, in this order: <code>no</code>, <code>noise</code>, <code>unknown</code>, <code>yes</code> (alphabetical, so <code>yes</code> is index 3);</li>
+<li>the network is compiled with Edge Impulse’s EON compiler and quantized to int8; the working memory it asks for is 6,265 bytes, and the model code is 56 KB, so it needs <strong>no PSRAM</strong> (the book asks for it, for the Sense board’s sketch);</li>
+<li>it detects no anomalies.</li>
+</ul>
+<p>The Studio’s public page, for the int8 model that runs on the board, shows <strong>91.3% on the validation set and 87.16% on the test set</strong>. Its on-device performance panels estimate 361 ms and 15 KB of RAM for the MFCC block, and 5 ms, 12.6 KB of RAM, and 46.0 KB of flash for the network (EON compiler). We did not reproduce the Studio’s test. The performance panels are estimates, not measurements on this board: in test 04 we measured about 17 ms for the MFCC and about 15 ms for the network per slice, so trust the board’s numbers. The screenshots below are of the public project.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/studio_kws_1_dataset.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>The dataset in the Studio: 1 hour 43 minutes of 1-second clips, 79% for training and 21% for testing</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/studio_kws_2_impulse.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>The impulse: 1,000 ms windows, 16 kHz audio, MFCC, a classifier with four outputs</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/studio_kws_3_mfcc.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>The MFCC block: 13 coefficients, 20 ms frames, 32 filters, FFT 256, normalization window 101, with the estimate of 361 ms and 15 KB</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/studio_kws_4_features.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>The features of the 4,932 training windows, and the same estimate for the MFCC block</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/studio_kws_5_classifiera.png" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>The classifier of the keyword model: the training settings and the network architecture (two 1D convolution layers with dropout).</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/studio_kws_5_classifierb.png" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>The validation result of the keyword model, with the Studio’s estimate for the network: 5 ms, 12.6 KB of RAM, and 46.0 KB of flash.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/studio_kws_6_training_graphs.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>The training graphs: accuracy and loss over the 100 training cycles</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/studio_kws_7_testing.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>Model testing: 87.16% on the test set; the <code>unknown</code> class is the weakest</figcaption>
+</figure>
+</div>
+</section>
+<section id="test-04-keyword-spotting-on-the-board" class="level4">
+<h4 class="anchored" data-anchor-id="test-04-keyword-spotting-on-the-board">Test 04: keyword spotting on the board</h4>
+<p>Runs the model on the microphone, continuously: the microphone is cut into 250 ms slices (test 02), and every slice runs the classifier on the last second of audio. The screen shows the detected word in large letters (YES in green, NO in red), a bar for each of the four classes, the processing times, and the level. A word is shown when YES or NO wins with a score of at least 0.80 (a first guess, not a tuned value), and stays on screen for one second.</p>
+<p><strong>Build it with ESP-NN turned off.</strong> The file <code>build_opt.h</code> next to the sketch does that. It contains one line:</p>
+<pre><code>-DEI_CLASSIFIER_TFLITE_ENABLE_ESP_NN=0</code></pre>
+<p>Both the Arduino IDE and <code>arduino-cli</code> read it. Without it, the model gives wrong answers on this board (next section).</p>
+<p><strong>Measured.</strong> The sketch uses 597 KB of flash (28%) and 45 KB of RAM (13%), with PSRAM disabled. For each slice, the signal processing takes about 16 to 17 ms and the network about 15 ms, so roughly 32 ms of the 250 ms available. In a quiet room the class <code>noise</code> wins nearly everywhere, but with less certainty than before the fix (scores of 0.46 to 0.89), and <code>unknown</code> sometimes reaches 0.4 to 0.5. Live behavior with a voice is in “The live test with a voice” and “The live test with ground truth” below.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/kws_live_states.jpg" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>From left to right: a clean YES (YES bar at 100%); a clean NO (99%); no word, with <code>unknown</code> at 92%; and NO still on screen while the bars read no 44%, unknown 48%. The last one is the hold: a detected word stays on the screen for one second (<code>HOLD_MS</code>), while the bars show the current scores.</figcaption>
+</figure>
+</div>
+<section id="how-it-works-3" class="level5">
+<h5 class="anchored" data-anchor-id="how-it-works-3">How it works</h5>
+<ul>
+<li><strong>The capture is the one from test 02:</strong> two slice buffers filled by a task on core 0.</li>
+<li><strong><code>numpy::int16_to_float</code></strong> hands the slice to Edge Impulse as floats in the int16 range. The MFCC block then divides by 32768 itself.</li>
+<li><strong><code>run_classifier_continuous()</code></strong> keeps the earlier slices, so each call classifies the last second. The first full window needs four slices; until then the screen says “warming up”.</li>
+<li><strong>The labels come from the model,</strong> so the screen shows whatever the four classes are called, in the model’s own order.</li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="Code">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete sketch (225 lines) is in the repository: <a href="https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3/blob/main/part2_tinyml/04_kws_inference/04_kws_inference.ino"><code>part2_tinyml/04_kws_inference/04_kws_inference.ino</code></a>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="a-problem-we-found-the-esp-nn-kernels-give-wrong-answers" class="level4">
+<h4 class="anchored" data-anchor-id="a-problem-we-found-the-esp-nn-kernels-give-wrong-answers">A problem we found: the ESP-NN kernels give wrong answers</h4>
+<p><strong>What happened.</strong> The first live attempt classified everything as <code>noise</code>. The recording showed rhythmic bursts of speech, yet <code>yes</code> never went above 0.09. We then fed recorded clips to the board over the USB cable (test 05) to take the microphone and the room out of the picture. Even the dataset’s own clips, which the model had been trained on, came out as <code>noise</code>: <strong>13 of 48 correct (27%)</strong>, with 0 of 12 for <code>yes</code> and 0 of 12 for <code>unknown</code>.</p>
+<p><strong>What we ruled out, in this order:</strong></p>
+<ol type="1">
+<li><em>The clips arriving damaged.</em> The board returns a checksum of what it received; all of them matched.</li>
+<li><em>The way we feed the classifier.</em> The Edge Impulse source confirms the format: floats in the int16 range, as the sketch does.</li>
+<li><em>The model.</em> We built the same library, with the same SDK and the same compiled network, as a program for the Mac. On the same 48 clips it got <strong>44 of 48 (91.7%)</strong>, in line with the Studio’s 87 to 91%.</li>
+</ol>
+<p><strong>The cause.</strong> On the ESP32-S3 the SDK turns on two optimized paths by default: ESP-DSP (a fast FFT for the signal processing) and ESP-NN (optimized neural-network kernels). We turned them off one at a time, with a compile-time flag, and scored the same 48 clips on the board each time:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Build</th>
+<th>Correct, of 48</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Default (ESP-DSP on, ESP-NN on)</td>
+<td>13 (27.1%)</td>
+</tr>
+<tr class="even">
+<td>ESP-DSP off, ESP-NN on</td>
+<td>13 (27.1%)</td>
+</tr>
+<tr class="odd">
+<td><strong>ESP-NN off, ESP-DSP on</strong></td>
+<td><strong>44 (91.7%)</strong></td>
+</tr>
+<tr class="even">
+<td>ESP-DSP off, ESP-NN off</td>
+<td>44 (91.7%)</td>
+</tr>
+<tr class="odd">
+<td>The same model on the Mac</td>
+<td>44 (91.7%)</td>
+</tr>
+</tbody>
+</table>
+<p>With ESP-NN off, the board’s confusion matrix matches the Mac’s cell for cell. ESP-DSP is fine, and keeping it makes the signal processing about twice as fast. The cost of turning ESP-NN off is that the network takes about 15 ms per slice instead of 1 to 2 ms. The 1 to 2 ms were fast because they were wrong.</p>
+<p><strong>How far this goes.</strong> We found it with Arduino core 3.3.12, with this one model, and with the Edge Impulse SDK inside the library we downloaded. We did not try other cores, other SDK versions, or other models, and we do not know if the fault is in the ESP-NN code, in how it is built here, or in how it meets this core. The book tells you to stay on core 2.0.17 and not update it; that is consistent with a problem in newer cores, but we did not test 2.0.17.</p>
+</section>
+<section id="test-05-replay-a-hardware-in-the-loop-test" class="level4">
+<h4 class="anchored" data-anchor-id="test-05-replay-a-hardware-in-the-loop-test">Test 05: replay, a hardware-in-the-loop test</h4>
+<p>Classifies audio that a computer sends over the USB cable, with the same signal processing and the same network as test 04. It is how the problem above was found, and it is a good way to test any model on this board without depending on the room. It has three commands: <code>WAVE</code> (a whole 1-second clip), and <code>SLCE</code> and <code>RSET</code> (the continuous classifier, one 250 ms slice at a time, as in test 04).</p>
+<p>The tools on the computer (standard library only, except the program for the Mac):</p>
+<ul>
+<li><code>tools/kws_replay.py</code> sends whole clips and scores them, optionally made louder or quieter. With <code>--host</code> it runs the same clips through the program for the Mac.</li>
+<li><code>tools/kws_stream_eval.py</code> places each clip between two stretches of noise and runs it in continuous mode, applying test 04’s rule, on the board (<code>--port</code>) or on the Mac.</li>
+<li><code>tools/ei_host_test/</code> holds the small program that runs the library on the Mac, and <code>build.py</code> builds it from the unzipped library.</li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="Code">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete sketch (144 lines) is in the repository: <a href="https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3/blob/main/part2_tinyml/05_kws_replay/05_kws_replay.ino"><code>part2_tinyml/05_kws_replay/05_kws_replay.ino</code></a>.</p>
+</div>
+</div>
+</section>
+<section id="what-the-model-does-on-the-board-measured-with-recorded-clips" class="level4">
+<h4 class="anchored" data-anchor-id="what-the-model-does-on-the-board-measured-with-recorded-clips">What the model does on the board, measured with recorded clips</h4>
+<p><strong>Whole clips, on your own test clips</strong> (68 clips never used in training: 16 <code>no</code>, 22 <code>noise</code>, 15 <code>unknown</code>, 15 <code>yes</code>): <strong>58 correct (85.3%)</strong>, identical on the board and on the Mac. Recall by class: <code>no</code> 93.8%, <code>yes</code> 93.3%, <code>unknown</code> 80.0%, <code>noise</code> 77.3%.</p>
+<p><strong>Continuous mode, as in the live sketch.</strong> Each clip sits between two stretches of your room noise, and a clip counts as a detection when YES or NO wins with at least 0.80 in some slice:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Clips</th>
+<th><code>yes</code> detected</th>
+<th><code>no</code> detected</th>
+<th>False alarms on <code>noise</code></th>
+<th>False alarms on <code>unknown</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Your 68 test clips</td>
+<td>93.3% (14 of 15)</td>
+<td>93.8% (15 of 16)</td>
+<td>0% (0 of 22)</td>
+<td>20% (3 of 15)</td>
+</tr>
+<tr class="even">
+<td>400 dataset clips (100 per class)</td>
+<td>84%</td>
+<td>84%</td>
+<td>0%</td>
+<td>10%</td>
+</tr>
+</tbody>
+</table>
+<p>The board and the Mac gave <strong>the same table, cell for cell, on all 468 clips.</strong> The dataset row is optimistic, because many of its clips were used in training; the first row is the fairer one. With 15 or 16 clips per word, one clip moves a percentage by about 6 points. On the Mac only, with your test clips, the threshold is a trade-off: at 0.6, <code>no</code> is detected 100% of the time but the false alarms on <code>unknown</code> rise to 26.7%; at 0.9, <code>no</code> falls to 75% and those false alarms to 6.7%.</p>
+<p><strong>The level does not matter.</strong> The scores for a clip were identical, to three decimals, from +12 dB louder to 36 dB quieter. On the board, whole-clip accuracy was the same at +0, +6, and +12 dB. A likely reason, which we have read in the code but not isolated with an experiment: the MFCC block normalizes the coefficients over a sliding window (its <code>win_size</code> is 101), which removes a constant gain, and the network’s outputs are quantized in steps of about 0.004.</p>
+</section>
+<section id="the-live-test-with-a-voice" class="level4">
+<h4 class="anchored" data-anchor-id="the-live-test-with-a-voice">The live test with a voice</h4>
+<p>Three live attempts, in order:</p>
+<ol type="1">
+<li>With ESP-NN on (the default), speech was clearly present, yet <code>yes</code> never went above 0.09. This is what led to the problem described above.</li>
+<li>With ESP-NN off, but no speech in the recording (the loudest slice was -48 dBFS), so it proves nothing.</li>
+<li><strong>With ESP-NN off and a voice,</strong> on the board’s own microphone, over about 100 s. The loudest slice was -29 dBFS, and 67 of the 400 slices were louder than -45 dBFS.</li>
+</ol>
+<p>What attempt 3 shows:</p>
+<ul>
+<li><strong>The model detects the words.</strong> There were 27 stretches in which the winner was not <code>noise</code>. In 7 of them only <code>yes</code> reached 0.80, in 11 only <code>no</code>, in 4 both did, and in 5 neither (the winner was <code>unknown</code>, or the scores were weak). A clean word gives a score of 1.00 for 3 to 5 slices in a row, which is 0.75 to 1.25 s.</li>
+<li><strong>Words that are not YES or NO mostly land in <code>unknown</code>,</strong> with scores of 0.88 to 0.99.</li>
+<li><strong>No false alarms in the quiet.</strong> Of the 397 one-second windows whose levels are all known, 168 were entirely quiet (every slice below -50 dBFS). In none of them did <code>yes</code> or <code>no</code> reach 0.80.</li>
+<li><strong>The label can flicker inside one word.</strong> Several stretches switch between <code>yes</code>, <code>no</code>, and <code>unknown</code> for a slice or two, for example <code>yes yes yes yes unk unk no yes yes yes</code>. A rule that asks for two slices in a row would hide those flickers; we have not tried it.</li>
+</ul>
+<p>The author’s own description of the same test, from watching the screen: YES was almost always right, and some other words gave a false NO. That agrees with the 20% false alarms on <code>unknown</code> clips measured above, which went mostly to <code>no</code>.</p>
+<p>What it does <strong>not</strong> show: an accuracy per word. The exact order and number of the words spoken, with their times, were not recorded, so we cannot say how many <code>yes</code> were missed or how many <code>no</code> were taken for <code>yes</code>. For that number, the test needs ground truth, for example a cue (a beep) before every word, logged on the computer, so that each detection can be matched to what was asked. The measurements on recorded clips above remain the reliable numbers.</p>
+</section>
+<section id="the-live-test-with-ground-truth" class="level4">
+<h4 class="anchored" data-anchor-id="the-live-test-with-ground-truth">The live test with ground truth</h4>
+<p><code>tools/kws_cued_test.py</code> gives the live test a known answer. It plays a sound file of beeps on the computer’s speakers; the pattern says which word to say, right after it: one low beep for YES, two middle beeps for NO, three high beeps for any other word. The 30 cues (10 of each kind, in a random order, 5 seconds apart) are known exactly, and the tool logs what the board answers, with the time of every answer. Then it matches each detection to the word that was asked, and counts hits, misses, wrong words, and false alarms, with 95% confidence intervals. With only 10 cues per word, those intervals are wide: 9 of 10 correct is compatible with anything from about 60% to 98%.</p>
+<p>Two things it tells apart: detections that fall during the beeps (the cue itself fooling the model, since the microphone hears the beeps) and detections in the quiet gaps. It also reports a looser reading, in which, when both words flashed during one cue, the one with the highest score counts as the answer. We checked the analysis on made-up runs with a known number of planted errors, and it counted them correctly.</p>
+<p><strong>Results of one run</strong> (Arduino core 3.3.12, ESP-NN off, the board’s own microphone, one speaker, one room, 30 cues in about 2 minutes 40 seconds). The speaker reported afterwards that on cue 1, which asked for NO, they said YES by mistake. We used that report to correct the ground truth (<code>--said 1=yes</code>), so the run counts 11 YES, 9 NO, and 10 other words. The rule is the sketch’s: YES or NO winning with at least 0.80.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Asked for</th>
+<th>Shown correctly</th>
+<th>95% interval</th>
+<th>What went wrong</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>YES (11)</td>
+<td>7 (64%)</td>
+<td>35 to 85%</td>
+<td>3 shown nothing, 1 showed both words</td>
+</tr>
+<tr class="even">
+<td>NO (9)</td>
+<td>9 (100%)</td>
+<td>70 to 100%</td>
+<td>nothing</td>
+</tr>
+<tr class="odd">
+<td>Other word (10)</td>
+<td>8 (80%)</td>
+<td>49 to 94%</td>
+<td>2 were shown as NO</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>If, when both words flashed, the highest score counts,</strong> YES goes to 8 of 11 (73%).</li>
+<li><strong>The beeps did not fool the model:</strong> no detection fell during the beeps, and none fell in the quiet gaps between cues.</li>
+<li><strong>The three missed YES.</strong> In those windows <code>yes</code> reached 0.37, 0.45, and 0.79 while <code>unknown</code> or <code>noise</code> won (0.89 to 0.96). So the model heard something, but not clearly YES; one came close, just under the 0.80 threshold. We do not know why: we have no recording of the audio, and the word may have been said more quietly, at a different moment, or differently.</li>
+<li><strong>The two false NO</strong> came from two of the other words (scores 0.98 and 0.83). We do not know which words they were. This agrees with the offline result that <code>unknown</code> clips trigger a word in about 20% of cases, mostly NO.</li>
+<li><strong>The threshold is a trade-off here too.</strong> At 0.9, YES rises to 8 of 11 (73%) and other words are shown wrongly only once (9 of 10 correct). At 0.6 or 0.7, other words are shown wrongly 3 times (7 of 10 correct). The time alignment does not matter: forcing the lag anywhere from 0.0 to 0.4 s gave the same table.</li>
+</ul>
+<p><strong>How far to trust it.</strong> Ten cues per word is few: the intervals above are wide, and YES at 64% is compatible with anything from about 35% to 85%. It is one speaker, one session, one distance. Cue 1 (asked for NO, answered with YES) shows the ground truth can have errors: we corrected the one the speaker noticed, and there may be others they did not. The alignment between the beeps and the board’s answers was moderate (a correlation of 0.58 between loudness and the beeps). Offline, on the author’s own clips, YES was detected 93% of the time (14 of 15); live it was 64% (7 of 11). The intervals overlap, so we cannot say the two differ, but the live number is lower and we have not explained it.</p>
+</section>
+<section id="next-steps-for-keyword-spotting" class="level4">
+<h4 class="anchored" data-anchor-id="next-steps-for-keyword-spotting">Next steps for keyword spotting</h4>
+<ol type="1">
+<li><strong>Understand the missed YES.</strong> Live YES was 64% against 93% offline. Make the live sketch save the last second of audio to the card whenever the model hesitates (for example when <code>yes</code> is between 0.3 and 0.8), then listen to those clips and send them through the replay test. That would show if the words were quiet, cut off, or different from the training clips. A longer cued test, with more cues per word, would also narrow the intervals.</li>
+<li><strong>Tune the detection rule.</strong> The threshold of 0.80 is a guess. On your test clips it misses about 6% of the words and <code>unknown</code> triggers a word 20% of the time. A rule that asks for two slices in a row, or a different threshold for each word, might do better; test it on recorded clips first, with the tools above.</li>
+<li><strong>Find out if the ESP-NN problem is the core.</strong> Build the same replay sketch on core 2.0.17 (the book’s version), in a separate setup so that your installation is not changed. It would say whether the fault comes from the newer core.</li>
+<li><strong>Wake-word use.</strong> A single word is not a wake word; a real one needs a model made for it, trained to reject speech that is not the word.</li>
+</ol>
+</section>
+</section>
+</section>
+<section id="part-3-a-tiny-language-model-on-the-board" class="level2">
+<h2 class="anchored" data-anchor-id="part-3-a-tiny-language-model-on-the-board">Part 3: a tiny language model on the board</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/ini_part3_slm.jpg" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption><em>Image prompt - 1950s style cartoon illustration of a cozy storytelling corner. A tiny display board with a smiling face sits on a small desk and tells a story to a circle of paper-craft children; an open picture book next to it shows a ball, a dog, and a little girl. The board’s screen shows only abstract scribbles that stand for lines of text. In the background, a gigantic vintage mainframe computer with spinning tape reels looms behind a curtain, drawn comically huge next to the tiny board, as a gag about a very small model against a very large one. A scientist in a white lab coat smiles and takes notes. Warm muted colors, clean outlines, classic animation look. No legible text. Square format.</em></figcaption>
+</figure>
+</div>
+<p>A language model with 260,000 parameters generates short children’s stories on the ESP32-S3, one token at a time, and the text appears on the 1.47” screen as it is written. It is far too small to be useful, and that is the point of the lesson: it shows, in a few hundred lines of C++, everything a large language model does, with a model small enough to read, run, and check by hand.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/slm_story_screen.jpg" class="img-fluid figure-img" style="width:45.0%"></p>
+<figcaption>The screen after a story of 512 tokens. The last line shows the speed measured while the model was running.</figcaption>
+</figure>
+</div>
+<section id="what-you-need-1" class="level3">
+<h3 class="anchored" data-anchor-id="what-you-need-1">What you need</h3>
+<ul>
+<li>The 1.47” touch board, with <strong>PSRAM turned on</strong>: in the Arduino IDE, Tools, PSRAM, OPI PSRAM (with <code>arduino-cli</code>, the board string ends in <code>:PSRAM=opi</code>). The default is <em>Disabled</em>, and then the sketch stops with a message, because the weights do not fit in the internal RAM.</li>
+<li>A microSD card (FAT) with a folder <code>slm</code> holding two files, in the root of the card: <code>/slm/stories260K.bin</code> (the weights) and <code>/slm/tok512.bin</code> (the tokenizer).</li>
+</ul>
+<p>The two files are Andrej Karpathy’s, from <a href="https://huggingface.co/karpathy/tinyllamas">huggingface.co/karpathy/tinyllamas</a>, folder <code>stories260K</code>. They are not in this repository; download them from there. The copies used for the measurements below had these sizes and SHA-256 sums:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>Bytes</th>
+<th>SHA-256</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>stories260K.bin</code></td>
+<td>1,056,540</td>
+<td><code>b0a507e7ad0f626624f17112325e66691f9076d622e1d3274d103d00299f2696</code></td>
+</tr>
+<tr class="even">
+<td><code>tok512.bin</code></td>
+<td>6,227</td>
+<td><code>037cb335abb25d1fa9e8ecae30ed2a3a8ace9302862ebcdc05d51a6bbb10c312</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="credits-for-part-3" class="level3">
+<h3 class="anchored" data-anchor-id="credits-for-part-3">Credits for Part 3</h3>
+<p>The model, the tokenizer, and the file format come from Andrej Karpathy’s <a href="https://github.com/karpathy/llama2.c">llama2.c</a> project (MIT license) and its <a href="https://huggingface.co/karpathy/tinyllamas">tinyllamas</a> models, trained on the TinyStories data set. The sketch in this repository is a port of llama2.c’s inference code to the Arduino environment, and the Python check in <code>tools/slm_reference.py</code> is a second, independent implementation of the same model. Both were written by Claude Sonnet 5.5 (Anthropic) under the author’s direction, and the author ran, checked, and photographed them on the board.</p>
+</section>
+<section id="the-model-1" class="level3">
+<h3 class="anchored" data-anchor-id="the-model-1">The model</h3>
+<p>Read from the header of the file:</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td>Embedding size (<code>dim</code>)</td>
+<td>64</td>
+</tr>
+<tr class="even">
+<td>Layers</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td>Attention heads</td>
+<td>8 (4 for the keys and values)</td>
+</tr>
+<tr class="even">
+<td>Feed-forward size</td>
+<td>172</td>
+</tr>
+<tr class="odd">
+<td>Vocabulary</td>
+<td>512 tokens</td>
+</tr>
+<tr class="even">
+<td>Context</td>
+<td>512 tokens</td>
+</tr>
+<tr class="odd">
+<td>Parameters</td>
+<td>264,128, stored as 32-bit floats</td>
+</tr>
+</tbody>
+</table>
+<p>The file is 1,056,540 bytes: 28 bytes of header and 1,056,512 bytes of weights, which is exactly 264,128 values of 4 bytes. The match with the count we computed from the header is how we know the file format was read correctly.</p>
+<p><strong>Memory.</strong> After loading, 1,824,316 bytes of the PSRAM are in use (6.44 MB of the 8.26 MB that the board reports are still free). The weights are 1.06 MB; the cache of the attention layers (the keys and values of every position, 5 layers by 512 positions) is 655,360 bytes; the rest is the tokenizer and the working buffers. The sketch leaves most of the internal heap free (about 340 KB at the benchmark).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/slm_model_diagram.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>The model on one page. Every token goes through the same five blocks, each with its own weights. The numbers come from the file header and from counting the weights of each part: the feed-forward layers hold almost two thirds of them, and the attention layers hold about a quarter. The two small position tables that the old file format still carries (4,096 values together) are not used by this code.</figcaption>
+</figure>
+</div>
+</section>
+<section id="test-07-tell-a-story" class="level3">
+<h3 class="anchored" data-anchor-id="test-07-tell-a-story">Test 07: tell a story</h3>
+<p>The sketch loads the weights from the card into PSRAM and generates a story. The first token is the “beginning of text” mark; then each step runs the whole network once to get a score for each of the 512 tokens, picks one, and feeds it back in.</p>
+<p><strong>Controls</strong></p>
+<ul>
+<li><strong>USR1</strong> tells a new story, or stops the one being told.</li>
+<li><strong>USR2</strong> changes the beginning of the story (the <em>prompt</em>): none, “Once upon a time”, “One day, a little girl”, “Tom and Lily”, or “The big dog”. The new beginning appears in big letters; press USR1 to continue it.</li>
+<li><strong>Touch:</strong> drag up or down to scroll, and tap to switch between big letters (14 per line) and small letters (28 per line). While a story is being written the screen follows the newest text; scroll up to read, and scroll back to the end to follow again.</li>
+<li><strong>Serial</strong> (115200): the story as text, then a line with the speed. Two commands: <code>b</code> runs a benchmark, and <code>g &lt;text&gt;</code> decodes greedily and prints the token numbers (used for the check below).</li>
+</ul>
+<p>The words are chosen with a temperature of 0.9 and top-p of 0.9: the model draws among the most likely tokens, so every story is different.</p>
+<div class="callout callout-style-simple callout-note callout-titled" title="Code">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete sketch (584 lines) is in the repository: <a href="https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3/blob/main/part3_slm/07_slm_stories/07_slm_stories.ino"><code>part3_slm/07_slm_stories/07_slm_stories.ino</code></a>.</p>
+</div>
+</div>
+<section id="how-it-works-4" class="level5">
+<h5 class="anchored" data-anchor-id="how-it-works-4">How it works</h5>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/slm_generation_diagram.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>The loop that writes a story. The prompt is read first, token by token, and then the model’s own choices are fed back in, one per step, until it chooses the end mark or the context of 512 tokens is full.</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>The tokenizer</strong> turns text into numbers. The 512 tokens are letters and common pieces of words (the file <code>tok512.bin</code> has them with a score each). The text is cut into letters and then the best-scoring pairs are merged until none is left. The reverse is a table lookup. A token such as <code>&lt;0x0A&gt;</code> is a raw byte (here, a new line).</li>
+<li><strong>One step of the network</strong> (<code>forward</code>): look up the embedding of the token (64 numbers), then for each of the 5 layers: normalize; compute the query, key, and value; rotate them by an angle that depends on the position (RoPE); store the key and value in the cache; let each of the 8 heads compare its query with all the keys so far and mix the values by those scores (attention); add the result back; then a feed-forward block with the SwiGLU activation, added back too. At the end, the 64 numbers are multiplied by the embedding table to give 512 scores.</li>
+<li><strong>The cache</strong> is why a step does not recompute the past: the keys and values of earlier positions are kept. It is also why a step takes longer the further the story goes, as the attention has more positions to look at.</li>
+<li><strong>Choosing</strong> the token: with a temperature of 0 it is always the highest score; with a higher temperature it is drawn from the softmax of the scores, cutting off the unlikely tail (top-p).</li>
+<li><strong>Everything is plain float code</strong>, no libraries and no optimization of the inner loops, to be readable.</li>
+</ul>
+</section>
+</section>
+<section id="is-it-right-a-check-against-a-second-implementation" class="level3">
+<h3 class="anchored" data-anchor-id="is-it-right-a-check-against-a-second-implementation">Is it right? A check against a second implementation</h3>
+<p>A port can run and still be wrong, and a 260K-parameter model would write odd stories either way. So the check does not look at the text. <code>tools/slm_reference.py</code> runs the same model in Python (numpy), written separately, with greedy decoding (always the highest score). The command <code>g</code> on the board does the same.</p>
+<p>For each of the five beginnings of the sketch (none, “Once upon a time”, “One day, a little girl”, “Tom and Lily”, and “The big dog”), the first 64 tokens were <strong>the same on the board and in numpy, 64 of 64 in every case</strong>. This checks the whole path (file format, tokenizer, attention, the cache, and the feed-forward block) for those five prompts. It does not check the sampling (temperature and top-p), since greedy decoding does not use it, and it does not look past 64 tokens.</p>
+<p>Greedy decoding also shows a known weakness of small models: with “The big dog” it falls into a loop and repeats “He liked to play with his ball.” This is why the sketch draws the words at random instead.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> tools/slm_reference.py ~/datasets/slm/stories260K.bin ~/datasets/slm/tok512.bin <span class="st">""</span> <span class="at">--steps</span> 64</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="speed" class="level3">
+<h3 class="anchored" data-anchor-id="speed">Speed</h3>
+<p>All numbers are the time spent in the network only, not drawing on the screen.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>What</th>
+<th>Tokens per second</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Greedy, the first 64 tokens</td>
+<td>30.5</td>
+</tr>
+<tr class="even">
+<td>Benchmark (<code>b</code>): 200 tokens, fixed seed</td>
+<td>21.7</td>
+</tr>
+<tr class="odd">
+<td>A full story of 512 tokens</td>
+<td>12.5 to 12.6</td>
+</tr>
+</tbody>
+</table>
+<p>The speed falls as the story grows, because each step attends to all the positions before it. The first token needs only one position; the 512th needs 512. We did not try to make it faster: the weights are read from PSRAM, which is slower than the internal RAM; the code does not use the second core; and the weights are 32-bit floats, where 8-bit weights would be four times smaller. These are the places to look.</p>
+</section>
+<section id="what-the-stories-are-like" class="level3">
+<h3 class="anchored" data-anchor-id="what-the-stories-are-like">What the stories are like</h3>
+<p>A model this small writes grammatical sentences in the style of a children’s story and loses the thread within a paragraph. This is a story the board wrote from the empty prompt (the model’s own words, with an ordinary run of the sketch):</p>
+<blockquote class="blockquote">
+<p>Once upon a time, there was a little girl named Lily. She loved to jump, but it was her favorite ice cream. One day, Lily was very impressive and decided to clean up her room. She asked her mommy, “Why are you sad?”</p>
+</blockquote>
+<p>The first sentence is a typical opening for this kind of story. After that the sentences are fine one by one, but they do not follow from each other (“it was her favorite ice cream”; “very impressive”). Larger models with the same design do much better; this one shows the machinery and its limits. The training data set is TinyStories, made of very simple stories, which is why such a small model can write anything readable at all.</p>
+</section>
+<section id="next-steps" class="level3">
+<h3 class="anchored" data-anchor-id="next-steps">Next steps</h3>
+<ol type="1">
+<li><strong>Make it faster.</strong> Try the second core, keep the hot buffers in internal RAM, or quantize the weights to 8 bits. Check every change against <code>tools/slm_reference.py</code>.</li>
+<li><strong>Compare the other model sizes</strong> of the same family (a model of 15 million parameters would need about 60 MB as 32-bit floats, which does not fit in the 8 MB of PSRAM).</li>
+<li><strong>Let the user type the beginning</strong>, with a serial command, instead of the five fixed prompts.</li>
+</ol>
+</section>
+</section>
+<section id="what-comes-next" class="level2">
+<h2 class="anchored" data-anchor-id="what-comes-next">What comes next</h2>
+<ul>
+<li><strong>Part 1, other boards:</strong> repeat the tests on the 1.14” and 0.96” versions. Their panels are ST7789, they have no touch or microSD, and the 1.14” adds a Grove connector and a third button.</li>
+<li><strong>Battery:</strong> the battery test needs a connected LiPo (test 06).</li>
+<li><strong>Part 2:</strong> a blind test of the motion model, and finding out why live YES is lower than offline (see the next steps in that page).</li>
+<li><strong>Part 3:</strong> make the model faster (the second core, internal RAM, 8-bit weights).</li>
+</ul>
+</section>
+<section id="credits" class="level2">
+<h2 class="anchored" data-anchor-id="credits">Credits</h2>
+<p>The sketches, the library patch, and this text were generated by Claude (Sonnet 5.5, Anthropic) under the direction of Marcelo Rovai, who ran each test on the hardware, photographed the screens, and decided what to investigate. The measurements come from that board, through <code>arduino-cli</code> on a Mac. Parts 2 and 3 have their own credits: the Edge Impulse models were trained by Marcelo Rovai, and Part 3 uses Andrej Karpathy’s llama2.c and tinyllamas (see <a href="#credits-for-part-3">Part 3</a>).</p>
+<p>The cover illustration is not a photograph. It was generated locally on a Mac with <a href="https://huggingface.co/Qwen/Qwen-Image-2.1">Qwen-Image-2.1</a> (Qwen team, Alibaba), using Qwen Image Studio, a macOS app that Marcelo Rovai built with Claude Opus 5 (Anthropic). The text printed on the boards in the illustration is garbled and does not match the real boards.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../content/xiao_ips_display/choosing_a_board.html" class="pagination-link" aria-label="Choosing a Board and Adapting the Projects">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Choosing a Board and Adapting the Projects</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Written and edited by Prof.&nbsp;Marcelo Rovai (UNIFEI University)</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

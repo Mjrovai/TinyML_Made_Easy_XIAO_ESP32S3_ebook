@@ -88,12 +88,24 @@ ul.task-list li input[type="checkbox"] {
     <span class="navbar-title">TinyML Made Easy</span>
     </a>
   </div>
-        <div class="quarto-navbar-tools tools-wide tools-end">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/Mjrovai/TinyML_Made_Easy_XIAO_ESP32S3_ebook/releases/latest/download/TinyML-Made-Easy.pdf"> <i class="bi bi-file-earmark-pdf" role="img">
+</i> 
+<span class="menu-text">Download PDF</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools tools-wide">
     <a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./TinyML-Made-Easy.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
     <div class="dropdown">
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
-      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
             <a class="dropdown-item quarto-navbar-tools-item" href="https://twitter.com/intent/tweet?url=|url|">
               <i class="bi bi-twitter pe-1"></i>
@@ -120,7 +132,6 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </a>
 </div>
-          <div id="quarto-search" class="" title="Search"></div>
       </div> <!-- /container-fluid -->
     </nav>
   <nav class="quarto-secondary-nav">
@@ -245,6 +256,22 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Object Detection</span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text"><div class="part">XIAO IPS Display</div></span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./content/xiao_ips_display/choosing_a_board.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Choosing a Board and Adapting the Projects</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./content/xiao_ips_display/xiao_ips_display.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Testing the Seeed XIAO IPS Display (ESP32-S3) Series</span></a>
+  </div>
+</li>
         <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
@@ -293,9 +320,10 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>The convergence of artificial intelligence and embedded systems is revolutionizing how we interact with technology. TinyML—Machine Learning on microcontrollers—brings intelligent decision-making directly to edge devices, enabling applications from smart homes to industrial automation, all while maintaining privacy, reducing latency, and minimizing power consumption.</p>
-<p>This book demystifies TinyML through hands-on projects using Seeed Studio’s powerful yet affordable development platforms: the XIAOML Kit based on the XIAO ESP32S3 Sense and the Grove Vision AI V2. Whether you’re classifying images, detecting objects, recognizing keywords, or identifying motion patterns, you’ll learn by building real, working applications.</p>
+<p>This book demystifies TinyML through hands-on projects using Seeed Studio’s powerful yet affordable development platforms: the XIAOML Kit based on the XIAO ESP32S3 Sense, the Grove Vision AI V2, and the XIAO IPS Display boards. Whether you’re classifying images, detecting objects, recognizing keywords, or identifying motion patterns, you’ll learn by building real, working applications.</p>
 <p>The XIAO ESP32S3 Sense, despite its thumb-sized form factor (21 x 17.5mm), packs remarkable capabilities: a dual-core ESP32-S3 processor running at 240 MHz, 8MB of PSRAM, an OV2640 camera, and a digital microphone. Combined with the XIAOML Kit’s expansion board, which features an OLED display and an IMU sensor, this platform provides everything needed for comprehensive TinyML exploration.</p>
 <p>The Grove Vision AI V2 offers a complementary approach: a dedicated AI vision module with built-in hardware acceleration, ideal for no-code and low-code computer vision applications. Together, these platforms demonstrate the spectrum of TinyML deployment strategies, from fully custom models to pre-trained solutions.</p>
+<p>The XIAO IPS Display boards close the loop. They put the same XIAO ESP32-S3 Plus processor behind a screen of three possible sizes, with an IMU and a microphone on board, so the model’s answer appears on the device itself. In that section you will bring up every feature of the board, run motion classification and keyword spotting models trained in Edge Impulse Studio, and run a tiny language model that writes short stories on the board. A short chapter compares the three boards and shows what to adapt to repeat the book’s projects on each of them.</p>
 <p>Throughout this book, you’ll use Edge Impulse Studio as your primary development platform, gaining practical experience in the complete machine learning workflow: data collection, preprocessing, model training, optimization, and deployment. Each project systematically builds your understanding, from foundational concepts to advanced techniques such as digital signal processing and feature engineering.</p>
 <p>This isn’t just a technical manual—it’s your practical guide to building intelligent edge devices that can see, hear, and understand the world around them.</p>
 
@@ -729,7 +757,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/edit/main/intro.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/Mjrovai/XIAO-ESP32S3-Sense/blob/main/intro.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    </div>
     <div class="nav-footer-right">
 <p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
 </div>
