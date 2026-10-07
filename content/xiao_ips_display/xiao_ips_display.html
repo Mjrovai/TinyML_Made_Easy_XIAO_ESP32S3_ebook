@@ -453,7 +453,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td><a href="#part-3-a-tiny-language-model-on-the-board">Part 3, a tiny language model</a></td>
 <td>A 260,000-parameter model writes short stories on the board</td>
-<td>12.5 to 30 tokens per second; the first 64 tokens match an independent Python implementation for five prompts. A 4-million-parameter character GRU also runs, at 4.6 characters per second</td>
+<td>12.5 to 30 tokens per second; the first 64 tokens match an independent Python implementation for five prompts. A 4-million-parameter character GRU runs at 4.6 characters per second, and a Transformer of the same size at 3.5 to 4.3, each checked against numpy</td>
 </tr>
 </tbody>
 </table>
@@ -2293,7 +2293,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<p>In 32-bit floats the VerneBot models do not fit in the 8 MB of PSRAM, and in 16 bits (8.2 MB) they do not either. As <strong>8-bit integers (about 4 MB)</strong> they do. Both tests below use that.</p>
+<p>In 32-bit floats the VerneBot models do not fit in the 8 MB of PSRAM, and in 16 bits (8.2 MB) they do not either. As <strong>8-bit integers (about 4 MB)</strong> they do. The tests below use that.</p>
 <section id="test-08-how-fast-would-they-run" class="level4">
 <h4 class="anchored" data-anchor-id="test-08-how-fast-would-they-run">Test 08: how fast would they run?</h4>
 <p>Before exporting anything, we measured the speed with <strong>random weights</strong>. The speed of a network depends on the shapes of its matrices and not on their values, so a network with random 8-bit weights of exactly the same shapes runs at exactly the same speed. The shapes reproduce the parameter counts of the chapter to the digit: the GRU has an embedding of 123 x 256, a GRU layer of 1,024 units in the Keras layout, and a dense layer; the Transformer has 5 blocks, 4 heads, width 256, a feed-forward layer of 1,024, learned positions, LayerNorm, GELU, and the output tied to the embedding. The text that these networks “write” is meaningless; only the times matter.</p>
@@ -2402,7 +2402,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Captain Nemo was stopped up, but a brave capital of twenty-eight days, and set out a few miles from the European or Scotland with blows of the orders o</p>
 </blockquote>
 <p>It is made of words and phrases of the novels, and it reads like English, but the sentences do not follow from each other. That is what a model with four million parameters that reads one character at a time does. At 4 to 5 characters per second, a paragraph of 500 characters takes about two minutes, and the letters appear one by one on the screen.</p>
-<p><strong>What was not done.</strong> The Transformer was measured with random weights (test 08) but was not ported with its trained weights. It would need its own forward pass (the parameter counts say that it uses LayerNorm and learned positions; the other details must be read from the project’s code), and the same check against the reference.</p>
 <div class="callout callout-style-simple callout-note callout-titled" title="Code">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2417,12 +2416,86 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
+<section id="test-10-the-vernebot-transformer-on-the-board" class="level4">
+<h4 class="anchored" data-anchor-id="test-10-the-vernebot-transformer-on-the-board">Test 10: the VerneBot Transformer on the board</h4>
+<p>The Transformer is the harder of the two. It has no state that carries the past: the past is a <strong>cache of keys and values</strong>, one column for every character written so far, which grows with the text and has a fixed size (256 positions). The sketch follows the project’s JavaScript demo: pre-norm blocks, learned positions, the exact (erf) GELU, an output head tied to the embedding, and, when the window is full, a rebuild of the cache.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/verne_tx_model_diagram.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>The model on one page. Two thirds of the weights are in the feed-forward layers and a third in the attention layers. The embedding is used twice: to turn a character into numbers and, at the end, to turn numbers back into a score for each character.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/verne_tx_generation_diagram.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>The loop that writes a text, and the cache. The window rebuild is the price of learned absolute positions: if the cache wrapped around instead, the newest character would get a low position while the older ones kept the high ones.</figcaption>
+</figure>
+</div>
+<p><strong>The weights file.</strong> <code>tools/verne_transformer.py export</code> writes <code>verne_tx_int8.bin</code>, 4,435,264 bytes, from the project’s <code>tx-paired</code> model (window 256): the matrices of the five blocks as 8-bit integers with one scale per row, and the embedding, the position table, the biases, and the LayerNorms as 32-bit floats. The output head is the embedding table, so it is stored once (the script checks that the two are identical). The file is attached to the <a href="https://github.com/Mjrovai/TinyML_Made_Easy_XIAO_ESP32S3_ebook/releases/tag/v1.1">v1.1 release of the book</a> next to the GRU file; put it in <code>/slm</code> on the card.</p>
+<p><strong>What we checked:</strong></p>
+<ul>
+<li><strong>The reference is right.</strong> <code>tools/verne_transformer.py check</code> runs the model in numpy from the float16 weights on the seed “THE FLYING SUBMARINE”: the scores differ from the project’s <code>tests/reference.json</code> by at most 0.003, and the eight most likely next characters are the same, in the same order.</li>
+<li><strong>8 bits cost almost nothing here too.</strong> On 239 characters of one novel (one window, so no rebuild), the loss is 1.1614 in float16 and 1.1621 in 8 bits, the most likely next character is the same at 100% of the positions, and the greedy text of 64 characters is identical. As before, the novel is part of the training data, so only the difference between the two means something.</li>
+<li><strong>The board matches the reference.</strong> Greedy writing of 64 characters on the four seeds gave <strong>the same 64 characters on the board and in numpy with 8-bit weights, in every case</strong>, and the eight most likely characters after “THE FLYING SUBMARINE” are the same. The rebuild is the part that is easy to get wrong, so we also wrote <strong>300 characters</strong>, which crosses the window and rebuilds the cache twice: they are <strong>identical to numpy, 300 of 300</strong>.</li>
+<li><strong>Memory.</strong> After loading the weights and allocating the cache (2.6 MB), 0.96 MB of the PSRAM is free. It fits, with little to spare.</li>
+</ul>
+<p><strong>Speed.</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Characters per second</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Greedy, the first 64 characters of a text</td>
+<td>4.3</td>
+</tr>
+<tr class="even">
+<td>Greedy, 300 characters, <strong>without</strong> counting the rebuilds</td>
+<td>3.9</td>
+</tr>
+<tr class="odd">
+<td>With the screen being redrawn while it writes</td>
+<td>3.5</td>
+</tr>
+</tbody>
+</table>
+<p>Each step takes longer as the cache fills, because the attention looks at every saved column. The two rebuilds of the 300-character text took <strong>about 47 seconds each</strong>: a rebuild runs 192 characters again, one after another, and the screen shows “rebuilding cache” while it does. After the window fills there is one rebuild for every 64 characters, that is, one for about every 15 to 20 seconds of writing. So, once a text is longer than 256 characters, the Transformer spends a large part of its time rebuilding. The GRU does not have this problem.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/jpeg/verne_tx_screens.jpg" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>The VerneBot Transformer screens: the start screen, and a text being written from the seed “Captain Nemo”, 157 characters at 3.5 characters per second</figcaption>
+</figure>
+</div>
+<p><em>Left: the start screen. Right: a text being written.</em> A text written by the board from the seed “Captain Nemo” (the paragraphs are the model’s):</p>
+<blockquote class="blockquote">
+<p>Captain Nemo speaks of it.”</p>
+<p>“No, I can say that I shall not be in the world of that in the middle of the lake seemed quite preparing.”</p>
+<p>“Very well, sir, then, that’s it</p>
+</blockquote>
+<p>This text has the shape of a novel: it closes the quotation marks and puts each speech in its own paragraph. The sentences still do not mean much. On the text held out from training, the VerneBot project measured a loss of 1.034 for this Transformer and 1.146 for the GRU, so the Transformer is better at the same size, by a margin that the project’s chapter discusses; here we only checked that the board computes what the model computes.</p>
+<div class="callout callout-style-simple callout-note callout-titled" title="Code">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete sketch (538 lines) is in the repository: <a href="https://github.com/Mjrovai/XIAO-IPS-Display-ESP32S3/blob/main/part3_slm/10_verne_transformer/10_verne_transformer.ino"><code>part3_slm/10_verne_transformer/10_verne_transformer.ino</code></a>.</p>
+</div>
+</div>
+</section>
 </section>
 <section id="next-steps" class="level3">
 <h3 class="anchored" data-anchor-id="next-steps">Next steps</h3>
 <ol type="1">
 <li><strong>Make it faster.</strong> Try the second core, keep the hot buffers in internal RAM, or quantize the weights to 8 bits. Check every change against <code>tools/slm_reference.py</code>.</li>
-<li><strong>Port the VerneBot Transformer</strong> with its trained weights, check it against its reference, and compare it with the GRU on the same board. A model of 15 million parameters, as 32-bit floats, would not fit in the 8 MB of PSRAM.</li>
+<li><strong>Make the Transformer rebuild faster.</strong> A rebuild takes 47 seconds because it recomputes 192 characters one at a time. The project’s other model has a window of 120, which would cut it. A model of 15 million parameters, as 32-bit floats, would not fit in the 8 MB of PSRAM.</li>
 <li><strong>Let the user type the beginning</strong>, with a serial command, instead of the five fixed prompts.</li>
 </ol>
 </section>
