@@ -40,6 +40,36 @@
     ]
   },
   {
+    "objectID": "course_materials.html",
+    "href": "course_materials.html",
+    "title": "Course Materials",
+    "section": "",
+    "text": "What Maps to What\nSlides and video walkthroughs to accompany the book\nThe XIAOML Kit part of this book is also taught as a course. Each of its five chapters has a slide deck and a recorded walkthrough, made for IESTI01 — TinyML: Machine Learning for Embedded Devices at UNIFEI and used in AIEng4D workshops. Everything is open and free to reuse.\nThe lectures follow the book’s chapter order, one deck and one video per chapter.\nThe other parts of the book (Preprocessing Deep Dive, Grove Vision AI V2, and XIAO IPS Display) have no lecture yet.\nTotal running time of the five recorded lectures is about 1 hour 49 minutes.",
+    "crumbs": [
+      "Course Materials"
+    ]
+  },
+  {
+    "objectID": "course_materials.html#what-maps-to-what",
+    "href": "course_materials.html#what-maps-to-what",
+    "title": "Course Materials",
+    "section": "",
+    "text": "Book chapter\nSlide deck\nVideo\n\n\n\n\nSetup\nCh1 — XIAOML Kit Setup\nXIAOML Kit Setup, 21:04\n\n\nImage Classification\nCh2 — Image Classification\nImage Classification, 24:27\n\n\nObject Detection\nCh3 — Object Detection\nObject Detection, 19:56\n\n\nKeyword Spotting (KWS)\nCh4 — Keyword Spotting\nKeyword Spotting, 21:58\n\n\nMotion Classification and Anomaly Detection\nCh5 — Motion Classification & Anomaly Detection\nMotion Classification & Anomaly Detection, 21:27",
+    "crumbs": [
+      "Course Materials"
+    ]
+  },
+  {
+    "objectID": "course_materials.html#how-the-course-runs",
+    "href": "course_materials.html#how-the-course-runs",
+    "title": "Course Materials",
+    "section": "How the Course Runs",
+    "text": "How the Course Runs\nIn IESTI01, the XIAOML Kit chapters are hands-on companions to the course’s Part 2, Applications & Deploy. Each one follows the class that introduces the topic, so students meet the theory first and then build it on the kit.\nThe live class plan is in the course repository: IESTI01 — XIAOML Kit. It also lists the earlier lectures on TinyML fundamentals, TensorFlow Lite Micro, and the Arduino Nano 33 BLE Sense track.\nIf you teach with this material, I would like to hear about it. Corrections and contributions are welcome in either repository.",
+    "crumbs": [
+      "Course Materials"
+    ]
+  },
+  {
     "objectID": "content/xiaoml_kit/setup/setup.html",
     "href": "content/xiaoml_kit/setup/setup.html",
     "title": "Setup",
